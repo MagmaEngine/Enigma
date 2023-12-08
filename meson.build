@@ -1,3 +1,5 @@
+m_dep = cc.find_library('m', required : false)
+
 libenigma = library(
   'enigma',
   'src/e_matrix_operations.c',
@@ -9,6 +11,9 @@ libenigma = library(
   'src/e_matrix_make.c',
   'src/e_math.c',
   include_directories: include_directories('include'),
+  dependencies : [
+    m_dep,
+  ],
   install : false)
 
 libenigma_dep = declare_dependency(

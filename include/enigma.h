@@ -1,5 +1,5 @@
-#ifndef _UTIL_H
-#define _UTIL_H
+#ifndef _ENIGMA_H
+#define _ENIGMA_H
 
 #define PI 3.1415926535897932384626433832795L
 
@@ -14,25 +14,7 @@ typedef double efloat;
 typedef float efloat;
 #endif
 
-// ------------ DEBUG TOOLS ------------
-#ifdef E_MEM_DEBUG
-// required for memory debugger to be thread safe
-extern void e_debug_mem_init(void);
-extern void *e_debug_mem_malloc(size_t size, char *file, uint line);
-extern void *e_debug_mem_realloc(void *pointer, size_t size, char *file, uint line);
-extern void e_debug_mem_free(void *buf);
-extern void e_debug_mem_print(uint min_allocs);
-// allows you to clear all memory stored in the debugging system if you only want to record allocations after a specific point in your code
-extern void e_debug_mem_reset(void);
-// checks if any of the bounds of any allocation has been overwritten and reports where to stdout. the function returns TRUE if any error was found
-extern bool e_debug_memory(void);
-
-#define malloc(n) e_debug_mem_malloc(n, __FILE__, __LINE__)
-#define realloc(n, m) e_debug_mem_realloc(n, m, __FILE__, __LINE__)
-#define free(n) e_debug_mem_free(n)
-#endif
-
-// Crash on exit. Makes it easy to see where an application exits
+// Crash on exit.
 #ifdef E_EXIT_CRASH
 extern void exit_crash(uint i);
 #define exit(n) exit_crash(n);
@@ -346,5 +328,5 @@ extern uint *e_path_find(uint *output_count, uint cell_count, uint naighbour_max
 
 #endif // E_DOUBLE_PRECISION
 
-#endif // _UTIL_H
+#endif // _ENIGMA_H
 

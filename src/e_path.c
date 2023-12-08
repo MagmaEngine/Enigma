@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include "util.h"
+#include "enigma.h"
 
 typedef struct{
 	uint parent;

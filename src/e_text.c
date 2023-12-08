@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <math.h>
 
-#include "util.h"
+#include "enigma.h"
 
 uint e_find_next_word(char *text)
 {
