@@ -1,5 +1,3 @@
-m_dep = cc.find_library('m', required : false)
-
 libenigma = library(
   'enigma',
   'src/e_dynarr.c',
