@@ -1,9 +1,9 @@
 #include "enigma.h"
 #include <string.h>
 
-dynarr *e_dynarr_init(size_t item_size, uint item_cap)
+edynarr *e_dynarr_init(size_t item_size, uint item_cap)
 {
-	dynarr *d = malloc(sizeof *d);
+	edynarr *d = malloc(sizeof *d);
 	d->item_size = item_size;
 	d->num_items = 0;
 	d->item_cap = item_cap;
@@ -11,7 +11,7 @@ dynarr *e_dynarr_init(size_t item_size, uint item_cap)
 	return d;
 }
 
-void e_dynarr_deinit(dynarr *d)
+void e_dynarr_deinit(edynarr *d)
 {
 	if(d == NULL)
 		return;
@@ -20,7 +20,7 @@ void e_dynarr_deinit(dynarr *d)
 	free(d);
 }
 
-void e_dynarr_add(dynarr *d, void *item)
+void e_dynarr_add(edynarr *d, void *item)
 {
 	if(d->num_items >= d->item_cap)
 	{

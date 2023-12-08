@@ -40,11 +40,11 @@ typedef struct {
 	size_t item_size;
 	uint num_items;
 	uint item_cap;
-} dynarr;
+} edynarr;
 
-extern dynarr *e_dynarr_init(size_t item_size, uint item_cap);
-extern void e_dynarr_add(dynarr *d, void *item);
-extern void e_dynarr_deinit(dynarr *d);
+extern edynarr *e_dynarr_init(size_t item_size, uint item_cap);
+extern void e_dynarr_add(edynarr *d, void *item);
+extern void e_dynarr_deinit(edynarr *d);
 
 // ------------ Vector Math ------------
 //#define d_sqrt sqrt /* replaced sqrt with carmacks  inverse sqrt aproximation */
