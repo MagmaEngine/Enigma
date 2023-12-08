@@ -34,17 +34,17 @@ extern double e_randnd(uint32_t index);
 extern uint e_randi(uint32_t index);
 
 // ------------ Dynamic Arrays ------------
+// only store pointer types
 typedef struct {
 	void *arr;
 	size_t item_size;
-	size_t num_items;
-	size_t arr_size;
+	uint num_items;
+	uint item_cap;
 } dynarr;
 
-// TODO: Algorithms class, 03-DPTimber
-extern dynarr e_dynarr_init(size_t item_size);
-extern void e_dynarr_add(dynarr d, void *item);
-extern void e_dynarr_deinit(dynarr d);
+extern dynarr *e_dynarr_init(size_t item_size, uint item_cap);
+extern void e_dynarr_add(dynarr *d, void *item);
+extern void e_dynarr_deinit(dynarr *d);
 
 // ------------ Vector Math ------------
 //#define d_sqrt sqrt /* replaced sqrt with carmacks  inverse sqrt aproximation */

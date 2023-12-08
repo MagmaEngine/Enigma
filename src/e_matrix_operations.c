@@ -227,7 +227,7 @@ void e_matrix_to_quaternionf(float *quaternion, float *matrix)
 			quaternion[0] = 0.25f * s;
 			quaternion[1] = (matrix[0 * 4 + 1] + matrix[1 * 4 + 0]) / s;
 			quaternion[2] = (matrix[0 * 4 + 2] + matrix[2 * 4 + 0]) / s;
-		}else if (matrix[1 * 4 + 1] > matrix[2 * 4 + 2])
+		}else if(matrix[1 * 4 + 1] > matrix[2 * 4 + 2])
 		{
 			s = 2.0f * sqrt(1.0f + matrix[1 * 4 + 1] - matrix[0 * 4 + 0] - matrix[2 * 4 + 2]);
 			quaternion[3] = (matrix[0 * 4 + 2] - matrix[2 * 4 + 0]) / s;
@@ -326,7 +326,7 @@ void e_matrix_to_quaterniond(double *quaternion, double *matrix)
 			quaternion[0] = 0.25 * s;
 			quaternion[1] = (matrix[0 * 4 + 1] + matrix[1 * 4 + 0]) / s;
 			quaternion[2] = (matrix[0 * 4 + 2] + matrix[2 * 4 + 0]) / s;
-		}else if (matrix[1 * 4 + 1] > matrix[2 * 4 + 2])
+		}else if(matrix[1 * 4 + 1] > matrix[2 * 4 + 2])
 		{
 			s = 2.0 * sqrt(1.0f + matrix[1 * 4 + 1] - matrix[0 * 4 + 0] - matrix[2 * 4 + 2]);
 			quaternion[3] = (matrix[0 * 4 + 2] - matrix[2 * 4 + 0]) / s;

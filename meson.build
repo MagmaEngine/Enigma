@@ -2,6 +2,7 @@ m_dep = cc.find_library('m', required : false)
 
 libenigma = library(
   'enigma',
+  'src/e_dynarr.c',
   'src/e_matrix_operations.c',
   'src/e_path.c',
   'src/e_text.c',

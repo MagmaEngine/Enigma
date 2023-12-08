@@ -586,7 +586,7 @@ short e_float32_to_float16(float value)
 			sig =  0;
 			exponent += 1;
 		}
-		if (exponent > 30)
+		if(exponent > 30)
 			return sign | 0x7c00;	/*inf*/
 		return sign | (exponent << 10) | (sig >> 13);
     }
@@ -600,9 +600,9 @@ float e_float16_to_float32(short value)
 	exponent = (value >> 10) & 0x0000001f;
 	sig =  value & 0x000003ff;
 
-	if (exponent == 0)
+	if(exponent == 0)
 	{
-		if (sig == 0)
+		if(sig == 0)
 		{
 			convert.integer = sign << 31;
 			return convert.real;
@@ -616,9 +616,9 @@ float e_float16_to_float32(short value)
 			exponent += 1;
 			sig &= ~0x00000400;
 		}
-	}else if (exponent == 31)
+	}else if(exponent == 31)
 	{
-		if (sig == 0)
+		if(sig == 0)
 		{
 			convert.integer = (sign << 31) | 0x7f800000;
 			return convert.real;
