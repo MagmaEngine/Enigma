@@ -182,6 +182,65 @@ int test_e_project2f(float a, float b, float c, float d, float out0, float out1)
 	return 0;
 }
 
+int test_e_normal2f(float a, float b, float c, float d, float out0, float out1)
+{
+	float *veca = malloc(sizeof *veca * 2);
+	veca[0] = a;
+	veca[1] = b;
+	float *vecb = malloc(sizeof *vecb * 2);
+	vecb[0] = c;
+	vecb[1] = d;
+	float *k = malloc(sizeof *k * 2);
+	e_normal2f(k, veca, vecb);
+	if (test_float_equality(k[0], out0) || test_float_equality(k[1], out1))
+	{
+		printf("%s, %s: Test failed for: (%f, %f), (%f, %f). Expected (%f, %f), but got (%f, %f)",
+				__FILE__, __FUNCTION__, a, b, c, d, out0, out1, k[0], k[1]);
+		free(veca);
+		free(vecb);
+		free(k);
+		return 1;
+	}
+	free(veca);
+	free(vecb);
+	free(k);
+	return 0;
+}
+int test_e_intersect2f(float a, float b, float c, float d, float e, float f, float g, float h, float out0, float out1)
+{
+	float *pa1 = malloc(sizeof *pa1 * 2);
+	pa1[0] = a;
+	pa1[1] = b;
+	float *pa2 = malloc(sizeof *pa2 * 2);
+	pa2[0] = c;
+	pa2[1] = d;
+	float *pb1 = malloc(sizeof *pb1 * 2);
+	pb1[0] = e;
+	pb1[1] = f;
+	float *pb2 = malloc(sizeof *pb2 * 2);
+	pb2[0] = g;
+	pb2[1] = h;
+	float *k = malloc(sizeof *k * 2);
+	e_intersect2f(k, pa1, pa2, pb1, pb2);
+	if (test_float_equality(k[0], out0) || test_float_equality(k[1], out1))
+	{
+		printf("%s, %s: Test failed for: (%f, %f), (%f, %f), (%f, %f), (%f, %f). Expected (%f, %f), but got (%f, %f)",
+				__FILE__, __FUNCTION__, a, b, c, d, e, f, g, h, out0, out1, k[0], k[1]);
+		free(pa1);
+		free(pa2);
+		free(pb1);
+		free(pb2);
+		free(k);
+		return 1;
+	}
+	free(pa1);
+	free(pa2);
+	free(pb1);
+	free(pb2);
+	free(k);
+	return 0;
+}
+
 // ------------ 3D floats ------------
 int test_e_length3f(float a, float b, float c, float out)
 {
@@ -347,6 +406,39 @@ int test_e_project3f(float a, float b, float c, float d, float e, float f, float
 	free(k);
 	return 0;
 }
+int test_e_normal3f(float a, float b, float c, float d, float e, float f, float g, float h, float i,
+		float out0, float out1, float out2)
+{
+	float *veca = malloc(sizeof *veca * 3);
+	veca[0] = a;
+	veca[1] = b;
+	veca[2] = c;
+	float *vecb = malloc(sizeof *vecb * 3);
+	vecb[0] = d;
+	vecb[1] = e;
+	vecb[2] = f;
+	float *vecc = malloc(sizeof *vecc * 3);
+	vecc[0] = g;
+	vecc[1] = h;
+	vecc[2] = i;
+	float *k = malloc(sizeof *k * 3);
+	e_normal3f(k, veca, vecb, vecc);
+	if (test_float_equality(k[0], out0) || test_float_equality(k[1], out1) || test_float_equality(k[2], out2))
+	{
+		printf("%s, %s: Test failed for: (%f, %f, %f), (%f, %f, %f), (%f, %f, %f). Expected (%f, %f, %f), but got (%f, %f, %f)",
+				__FILE__, __FUNCTION__, a, b, c, d, e, f, g, h, i, out0, out1, out2, k[0], k[1], k[2]);
+		free(veca);
+		free(vecb);
+		free(vecc);
+		free(k);
+		return 1;
+	}
+	free(veca);
+	free(vecb);
+	free(vecc);
+	free(k);
+	return 0;
+}
 
 // ---------- 2D doubles -----------
 int test_e_length2d(double a, double b, double c)
@@ -497,6 +589,64 @@ int test_e_project2d(double a, double b, double c, double d, double out0, double
 	}
 	free(pos);
 	free(normal);
+	free(k);
+	return 0;
+}
+int test_e_normal2d(double a, double b, double c, double d, double out0, double out1)
+{
+	double *veca = malloc(sizeof *veca * 2);
+	veca[0] = a;
+	veca[1] = b;
+	double *vecb = malloc(sizeof *vecb * 2);
+	vecb[0] = c;
+	vecb[1] = d;
+	double *k = malloc(sizeof *k * 2);
+	e_normal2d(k, veca, vecb);
+	if (test_double_equality(k[0], out0) || test_double_equality(k[1], out1))
+	{
+		printf("%s, %s: Test failed for: (%f, %f), (%f, %f). Expected (%f, %f), but got (%f, %f)",
+				__FILE__, __FUNCTION__, a, b, c, d, out0, out1, k[0], k[1]);
+		free(veca);
+		free(vecb);
+		free(k);
+		return 1;
+	}
+	free(veca);
+	free(vecb);
+	free(k);
+	return 0;
+}
+int test_e_intersect2d(double a, double b, double c, double d, double e, double f, double g, double h, double out0, double out1)
+{
+	double *pa1 = malloc(sizeof *pa1 * 2);
+	pa1[0] = a;
+	pa1[1] = b;
+	double *pa2 = malloc(sizeof *pa2 * 2);
+	pa2[0] = c;
+	pa2[1] = d;
+	double *pb1 = malloc(sizeof *pb1 * 2);
+	pb1[0] = e;
+	pb1[1] = f;
+	double *pb2 = malloc(sizeof *pb2 * 2);
+	pb2[0] = g;
+	pb2[1] = h;
+	double *k = malloc(sizeof *k * 2);
+	e_intersect2d(k, pa1, pa2, pb1, pb2);
+	if (test_double_equality(k[0], out0) || test_double_equality(k[1], out1))
+	{
+		printf("%s, %s: Test failed for: (%f, %f), (%f, %f), (%f, %f), (%f, %f). Expected (%f, %f), but got (%f, %f)",
+				__FILE__, __FUNCTION__, a, b, c, d, e, f, g, h, out0, out1, k[0], k[1]);
+		free(pa1);
+		free(pa2);
+		free(pb1);
+		free(pb2);
+		free(k);
+		return 1;
+	}
+	free(pa1);
+	free(pa2);
+	free(pb1);
+	free(pb2);
 	free(k);
 	return 0;
 }
@@ -666,6 +816,97 @@ int test_e_project3d(double a, double b, double c, double d, double e, double f,
 	free(k);
 	return 0;
 }
+int test_e_normal3d(double a, double b, double c, double d, double e, double f, double g, double h, double i,
+		double out0, double out1, double out2)
+{
+	double *veca = malloc(sizeof *veca * 3);
+	veca[0] = a;
+	veca[1] = b;
+	veca[2] = c;
+	double *vecb = malloc(sizeof *vecb * 3);
+	vecb[0] = d;
+	vecb[1] = e;
+	vecb[2] = f;
+	double *vecc = malloc(sizeof *vecc * 3);
+	vecc[0] = g;
+	vecc[1] = h;
+	vecc[2] = i;
+	double *k = malloc(sizeof *k * 3);
+	e_normal3d(k, veca, vecb, vecc);
+	if (test_double_equality(k[0], out0) || test_double_equality(k[1], out1) || test_double_equality(k[2], out2))
+	{
+		printf("%s, %s: Test failed for: (%f, %f, %f), (%f, %f, %f), (%f, %f, %f). Expected (%f, %f, %f), but got (%f, %f, %f)",
+				__FILE__, __FUNCTION__, a, b, c, d, e, f, g, h, i, out0, out1, out2, k[0], k[1], k[2]);
+		free(veca);
+		free(vecb);
+		free(vecc);
+		free(k);
+		return 1;
+	}
+	free(veca);
+	free(vecb);
+	free(vecc);
+	free(k);
+	return 0;
+}
+
+// ---------- 4D normalize -----------
+int test_e_normalize4f(float a, float b, float c, float d, float out0, float out1, float out2, float out3)
+{
+	float *i = malloc(sizeof *i * 4);
+	i[0] = a;
+	i[1] = b;
+	i[2] = c;
+	i[3] = d;
+	e_normalize3f(i);
+	if (
+			test_float_equality(i[0], out0) ||
+			test_float_equality(i[1], out1) ||
+			test_float_equality(i[2], out2) ||
+			test_float_equality(i[2], out2))
+	{
+		printf("%s, %s: Test failed for: (%f, %f, %f, %f). Expected (%f, %f, %f, %f), but got (%f, %f, %f, %f)",
+				__FILE__, __FUNCTION__, a, b, c, d, out0, out1, out2, out3, i[0], i[1], i[2], i[3]);
+		free(i);
+		return 1;
+	}
+	free(i);
+	return 0;
+}
+int test_e_normalize4d(double a, double b, double c, double d, double out0, double out1, double out2, double out3)
+{
+	double *i = malloc(sizeof *i * 4);
+	i[0] = a;
+	i[1] = b;
+	i[2] = c;
+	i[3] = d;
+	e_normalize3d(i);
+	if (
+			test_double_equality(i[0], out0) ||
+			test_double_equality(i[1], out1) ||
+			test_double_equality(i[2], out2) ||
+			test_double_equality(i[2], out2))
+	{
+		printf("%s, %s: Test failed for: (%f, %f, %f, %f). Expected (%f, %f, %f, %f), but got (%f, %f, %f, %f)",
+				__FILE__, __FUNCTION__, a, b, c, d, out0, out1, out2, out3, i[0], i[1], i[2], i[3]);
+		free(i);
+		return 1;
+	}
+	free(i);
+	return 0;
+}
+
+// ------------ Integer Tests ------------
+int test_e_sqrti(int a, int out)
+{
+	int result = e_sqrtf(a);
+	if (result != out)
+	{
+		printf("%s, %s: Test failed for: %i. Expected %i, but got %i", __FILE__, __FUNCTION__, a, out, result);
+		return 1;
+	}
+	return 0;
+}
 
 int main(void)
 {
@@ -697,12 +938,19 @@ int main(void)
 			test_e_normalize2f(-1, 1, -sqrt(2.f)/2, sqrt(2.f)/2) ||
 			test_e_normalize2f(0, 1, 0, 1) ||
 			test_e_normalize3f(1, 1, -1, sqrt(3.f)/3, sqrt(3.f)/3, -sqrt(3.f)/3) ||
+			test_e_normalize4f(1, 1, -1, 0, sqrt(3.f)/3, sqrt(3.f)/3, -sqrt(3.f)/3, 0) ||
 			test_e_reflect2f(1, 2, 3, -4, 31, -38) ||
 			test_e_reflect2f(1, 0, sqrt(2.f)/2, sqrt(2.f)/2, 0, -1) ||
 			test_e_reflect3f(3, 2, 6, 0.5, 0.4, 0.3, -1.1, -1.28, 3.54) ||
 			test_e_project2f(1, 2, -3, 4, -0.6, 0.8) ||
 			test_e_project3f(1, 2, 0, -3, 4, 0, -0.6, 0.8, 0) ||
 			test_e_project3f(-1, 4, 2, 1, 0, 3, 0.5, 0, 1.5) ||
+			test_e_normal2f(0, 0, 1, 1, -sqrt(2.f)/2, sqrt(2.f)/2) ||
+			test_e_normal3f(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1) ||
+			test_e_intersect2f(0, 0, 0, 1, 0, 0, -1, 1, 0, 0) ||
+			test_e_intersect2f(0, 0, 0, 1, 0, 0, 0, -1, 0, 0) ||
+			test_e_intersect2f(1, 1, 1, 2, 0, 1.5, 2, 1.5, 1, 1.5) ||
+			test_e_intersect2f(0, 0, 0, 1, 1, 1, 2, 1, 0, 1) ||
 
 			// Double tests
 			test_e_length2d(3, 4, 5) ||
@@ -724,12 +972,18 @@ int main(void)
 			test_e_normalize2d(-1, 1, -sqrt(2.f)/2, sqrt(2.f)/2) ||
 			test_e_normalize2d(0, 1, 0, 1) ||
 			test_e_normalize3d(1, 1, -1, sqrt(3.f)/3, sqrt(3.f)/3, -sqrt(3.f)/3) ||
+			test_e_normalize4d(1, 1, -1, 0, sqrt(3.f)/3, sqrt(3.f)/3, -sqrt(3.f)/3, 0) ||
 			test_e_reflect2d(1, 2, 3, -4, 31, -38) ||
 			test_e_reflect2d(1, 0, sqrt(2.f)/2, sqrt(2.f)/2, 0, -1) ||
 			test_e_reflect3d(3, 2, 6, 0.5, 0.4, 0.3, -1.1, -1.28, 3.54) ||
 			test_e_project2d(1, 2, -3, 4, -0.6, 0.8) ||
 			test_e_project3d(-1, 4, 2, 1, 0, 3, 0.5, 0, 1.5) ||
-		0)
+			test_e_normal2d(0, 0, 1, 1, -sqrt(2.f)/2, sqrt(2.f)/2) ||
+			test_e_normal3d(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1) ||
+			test_e_intersect2d(0, 0, 0, 1, 0, 0, -1, 1, 0, 0) ||
+			test_e_intersect2d(0, 0, 0, 1, 0, 0, 0, -1, 0, 0) ||
+			test_e_intersect2d(1, 1, 1, 2, 0, 1.5, 2, 1.5, 1, 1.5) ||
+			test_e_intersect2d(0, 0, 0, 1, 2, 1, 1, 1, 0, 1))
 		return 1;
 
 
