@@ -2,6 +2,7 @@ libenigma = library(
   'enigma',
   'src/e_dynarr.c',
   'src/e_matrix_operations.c',
+  'src/e_mem_debug.c',
   'src/e_path.c',
   'src/e_text.c',
   'src/e_types.c',

@@ -14,6 +14,25 @@ typedef double efloat;
 typedef float efloat;
 #endif
 
+#ifdef E_MEM_DEBUG
+
+/* ----- Debugging -----
+If E_MEM_DEBUG  is enabled, the memory debugging system will create macros that replace malloc, free and realloc and allows the system to keep track of and report where memory is beeing allocated, how much and if the memory is beeing freed. This is very useful for finding memory leaks in large applications. The system can also over allocate memory and fill it with a magic number and can therfor detect if the application writes outside of the allocated memory. if E_EXIT_CRASH is defined, then exit(); will be replaced with a funtion that writes to NULL. This will make it trivial ti find out where an application exits using any debugger., */
+
+extern void e_debug_memory_init(void (*lock)(void *mutex), void (*unlock)(void *mutex), void *mutex); /* Required for memory debugger to be thread safe */
+extern void *e_debug_mem_malloc(size_t size, char *file, uint line); /* Replaces malloc and records the c file and line where it was called*/
+extern void *e_debug_mem_realloc(void *pointer, size_t size, char *file, uint line); /* Replaces realloc and records the c file and line where it was called*/
+extern void e_debug_mem_free(void *buf); /* Replaces free and records the c file and line where it was called*/
+extern void e_debug_mem_print(uint min_allocs); /* Prints out a list of all allocations made, their location, how much memorey each has allocated, freed, and how many allocations have been made. The min_allocs parameter can be set to avoid printing any allocations that have been made fewer times then min_allocs */
+extern void e_debug_mem_reset(void); /* f_debug_mem_reset allows you to clear all memory stored in the debugging system if you only want to record allocations after a specific point in your code*/
+extern bool e_debug_memory(void); /*f_debug_memory checks if any of the bounds of any allocation has been over written and reports where to standard out. The function returns TRUE if any error was found*/
+
+#define malloc(n) e_debug_mem_malloc(n, __FILE__, __LINE__) /* Replaces malloc. */
+#define realloc(n, m) e_debug_mem_realloc(n, m, __FILE__, __LINE__) /* Replaces realloc. */
+#define free(n) e_debug_mem_free(n) /* Replaces free. */
+
+#endif // E_MEM_DEBUG
+
 // Crash on exit.
 #ifdef E_EXIT_CRASH
 extern void exit_crash(uint i);
