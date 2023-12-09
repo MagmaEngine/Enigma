@@ -13,16 +13,16 @@ EDynarr *e_dynarr_init(size_t item_size, uint item_cap)
 
 void e_dynarr_deinit(EDynarr *d)
 {
-	if(d == NULL)
+	if (d == NULL)
 		return;
-	if(d->arr != NULL)
+	if (d->arr != NULL)
 			free(d->arr);
 	free(d);
 }
 
 void e_dynarr_add(EDynarr *d, void *item)
 {
-	if(d->num_items >= d->item_cap)
+	if (d->num_items >= d->item_cap)
 	{
 		d->item_cap *= 2;
 		d->arr = realloc(d->arr, d->item_cap * d->item_size);

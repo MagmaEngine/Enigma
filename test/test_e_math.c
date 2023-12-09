@@ -677,6 +677,7 @@ int main(void)
 	}
 
 	if (
+			// Float tests
 			test_e_length2f(3, 4, 5) ||
 			test_e_length3f(3, 4, 0, 5) ||
 			test_e_length3f(1, 1, 1, sqrt(3)) ||
@@ -700,8 +701,10 @@ int main(void)
 			test_e_reflect2f(1, 0, sqrt(2.f)/2, sqrt(2.f)/2, 0, -1) ||
 			test_e_reflect3f(3, 2, 6, 0.5, 0.4, 0.3, -1.1, -1.28, 3.54) ||
 			test_e_project2f(1, 2, -3, 4, -0.6, 0.8) ||
+			test_e_project3f(1, 2, 0, -3, 4, 0, -0.6, 0.8, 0) ||
 			test_e_project3f(-1, 4, 2, 1, 0, 3, 0.5, 0, 1.5) ||
 
+			// Double tests
 			test_e_length2d(3, 4, 5) ||
 			test_e_length3d(3, 4, 0, 5) ||
 			test_e_length3d(1, 1, 1, sqrt(3)) ||

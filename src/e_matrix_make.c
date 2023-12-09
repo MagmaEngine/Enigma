@@ -4,7 +4,7 @@
 void e_matrixxyf(float *matrix, const float *origo, const float *point_a, const float *point_b)
 {
 	float r, a[3], b[3];
-	if(origo != NULL)
+	if (origo != NULL)
 	{
 		a[0] = point_a[0] - origo[0];
 		a[1] = point_a[1] - origo[1];
@@ -15,7 +15,7 @@ void e_matrixxyf(float *matrix, const float *origo, const float *point_a, const 
 		b[0] = point_b[0] - origo[0];
 		b[1] = point_b[1] - origo[1];
 		b[2] = point_b[2] - origo[2];
-	}else
+	} else
 	{
 		a[0] = point_a[0];
 		a[1] = point_a[1];
@@ -54,7 +54,7 @@ void e_matrixxyf(float *matrix, const float *origo, const float *point_a, const 
 void e_matrixxzf(float *matrix, const float *origo, const float *point_a, const float *point_b)
 {
 	float r, a[3], b[3];
-	if(origo != NULL)
+	if (origo != NULL)
 	{
 		a[0] = point_a[0] - origo[0];
 		a[1] = point_a[1] - origo[1];
@@ -65,7 +65,7 @@ void e_matrixxzf(float *matrix, const float *origo, const float *point_a, const 
 		b[0] = point_b[0] - origo[0];
 		b[1] = point_b[1] - origo[1];
 		b[2] = point_b[2] - origo[2];
-	}else
+	} else
 	{
 		a[0] = point_a[0];
 		a[1] = point_a[1];
@@ -104,7 +104,7 @@ void e_matrixxzf(float *matrix, const float *origo, const float *point_a, const 
 void e_matrixyxf(float *matrix, const float *origo, const float *point_a, const float *point_b)
 {
 	float r, a[3], b[3];
-	if(origo != NULL)
+	if (origo != NULL)
 	{
 		a[0] = point_a[0] - origo[0];
 		a[1] = point_a[1] - origo[1];
@@ -115,7 +115,7 @@ void e_matrixyxf(float *matrix, const float *origo, const float *point_a, const 
 		b[0] = point_b[0] - origo[0];
 		b[1] = point_b[1] - origo[1];
 		b[2] = point_b[2] - origo[2];
-	}else
+	} else
 	{
 		a[0] = point_a[0];
 		a[1] = point_a[1];
@@ -154,7 +154,7 @@ void e_matrixyxf(float *matrix, const float *origo, const float *point_a, const 
 void e_matrixyzf(float *matrix, const float *origo, const float *point_a, const float *point_b)
 {
 	float r, a[3], b[3];
-	if(origo != NULL)
+	if (origo != NULL)
 	{
 		a[0] = point_a[0] - origo[0];
 		a[1] = point_a[1] - origo[1];
@@ -165,7 +165,7 @@ void e_matrixyzf(float *matrix, const float *origo, const float *point_a, const 
 		b[0] = point_b[0] - origo[0];
 		b[1] = point_b[1] - origo[1];
 		b[2] = point_b[2] - origo[2];
-	}else
+	} else
 	{
 		a[0] = point_a[0];
 		a[1] = point_a[1];
@@ -204,7 +204,7 @@ void e_matrixyzf(float *matrix, const float *origo, const float *point_a, const 
 void e_matrixzxf(float *matrix, const float *origo, const float *point_a, const float *point_b)
 {
 	float r, a[3], b[3];
-	if(origo != NULL)
+	if (origo != NULL)
 	{
 		a[0] = point_a[0] - origo[0];
 		a[1] = point_a[1] - origo[1];
@@ -215,7 +215,7 @@ void e_matrixzxf(float *matrix, const float *origo, const float *point_a, const 
 		b[0] = point_b[0] - origo[0];
 		b[1] = point_b[1] - origo[1];
 		b[2] = point_b[2] - origo[2];
-	}else
+	} else
 	{
 		a[0] = point_a[0];
 		a[1] = point_a[1];
@@ -254,7 +254,7 @@ void e_matrixzxf(float *matrix, const float *origo, const float *point_a, const 
 void e_matrixzyf(float *matrix, const float *origo, const float *point_a, const float *point_b)
 {
 	float r, a[3], b[3];
-	if(origo != NULL)
+	if (origo != NULL)
 	{
 		a[0] = point_a[0] - origo[0];
 		a[1] = point_a[1] - origo[1];
@@ -265,7 +265,7 @@ void e_matrixzyf(float *matrix, const float *origo, const float *point_a, const 
 		b[0] = point_b[0] - origo[0];
 		b[1] = point_b[1] - origo[1];
 		b[2] = point_b[2] - origo[2];
-	}else
+	} else
 	{
 		a[0] = point_a[0];
 		a[1] = point_a[1];
@@ -304,7 +304,7 @@ void e_matrixzyf(float *matrix, const float *origo, const float *point_a, const 
 void e_matrixxyd(double *matrix, const double *origo, const double *point_a, const double *point_b)
 {
 	double r, a[3], b[3];
-	if(origo != NULL)
+	if (origo != NULL)
 	{
 		a[0] = point_a[0] - origo[0];
 		a[1] = point_a[1] - origo[1];
@@ -315,7 +315,7 @@ void e_matrixxyd(double *matrix, const double *origo, const double *point_a, con
 		b[0] = point_b[0] - origo[0];
 		b[1] = point_b[1] - origo[1];
 		b[2] = point_b[2] - origo[2];
-	}else
+	} else
 	{
 		a[0] = point_a[0];
 		a[1] = point_a[1];
@@ -354,7 +354,7 @@ void e_matrixxyd(double *matrix, const double *origo, const double *point_a, con
 void e_matrixxzd(double *matrix, const double *origo, const double *point_a, const double *point_b)
 {
 	double r, a[3], b[3];
-	if(origo != NULL)
+	if (origo != NULL)
 	{
 		a[0] = point_a[0] - origo[0];
 		a[1] = point_a[1] - origo[1];
@@ -365,7 +365,7 @@ void e_matrixxzd(double *matrix, const double *origo, const double *point_a, con
 		b[0] = point_b[0] - origo[0];
 		b[1] = point_b[1] - origo[1];
 		b[2] = point_b[2] - origo[2];
-	}else
+	} else
 	{
 		a[0] = point_a[0];
 		a[1] = point_a[1];
@@ -404,7 +404,7 @@ void e_matrixxzd(double *matrix, const double *origo, const double *point_a, con
 void e_matrixyxd(double *matrix, const double *origo, const double *point_a, const double *point_b)
 {
 	double r, a[3], b[3];
-	if(origo != NULL)
+	if (origo != NULL)
 	{
 		a[0] = point_a[0] - origo[0];
 		a[1] = point_a[1] - origo[1];
@@ -415,7 +415,7 @@ void e_matrixyxd(double *matrix, const double *origo, const double *point_a, con
 		b[0] = point_b[0] - origo[0];
 		b[1] = point_b[1] - origo[1];
 		b[2] = point_b[2] - origo[2];
-	}else
+	} else
 	{
 		a[0] = point_a[0];
 		a[1] = point_a[1];
@@ -454,7 +454,7 @@ void e_matrixyxd(double *matrix, const double *origo, const double *point_a, con
 void e_matrixyzd(double *matrix, const double *origo, const double *point_a, const double *point_b)
 {
 	double r, a[3], b[3];
-	if(origo != NULL)
+	if (origo != NULL)
 	{
 		a[0] = point_a[0] - origo[0];
 		a[1] = point_a[1] - origo[1];
@@ -465,7 +465,7 @@ void e_matrixyzd(double *matrix, const double *origo, const double *point_a, con
 		b[0] = point_b[0] - origo[0];
 		b[1] = point_b[1] - origo[1];
 		b[2] = point_b[2] - origo[2];
-	}else
+	} else
 	{
 		a[0] = point_a[0];
 		a[1] = point_a[1];
@@ -504,7 +504,7 @@ void e_matrixyzd(double *matrix, const double *origo, const double *point_a, con
 void e_matrixzxd(double *matrix, const double *origo, const double *point_a, const double *point_b)
 {
 	double r, a[3], b[3];
-	if(origo != NULL)
+	if (origo != NULL)
 	{
 		a[0] = point_a[0] - origo[0];
 		a[1] = point_a[1] - origo[1];
@@ -515,7 +515,7 @@ void e_matrixzxd(double *matrix, const double *origo, const double *point_a, con
 		b[0] = point_b[0] - origo[0];
 		b[1] = point_b[1] - origo[1];
 		b[2] = point_b[2] - origo[2];
-	}else
+	} else
 	{
 		a[0] = point_a[0];
 		a[1] = point_a[1];
@@ -554,7 +554,7 @@ void e_matrixzxd(double *matrix, const double *origo, const double *point_a, con
 void e_matrixzyd(double *matrix, const double *origo, const double *point_a, const double *point_b)
 {
 	double r, a[3], b[3];
-	if(origo != NULL)
+	if (origo != NULL)
 	{
 		a[0] = point_a[0] - origo[0];
 		a[1] = point_a[1] - origo[1];
@@ -565,7 +565,7 @@ void e_matrixzyd(double *matrix, const double *origo, const double *point_a, con
 		b[0] = point_b[0] - origo[0];
 		b[1] = point_b[1] - origo[1];
 		b[2] = point_b[2] - origo[2];
-	}else
+	} else
 	{
 		a[0] = point_a[0];
 		a[1] = point_a[1];

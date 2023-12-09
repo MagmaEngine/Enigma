@@ -34,47 +34,47 @@ uint e_randi(uint32_t index)
 
 void e_rgb_to_hsv(float *output, float r, float g, float b)
 {
-	if(r < g)
+	if (r < g)
 	{
-		if(r < b)
+		if (r < b)
 		{
-			if(g < b)
+			if (g < b)
 			{
 				output[0] = (4.0f - (g - r) / (b - r)) / 6.0f;
 				output[1] = 1.0f - r / b;
 				output[2] = b;
-			}else
+			} else
 			{
 				output[0] = (2.0f + (b - r) / (g - r)) / 6.0f;
 				output[1] = 1.0f - r / g;
 				output[2] = g;
 			}
-		}else
+		} else
 		{
 			output[0] = (2.0f - (r - b) / (g - b)) / 6.0f;
 			output[1] = 1.0f - b / g;
 			output[2] = g;
 		}
-	}else
+	} else
 	{
-		if(r < b)
+		if (r < b)
 		{
 			output[0] = (4.0f + (r - g) / (b - g)) / 6.0f;
 			output[1] = 1.0f - g / b;
 			output[2] = b;
-		}else
+		} else
 		{
-			if(g < b)
+			if (g < b)
 			{
 				output[0] = (6.0f - (b - g) / (r - g)) / 6.0f;
 				output[1] = 1.0f - g / r;
 				output[2] = r;
-			}else if(r == g && r == b)
+			} else if (r == g && r == b)
 			{
 				output[0] = 0.0f;
 				output[1] = 0.0f;
 				output[2] = r;
-			}else
+			} else
 			{
 
 				output[0] = (0.0f + (g - b) / (r - b)) / 6.0f;
@@ -87,15 +87,15 @@ void e_rgb_to_hsv(float *output, float r, float g, float b)
 
 void e_hsv_to_rgb(float *output, float h, float s, float v)
 {
-	if(h > 1 || h < 0.0f)
+	if (h > 1 || h < 0.0f)
 		h = h - (float)((int)h);
-	if(s < 0.0f)
+	if (s < 0.0f)
 		s = 0.0f;
-	if(s > 1.0f)
+	if (s > 1.0f)
 		s = 1.0f;
-	if(v < 0.0f)
+	if (v < 0.0f)
 		v = 0.0f;
-	if(v > 1.0f)
+	if (v > 1.0f)
 		v = 1.0f;
 
 	s = 1.0f - s;
@@ -190,15 +190,15 @@ void e_xyz_to_rgb3(float *output, float x, float y, float z)
 
 void e_rgb_to_xyz(float *xyz, float r, float g, float b)
 {
-	if(r <= 0.0404482362771076f)
+	if (r <= 0.0404482362771076f)
 		r = r / 12.92f;
 	else
 		r = (float)pow((r + 0.055f) / 1.055f, 2.4f);
-	if(g <= 0.0404482362771076f)
+	if (g <= 0.0404482362771076f)
 		g = g / 12.92f;
 	else
 		g = (float)pow((g + 0.055f) / 1.055f, 2.4f);
-	if(b <= 0.0404482362771076f)
+	if (b <= 0.0404482362771076f)
 		b = b / 12.92f;
 	else
 		b = (float)pow((b + 0.055) / 1.055f, 2.4f);
@@ -214,38 +214,38 @@ void e_xyz_to_rgb(float *rgb, float x, float y, float z)
 	rgb[1] = -0.9689f * x + 1.8758f * y + 0.0415f * z;
 	rgb[2] =  0.0557f * x - 0.2040f * y + 1.0570f * z;
 
-	if(rgb[0] < rgb[1])
+	if (rgb[0] < rgb[1])
 	{
-		if(rgb[0] < rgb[2])
+		if (rgb[0] < rgb[2])
 			min = rgb[0];
 		else
 			min = rgb[2];
-	}else
+	} else
 	{
-		if(rgb[1] < rgb[2])
+		if (rgb[1] < rgb[2])
 			min = rgb[1];
 		else
 			min = rgb[2];
 	}
 
-	if(min < 0)
+	if (min < 0)
 	{
 		rgb[0] -= min;
 		rgb[1] -= min;
 		rgb[2] -= min;
 	}
 
-	if(rgb[0] <= 0.0031306684425005883f)
+	if (rgb[0] <= 0.0031306684425005883f)
 		rgb[0] = 12.92f * rgb[0];
 	else
 		rgb[0] = 1.055f * pow(rgb[0], 0.416666666666666667f) - 0.055f;
 
-	if(rgb[1] <= 0.0031306684425005883f)
+	if (rgb[1] <= 0.0031306684425005883f)
 		rgb[1] = 12.92f * rgb[1];
 	else
 		rgb[1] = 1.055f * pow(rgb[1], 0.416666666666666667f) - 0.055f;
 
-	if(rgb[2] <= 0.0031306684425005883f)
+	if (rgb[2] <= 0.0031306684425005883f)
 		rgb[2] = 12.92f * rgb[2];
 	else
 		rgb[2] = 1.055f * pow(rgb[2], 0.416666666666666667f) - 0.055f;
@@ -256,15 +256,15 @@ void e_xyz_to_lab(float *lab, float x, float y, float z)
 	x /= e_WHITEPOINT_X;
 	y /= e_WHITEPOINT_Y;
 	z /= e_WHITEPOINT_Z;
-	if(x >= 8.85645167903563082e-3f)
+	if (x >= 8.85645167903563082e-3f)
 		x = pow(x, 0.333333333333333f);
 	else
 		x = (841.0f / 108.0f) * x + (4.0f / 29.0f);
-	if(y >= 8.85645167903563082e-3f)
+	if (y >= 8.85645167903563082e-3f)
 		y = pow(y, 0.333333333333333f);
 	else
 		y = (841.0f / 108.0f) * y + (4.0f / 29.0f);
-	if(z >= 8.85645167903563082e-3f)
+	if (z >= 8.85645167903563082e-3f)
 		z = pow(z, 0.333333333333333f);
 	else
 		z = (841.0f / 108.0f) * z + (4.0f / 29.0f);
@@ -279,17 +279,17 @@ void e_lab_to_xyz(float *xyz, float l, float a, float b)
 	a = l + a / 500.0f;
 	b = l - b / 200.0f;
 
-	if(a >= 0.206896551724137931f)
+	if (a >= 0.206896551724137931f)
 		xyz[0] = e_WHITEPOINT_X * a * a * a;
 	else
 		xyz[0] = e_WHITEPOINT_X * (108.0f / 841.0f) * (a - (4.0f / 29.0f));
 
-	if(l >= 0.206896551724137931f)
+	if (l >= 0.206896551724137931f)
 		xyz[1] = e_WHITEPOINT_Y * l * l * l;
 	else
 		xyz[1] = e_WHITEPOINT_Y * (108.0f / 841.0f) * (l - (4.0f / 29.0f));
 
-	if(b >= 0.206896551724137931f)
+	if (b >= 0.206896551724137931f)
 		xyz[2] = e_WHITEPOINT_Z * b * b * b;
 	else
 		xyz[2] = e_WHITEPOINT_Z * (108.0f / 841.0f) * (b - (4.0f / 29.0f));
@@ -496,7 +496,7 @@ void e_wiggle3dd(double *out, double f, double size)
 
 #define F_EPSILON 0.000001
 
-bool e_raycast_trif(float orig[3], float dir[3], float vert0[3], float vert1[3], float vert2[3], float *t, float *u, float *v)
+bool e_raycast_trif (float orig[3], float dir[3], float vert0[3], float vert1[3], float vert2[3], float *t, float *u, float *v)
 {
 	float edge1[3], edge2[3], tvec[3], pvec[3], qvec[3];
 	float det, inv_det;
@@ -512,7 +512,7 @@ bool e_raycast_trif(float orig[3], float dir[3], float vert0[3], float vert1[3],
 	pvec[2] = dir[0] * edge2[1] - dir[1] * edge2[0];
 	det = edge1[0] * pvec[0] + edge1[1] * pvec[1] + edge1[2] * pvec[2];
 
-	if(det > -F_EPSILON && det < F_EPSILON)
+	if (det > -F_EPSILON && det < F_EPSILON)
 		return false;
 	inv_det = 1.0 / det;
 
@@ -521,7 +521,7 @@ bool e_raycast_trif(float orig[3], float dir[3], float vert0[3], float vert1[3],
 	tvec[2] = orig[2] - vert0[2];
 
 	*u = (tvec[0] * pvec[0] + tvec[1] * pvec[1] + tvec[2] * pvec[2]) * inv_det;
-	if(*u < 0.0 || *u > 1.0)
+	if (*u < 0.0 || *u > 1.0)
 		return false;
 
 	qvec[0] = tvec[1] * edge1[2] - tvec[2] * edge1[1];
@@ -529,7 +529,7 @@ bool e_raycast_trif(float orig[3], float dir[3], float vert0[3], float vert1[3],
 	qvec[2] = tvec[0] * edge1[1] - tvec[1] * edge1[0];
 
 	*v = (dir[0] * qvec[0] + dir[1] * qvec[1] + dir[2] * qvec[2]) * inv_det;
-	if(*v < 0.0 || *u + *v > 1.0)
+	if (*v < 0.0 || *u + *v > 1.0)
 		return false;
 
 	*t = (edge2[0] * qvec[0] + edge2[1] * qvec[1] + edge2[2] * qvec[2]) * inv_det;
@@ -553,7 +553,7 @@ bool e_raycast_tri_cullf(float orig[3], float dir[3], float vert0[3], float vert
 	pvec[2] = dir[0] * edge2[1] - dir[1] * edge2[0];
 	det = edge1[0] * pvec[0] + edge1[1] * pvec[1] + edge1[2] * pvec[2];
 
-	if(det < F_EPSILON)
+	if (det < F_EPSILON)
 		return false;
 
 	tvec[0] = orig[0] - vert0[0];
@@ -561,14 +561,14 @@ bool e_raycast_tri_cullf(float orig[3], float dir[3], float vert0[3], float vert
 	tvec[2] = orig[2] - vert0[2];
 
 	*u = tvec[0] * pvec[0] + tvec[1] * pvec[1] + tvec[2] * pvec[2];
-	if(*u < 0.0 || *u > det)
+	if (*u < 0.0 || *u > det)
 		return false;
 
 	qvec[0] = tvec[1] * edge1[2] - tvec[2] * edge1[1];
 	qvec[1] = tvec[2] * edge1[0] - tvec[0] * edge1[2];
 	qvec[2] = tvec[0] * edge1[1] - tvec[1] * edge1[0];
 	*v = dir[0] * qvec[0] + dir[1] * qvec[1] + dir[2] * qvec[2];
-	if(*v < 0.0 || *u + *v > det)
+	if (*v < 0.0 || *u + *v > det)
 		return false;
 
 	*t = edge2[0] * qvec[0] + edge2[1] * qvec[1] + edge2[2] * qvec[2];
@@ -597,7 +597,7 @@ bool e_raycast_trid(double orig[3], double dir[3], double vert0[3], double vert1
 	pvec[2] = dir[0] * edge2[1] - dir[1] * edge2[0];
 	det = edge1[0] * pvec[0] + edge1[1] * pvec[1] + edge1[2] * pvec[2];
 
-	if(det > -F_EPSILON && det < F_EPSILON)
+	if (det > -F_EPSILON && det < F_EPSILON)
 		return false;
 	inv_det = 1.0 / det;
 
@@ -606,7 +606,7 @@ bool e_raycast_trid(double orig[3], double dir[3], double vert0[3], double vert1
 	tvec[2] = orig[2] - vert0[2];
 
 	*u = (tvec[0] * pvec[0] + tvec[1] * pvec[1] + tvec[2] * pvec[2]) * inv_det;
-	if(*u < 0.0 || *u > 1.0)
+	if (*u < 0.0 || *u > 1.0)
 		return false;
 
 	qvec[0] = tvec[1] * edge1[2] - tvec[2] * edge1[1];
@@ -614,7 +614,7 @@ bool e_raycast_trid(double orig[3], double dir[3], double vert0[3], double vert1
 	qvec[2] = tvec[0] * edge1[1] - tvec[1] * edge1[0];
 
 	*v = (dir[0] * qvec[0] + dir[1] * qvec[1] + dir[2] * qvec[2]) * inv_det;
-	if(*v < 0.0 || *u + *v > 1.0)
+	if (*v < 0.0 || *u + *v > 1.0)
 		return false;
 
 	*t = (edge2[0] * qvec[0] + edge2[1] * qvec[1] + edge2[2] * qvec[2]) * inv_det;
@@ -638,7 +638,7 @@ bool e_raycast_tri_culld(double orig[3], double dir[3], double vert0[3], double 
 	pvec[2] = dir[0] * edge2[1] - dir[1] * edge2[0];
 	det = edge1[0] * pvec[0] + edge1[1] * pvec[1] + edge1[2] * pvec[2];
 
-	if(det < F_EPSILON)
+	if (det < F_EPSILON)
 		return false;
 
 	tvec[0] = orig[0] - vert0[0];
@@ -646,14 +646,14 @@ bool e_raycast_tri_culld(double orig[3], double dir[3], double vert0[3], double 
 	tvec[2] = orig[2] - vert0[2];
 
 	*u = tvec[0] * pvec[0] + tvec[1] * pvec[1] + tvec[2] * pvec[2];
-	if(*u < 0.0 || *u > det)
+	if (*u < 0.0 || *u > det)
 		return false;
 
 	qvec[0] = tvec[1] * edge1[2] - tvec[2] * edge1[1];
 	qvec[1] = tvec[2] * edge1[0] - tvec[0] * edge1[2];
 	qvec[2] = tvec[0] * edge1[1] - tvec[1] * edge1[0];
 	*v = dir[0] * qvec[0] + dir[1] * qvec[1] + dir[2] * qvec[2];
-	if(*v < 0.0 || *u + *v > det)
+	if (*v < 0.0 || *u + *v > det)
 		return false;
 
 	*t = edge2[0] * qvec[0] + edge2[1] * qvec[1] + edge2[2] * qvec[2];

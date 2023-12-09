@@ -2,18 +2,18 @@
 
 float e_smooth_stepf(float f)
 {
-	if(f < 0)
+	if (f < 0)
 		return 0;
-	if(f < 1.0)
+	if (f < 1.0)
 		return (3.0 * f * f - 2.0 * f * f * f);
 	return 1.0;
 }
 
 double e_smooth_stepd(double f)
 {
-	if(f < 0)
+	if (f < 0)
 		return 0;
-	if(f < 1.0)
+	if (f < 1.0)
 		return (3.0 * f * f - 2.0 * f * f * f);
 	return 1.0;
 }
@@ -102,7 +102,7 @@ float e_noiserf(float f, uint recursions)
 {
 	float out = 0.0, size = 1.0;
 	uint i;
-	for(i = 0; i < recursions; i++)
+	for (i = 0; i < recursions; i++)
 	{
 		out += e_noisef(f / size) * size;
 		size *= 0.5;
@@ -114,7 +114,7 @@ float e_noiser2f(float x, float y, uint recursions)
 {
 	float out = 0.0, size = 1.0;
 	uint i;
-	for(i = 0; i < recursions; i++)
+	for (i = 0; i < recursions; i++)
 	{
 		out += e_noise2f(x / size, y / size) * size;
 		size *= 0.5;
@@ -126,7 +126,7 @@ float e_noiser3f(float x, float y, float z, uint recursions)
 {
 	float out = 0.0, size = 1.0;
 	uint i;
-	for(i = 0; i < recursions; i++)
+	for (i = 0; i < recursions; i++)
 	{
 		out += e_noise3f(x / size, y / size, z / size) * size;
 		size *= 0.5;
@@ -218,7 +218,7 @@ double e_noiserd(double f, uint recursions)
 {
 	double out = 0.0, size = 1.0;
 	uint i;
-	for(i = 0; i < recursions; i++)
+	for (i = 0; i < recursions; i++)
 	{
 		out += e_noisef(f / size) * size;
 		size *= 0.5;
@@ -230,7 +230,7 @@ double e_noiser2d(double x, double y, uint recursions)
 {
 	double out = 0.0, size = 1.0;
 	uint i;
-	for(i = 0; i < recursions; i++)
+	for (i = 0; i < recursions; i++)
 	{
 		out += e_noise2f(x / size, y / size) * size;
 		size *= 0.5;
@@ -242,7 +242,7 @@ double e_noiser3d(double x, double y, double z, uint recursions)
 {
 	double out = 0.0, size = 1.0;
 	uint i;
-	for(i = 0; i < recursions; i++)
+	for (i = 0; i < recursions; i++)
 	{
 		out += e_noise3f(x / size, y / size, z / size) * size;
 		size *= 0.5;
@@ -252,7 +252,7 @@ double e_noiser3d(double x, double y, double z, uint recursions)
 
 float e_snapf(float f, float step_size)
 {
-	if(f > 0)
+	if (f > 0)
 		return (float)((int)(f / step_size + 0.5)) * step_size;
 	else
 		return (float)((int)(f / step_size - 0.5)) * step_size;
@@ -260,7 +260,7 @@ float e_snapf(float f, float step_size)
 
 double e_snapd(double f, double step_size)
 {
-	if(f > 0)
+	if (f > 0)
 		return (double)((int)(f / step_size + 0.5)) * step_size;
 	else
 		return (double)((int)(f / step_size - 0.5)) * step_size;
@@ -362,7 +362,7 @@ float e_noisertf(float f, uint recursions, int period)
 {
 	float out = 0.0, size = 1.0;
 	uint i;
-	for(i = 0; i < recursions; i++)
+	for (i = 0; i < recursions; i++)
 	{
 		out += e_noisetf(f / size, period) * size;
 		size *= 0.5;
@@ -375,7 +375,7 @@ float e_noisert2f(float x, float y, uint recursions, int period)
 {
 	float out = 0.0, size = 1.0;
 	uint i;
-	for(i = 0; i < recursions; i++)
+	for (i = 0; i < recursions; i++)
 	{
 		out += e_noiset2f(x / size, y / size, period) * size;
 		size *= 0.5;
@@ -388,7 +388,7 @@ float e_noisert3f(float x, float y, float z, uint recursions, int period)
 {
 	float out = 0.0, size = 1.0;
 	uint i;
-	for(i = 0; i < recursions; i++)
+	for (i = 0; i < recursions; i++)
 	{
 		out += e_noiset3f(x / size, y / size, z / size, period) * size;
 		size *= 0.5;
@@ -493,7 +493,7 @@ double e_noisertd(double f, uint recursions, int period)
 {
 	double out = 0.0, size = 1.0;
 	uint i;
-	for(i = 0; i < recursions; i++)
+	for (i = 0; i < recursions; i++)
 	{
 		out += e_noisetd(f / size, period) * size;
 		size *= 0.5;
@@ -506,7 +506,7 @@ double e_noisert2d(double x, double y, uint recursions, int period)
 {
 	double out = 0.0, size = 1.0;
 	uint i;
-	for(i = 0; i < recursions; i++)
+	for (i = 0; i < recursions; i++)
 	{
 		out += e_noiset2d(x / size, y / size, period) * size;
 		size *= 0.5;
@@ -519,7 +519,7 @@ double e_noisert3d(double x, double y, double z, uint recursions, int period)
 {
 	double out = 0.0, size = 1.0;
 	uint i;
-	for(i = 0; i < recursions; i++)
+	for (i = 0; i < recursions; i++)
 	{
 		out += e_noiset3d(x / size, y / size, z / size, period) * size;
 		size *= 0.5;

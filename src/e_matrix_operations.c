@@ -211,30 +211,30 @@ void e_matrix_to_quaternionf(float *quaternion, float *matrix)
 {
 	float trace, s;
 	trace = matrix[0 * 4 + 0] + matrix[1 * 4 + 1] + matrix[2 * 4 + 2];
-	if(trace > 0.0f)
+	if (trace > 0.0f)
 	{
 		s = 0.5f / sqrt(trace + 1.0f);
 		quaternion[3] = 0.25f / s;
 		quaternion[0] = (matrix[2 * 4 + 1] - matrix[1 * 4 + 2]) * s;
 		quaternion[1] = (matrix[0 * 4 + 2] - matrix[2 * 4 + 0]) * s;
 		quaternion[2] = (matrix[1 * 4 + 0] - matrix[0 * 4 + 1]) * s;
-	}else
+	} else
 	{
-		if(matrix[0 * 4 + 0] > matrix[1 * 4 + 1] && matrix[0 * 4 + 0] > matrix[2 * 4 + 2])
+		if (matrix[0 * 4 + 0] > matrix[1 * 4 + 1] && matrix[0 * 4 + 0] > matrix[2 * 4 + 2])
 		{
 			s = 2.0f * sqrt(1.0f + matrix[0 * 4 + 0] - matrix[1 * 4 + 1] - matrix[2 * 4 + 2]);
 			quaternion[3] = (matrix[2 * 4 + 1] - matrix[1 * 4 + 2]) / s;
 			quaternion[0] = 0.25f * s;
 			quaternion[1] = (matrix[0 * 4 + 1] + matrix[1 * 4 + 0]) / s;
 			quaternion[2] = (matrix[0 * 4 + 2] + matrix[2 * 4 + 0]) / s;
-		}else if(matrix[1 * 4 + 1] > matrix[2 * 4 + 2])
+		} else if (matrix[1 * 4 + 1] > matrix[2 * 4 + 2])
 		{
 			s = 2.0f * sqrt(1.0f + matrix[1 * 4 + 1] - matrix[0 * 4 + 0] - matrix[2 * 4 + 2]);
 			quaternion[3] = (matrix[0 * 4 + 2] - matrix[2 * 4 + 0]) / s;
 			quaternion[0] = (matrix[0 * 4 + 1] + matrix[1 * 4 + 0]) / s;
 			quaternion[1] = 0.25f * s;
 			quaternion[2] = (matrix[1 * 4 + 2] + matrix[2 * 4 + 1]) / s;
-		}else
+		} else
 		{
 			s = 2.0f * sqrt(1.0f + matrix[2 * 4 + 2] - matrix[0 * 4 + 0] - matrix[1 * 4 + 1]);
 			quaternion[3] = (matrix[1 * 4 + 0] - matrix[0 * 4 + 1]) / s;
@@ -310,30 +310,30 @@ void e_matrix_to_quaterniond(double *quaternion, double *matrix)
 {
 	double trace, s;
 	trace = matrix[0 * 4 + 0] + matrix[1 * 4 + 1] + matrix[2 * 4 + 2];
-	if(trace > 0.0)
+	if (trace > 0.0)
 	{
 		s = 0.f / sqrt(trace + 1.0);
 		quaternion[3] = 0.25 / s;
 		quaternion[0] = (matrix[2 * 4 + 1] - matrix[1 * 4 + 2]) * s;
 		quaternion[1] = (matrix[0 * 4 + 2] - matrix[2 * 4 + 0]) * s;
 		quaternion[2] = (matrix[1 * 4 + 0] - matrix[0 * 4 + 1]) * s;
-	}else
+	} else
 	{
-		if(matrix[0 * 4 + 0] > matrix[1 * 4 + 1] && matrix[0 * 4 + 0] > matrix[2 * 4 + 2])
+		if (matrix[0 * 4 + 0] > matrix[1 * 4 + 1] && matrix[0 * 4 + 0] > matrix[2 * 4 + 2])
 		{
 			s = 2.0 * sqrt(1.0f + matrix[0 * 4 + 0] - matrix[1 * 4 + 1] - matrix[2 * 4 + 2]);
 			quaternion[3] = (matrix[2 * 4 + 1] - matrix[1 * 4 + 2]) / s;
 			quaternion[0] = 0.25 * s;
 			quaternion[1] = (matrix[0 * 4 + 1] + matrix[1 * 4 + 0]) / s;
 			quaternion[2] = (matrix[0 * 4 + 2] + matrix[2 * 4 + 0]) / s;
-		}else if(matrix[1 * 4 + 1] > matrix[2 * 4 + 2])
+		} else if (matrix[1 * 4 + 1] > matrix[2 * 4 + 2])
 		{
 			s = 2.0 * sqrt(1.0f + matrix[1 * 4 + 1] - matrix[0 * 4 + 0] - matrix[2 * 4 + 2]);
 			quaternion[3] = (matrix[0 * 4 + 2] - matrix[2 * 4 + 0]) / s;
 			quaternion[0] = (matrix[0 * 4 + 1] + matrix[1 * 4 + 0]) / s;
 			quaternion[1] = 0.25 * s;
 			quaternion[2] = (matrix[1 * 4 + 2] + matrix[2 * 4 + 1]) / s;
-		}else
+		} else
 		{
 			s = 2.0 * sqrt(1.0 + matrix[2 * 4 + 2] - matrix[0 * 4 + 0] - matrix[1 * 4 + 1]);
 			quaternion[3] = (matrix[1 * 4 + 0] - matrix[0 * 4 + 1]) / s;
@@ -375,14 +375,11 @@ void e_pos_quaternion_scale_to_matrixd(double *pos, double *quaternion, double *
 	matrix[10] *= scale[2];
 }
 
-/* #define e_MATRIX_CODE_GEN */
+/* #define E_MATRIX_CODE_GEN */
 
-#ifdef e_MATRIX_CODE_GEN
+#ifdef E_MATRIX_CODE_GEN
 
 #include <stdio.h>
-
-
-
 
 void e_gen_matrix_code(FILE *f, int a, int b, char *type, char *letter, int neg)
 {
@@ -394,7 +391,7 @@ void e_gen_matrix_code(FILE *f, int a, int b, char *type, char *letter, int neg)
 	fprintf(f, "void e_matrix%s%s%s(%s *matrix, const %s *origo, const %s *point_a, const %s *point_b)\n", axis[a], axis[b], letter, type, type, type, type);
 	fprintf(f, "{\n");
 	fprintf(f, "\t%s r, a[3], b[3];\n", type);
-	fprintf(f, "\tif(origo != NULL)\n");
+	fprintf(f, "\tif (origo != NULL)\n");
 	fprintf(f, "\t{\n");
 	fprintf(f, "\t\ta[0] = point_a[0] - origo[0];\n");
 	fprintf(f, "\t\ta[1] = point_a[1] - origo[1];\n");
@@ -405,7 +402,7 @@ void e_gen_matrix_code(FILE *f, int a, int b, char *type, char *letter, int neg)
 	fprintf(f, "\t\tb[0] = point_b[0] - origo[0];\n");
 	fprintf(f, "\t\tb[1] = point_b[1] - origo[1];\n");
 	fprintf(f, "\t\tb[2] = point_b[2] - origo[2];\n");
-	fprintf(f, "\t}else\n");
+	fprintf(f, "\t} else\n");
 	fprintf(f, "\t{\n");
 	fprintf(f, "\t\ta[0] = point_a[0];\n");
 	fprintf(f, "\t\ta[1] = point_a[1];\n");
@@ -421,12 +418,12 @@ void e_gen_matrix_code(FILE *f, int a, int b, char *type, char *letter, int neg)
 	fprintf(f, "\tmatrix[%u] = a[0] / r;\n", a * 4);
 	fprintf(f, "\tmatrix[%u] = a[1] / r;\n", a * 4 + 1);
 	fprintf(f, "\tmatrix[%u] = a[2] / r;\n", a * 4 + 2);
-	if(neg)
+	if (neg)
 	{
 		fprintf(f, "\tmatrix[%u] = matrix[%u] * b[1] - matrix[%u] * b[2];\n", c * 4 + 0, a * 4 + 2, a * 4 + 1);
 		fprintf(f, "\tmatrix[%u] = matrix[%u] * b[2] - matrix[%u] * b[0];\n", c * 4 + 1, a * 4 + 0, a * 4 + 2);
 		fprintf(f, "\tmatrix[%u] = matrix[%u] * b[0] - matrix[%u] * b[1];\n", c * 4 + 2, a * 4 + 1, a * 4 + 0);
-	}else
+	} else
 	{
 		fprintf(f, "\tmatrix[%u] = matrix[%u] * b[2] - matrix[%u] * b[1];\n", c * 4 + 0, a * 4 + 1, a * 4 + 2);
 		fprintf(f, "\tmatrix[%u] = matrix[%u] * b[0] - matrix[%u] * b[2];\n", c * 4 + 1, a * 4 + 2, a * 4 + 0);
@@ -436,12 +433,12 @@ void e_gen_matrix_code(FILE *f, int a, int b, char *type, char *letter, int neg)
 	fprintf(f, "\tmatrix[%u] = matrix[%u] / r;\n", c * 4 + 0, c * 4 + 0);
 	fprintf(f, "\tmatrix[%u] = matrix[%u] / r;\n", c * 4 + 1, c * 4 + 1);
 	fprintf(f, "\tmatrix[%u] = matrix[%u] / r;\n", c * 4 + 2, c * 4 + 2);
-	if(neg)
+	if (neg)
 	{
 		fprintf(f, "\tmatrix[%u] = matrix[%u] * matrix[%u] - matrix[%u] * matrix[%u];\n", b * 4 + 0, a * 4 + 1, c * 4 + 2, a * 4 + 2, c * 4 + 1);
 		fprintf(f, "\tmatrix[%u] = matrix[%u] * matrix[%u] - matrix[%u] * matrix[%u];\n", b * 4 + 1, a * 4 + 2, c * 4 + 0, a * 4 + 0, c * 4 + 2);
 		fprintf(f, "\tmatrix[%u] = matrix[%u] * matrix[%u] - matrix[%u] * matrix[%u];\n", b * 4 + 2, a * 4 + 0, c * 4 + 1, a * 4 + 1, c * 4 + 0);
-	}else
+	} else
 	{
 		fprintf(f, "\tmatrix[%u] = matrix[%u] * matrix[%u] - matrix[%u] * matrix[%u];\n", b * 4 + 0, a * 4 + 2, c * 4 + 1, a * 4 + 1, c * 4 + 2);
 		fprintf(f, "\tmatrix[%u] = matrix[%u] * matrix[%u] - matrix[%u] * matrix[%u];\n", b * 4 + 1, a * 4 + 0, c * 4 + 2, a * 4 + 2, c * 4 + 0);
@@ -467,13 +464,13 @@ int main()
 	f = fopen("e_matrix_make.c", "w");
 	fprintf(f, "#include <math.h>\n");
 	fprintf(f, "#define NULL (void*)0\n\n");
-	for(i = 0; i < 3; i++)
-		for(j = 0; j < 3; j++)
-			if(i != j)
+	for (i = 0; i < 3; i++)
+		for (j = 0; j < 3; j++)
+			if (i != j)
 				e_gen_matrix_code(f, i, j, "float", "f", neg[i * 3 + j]);
-	for(i = 0; i < 3; i++)
-		for(j = 0; j < 3; j++)
-			if(i != j)
+	for (i = 0; i < 3; i++)
+		for (j = 0; j < 3; j++)
+			if (i != j)
 				e_gen_matrix_code(f, i, j, "double", "d", neg[i * 3 + j]);
 	fclose(f);
 }

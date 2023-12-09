@@ -309,7 +309,7 @@ void e_intersect2d(double *output, double *line_a0, double *line_a1, double *lin
 
 // ------------ SQRT ------------
 #define e_sqrt_step(shift) \
-    if((0x40000000l >> shift) + root <= value)          \
+    if ((0x40000000l >> shift) + root <= value)          \
     {                                                   \
         value -= (0x40000000l >> shift) + root;         \
         root = (root >> 1) | (0x40000000l >> shift);    \
@@ -338,7 +338,7 @@ long e_sqrti(long value)
     e_sqrt_step(26);
     e_sqrt_step(28);
     e_sqrt_step(30);
-    if(root < value)
+    if (root < value)
         ++root;
     return root;
 }
@@ -348,7 +348,7 @@ unsigned char e_normalize_2di(int *point, int fixed_point_multiplyer)
 {
 	int length;
 	length = e_sqrti(point[0] * point[0] + point[1] * point[1]);
-	if(length != 0)
+	if (length != 0)
 	{
 		point[0] = (point[0] * fixed_point_multiplyer) / length;
 		point[1] = (point[1] * fixed_point_multiplyer) / length;
@@ -360,7 +360,7 @@ unsigned char e_normalize_3di(int *point, int fixed_point_multiplyer)
 {
 	int length;
 	length = e_sqrti(point[0] * point[0] + point[1] * point[1] + point[2] * point[2]);
-	if(length != 0)
+	if (length != 0)
 	{
 		point[0] = (point[0] * fixed_point_multiplyer) / length;
 		point[1] = (point[1] * fixed_point_multiplyer) / length;
@@ -384,7 +384,7 @@ void e_intersect2di(int *output, int *line_a0, int *line_a1, int *line_b0, int *
 	line64_b1[0] = (int64_t)line_b1[0];
 	line64_b1[1] = (int64_t)line_b1[1];
 	i = (line64_a0[0] - line64_a1[0]) * (line64_b0[1] - line64_b1[1]) - (line64_a0[1] - line64_a1[1]) * (line64_b0[0] - line64_b1[0]);
-	if(i == 0)
+	if (i == 0)
 	{
 		output[0] = (line_a0[0] + line_a1[0]) / 2;
 		output[1] = (line_a0[1] + line_a1[1]) / 2;
@@ -395,7 +395,7 @@ void e_intersect2di(int *output, int *line_a0, int *line_a1, int *line_b0, int *
 	tmp /= i;
 	output[0] = (int)tmp;
 	i = (line64_a0[0] - line64_a1[0]) * (line64_b0[1] - line64_b1[1]) - (line64_a0[1] - line64_a1[1]) * (line64_b0[0] - line64_b1[0]);
-	if(i == 0)
+	if (i == 0)
 	{
 		output[0] = (line_a0[0] + line_a1[0]) / 2;
 		output[1] = (line_a0[1] + line_a1[1]) / 2;
@@ -410,7 +410,7 @@ void e_intersect2di_working_questionmark(int *output, int *line_a0, int *line_a1
 {
 	int i;
 	i = (line_a0[0] - line_a1[0]) * (line_b0[1] - line_b1[1]) - (line_a0[1] - line_a1[1]) * (line_b0[0] - line_b1[0]);
-	if(i == 0)
+	if (i == 0)
 	{
 		output[0] = (line_a0[0] + line_a1[0]) / 2;
 		output[1] = (line_a0[1] + line_a1[1]) / 2;
@@ -420,7 +420,7 @@ void e_intersect2di_working_questionmark(int *output, int *line_a0, int *line_a1
 				(line_b0[0] * line_b1[1] - line_b0[1] * line_b1[0])	* (line_a0[0] - line_a1[0]);
 	output[0] /= i;
 	i = (line_a0[0] - line_a1[0]) * (line_b0[1] - line_b1[1]) - (line_a0[1] - line_a1[1]) * (line_b0[0] - line_b1[0]);
-	if(i == 0)
+	if (i == 0)
 	{
 		output[0] = (line_a0[0] + line_a1[0]) / 2;
 		output[1] = (line_a0[1] + line_a1[1]) / 2;
@@ -437,7 +437,7 @@ void e_intersect2di(int *output, int *line_a0, int *line_a1, int *line_b0, int *
 	i = (line_a0[0] - line_a1[0]) * (line_b0[1] - line_b1[1]) - (line_a0[1] - line_a1[1]) * (line_b0[0] - line_b1[0]);
 	a = (line_a0[0] - line_a1[0]) * (line_b0[1] - line_b1[1]);
 	b = (line_a0[1] - line_a1[1]) * (line_b0[0] - line_b1[0]);
-	if(i == 0)
+	if (i == 0)
 	{
 		output[0] = (line_a0[0] + line_a1[0]) / 2;
 		output[1] = (line_a0[1] + line_a1[1]) / 2;
@@ -448,7 +448,7 @@ void e_intersect2di(int *output, int *line_a0, int *line_a1, int *line_b0, int *
 	i = (line_a0[0] - line_a1[0]) * (line_b0[1] - line_b1[1]) - (line_a0[1] - line_a1[1]) * (line_b0[0] - line_b1[0]);
 	a = (line_a0[0] - line_a1[0]) * (line_b0[1] - line_b1[1]);
 	b = (line_a0[1] - line_a1[1]) * (line_b0[0] - line_b1[0]);
-	if(i == 0)
+	if (i == 0)
 	{
 		output[0] = (line_a0[0] + line_a1[0]) / 2;
 		output[1] = (line_a0[1] + line_a1[1]) / 2;
@@ -471,9 +471,9 @@ short e_float32_to_float16(float value)
 	exponent = ((convert.integer >> 23) & 0x000000ff) - (127 - 15);
 	sig = convert.integer & 0x007fffff;
 
-    if(exponent <= 0)
+    if (exponent <= 0)
     {
-		if(exponent < -10)
+		if (exponent < -10)
 			return sign;
 		sig = sig | 0x00800000;
 		t = 14 - exponent;
@@ -482,25 +482,25 @@ short e_float32_to_float16(float value)
 
 		sig = (sig + a + b) >> t;
 		return sign | sig;
-	}else if(exponent == 0xff - (127 - 15))
+	} else if (exponent == 0xff - (127 - 15))
 	{
-		if(sig == 0)
+		if (sig == 0)
 			return sign | 0x7c00;
 		else
 		{
 			sig >>= 13;
 			return sign | 0x7c00 | sig | (sig == 0);
 		}
-    }else
+    } else
     {
 		sig = sig + 0x00000fff + ((sig >> 13) & 1);
 
-		if(sig & 0x00800000)
+		if (sig & 0x00800000)
 		{
 			sig =  0;
 			exponent += 1;
 		}
-		if(exponent > 30)
+		if (exponent > 30)
 			return sign | 0x7c00;	/*inf*/
 		return sign | (exponent << 10) | (sig >> 13);
     }
@@ -514,15 +514,15 @@ float e_float16_to_float32(short value)
 	exponent = (value >> 10) & 0x0000001f;
 	sig =  value & 0x000003ff;
 
-	if(exponent == 0)
+	if (exponent == 0)
 	{
-		if(sig == 0)
+		if (sig == 0)
 		{
 			convert.integer = sign << 31;
 			return convert.real;
-		}else
+		} else
 		{
-			while(!(sig & 0x00000400))
+			while (!(sig & 0x00000400))
 			{
 				sig <<= 1;
 				exponent -=  1;
@@ -530,13 +530,13 @@ float e_float16_to_float32(short value)
 			exponent += 1;
 			sig &= ~0x00000400;
 		}
-	}else if(exponent == 31)
+	} else if (exponent == 31)
 	{
-		if(sig == 0)
+		if (sig == 0)
 		{
 			convert.integer = (sign << 31) | 0x7f800000;
 			return convert.real;
-		}else
+		} else
 		{
 			convert.integer = (sign << 31) | 0x7f800000 | (sig << 13);
 			return convert.real;
@@ -560,14 +560,14 @@ void e_image_scale_float_line_x(float *line, float *output, unsigned int in_x, u
 	out_xf = (float)out_x;
 	out_x *= channels;
 	i_f = 1;
-	for(i = 0; i < out_x + 1; i++)
+	for (i = 0; i < out_x + 1; i++)
 	{
 		i_f = (float)i;
 		f = in_xf * i_f / out_xf;
 		f -= i_f;
 		pixel = (out_x * i) / in_x;
 		pixel *= channels;
-		for(j = 0; j < channels; j++)
+		for (j = 0; j < channels; j++)
 		{
 			printf("pixel %f offset %f\n", pixel, f);
 			output[i * channels + j] = line[pixel] + (line[pixel + channels] - line[pixel]) * f;
@@ -588,27 +588,27 @@ void e_image_scale_float_line_x(float *input, float *output, unsigned int in_siz
 	in_pos = 0;
 	out_pos = -0.0001;
 	out_size *= out_jump;
-	for(out_pixel = in_pixel = 0; out_pixel < out_size; out_pixel += out_jump)
+	for (out_pixel = in_pixel = 0; out_pixel < out_size; out_pixel += out_jump)
 	{
 		out_pos += pixel_size_out;
 		weight = 0.0;
-		for(j = 0; j < channels; j++)
+		for (j = 0; j < channels; j++)
  			output[out_pixel + j] = 0;
-		while(1)
+		while (1)
 		{
 			next = in_pos + pixel_size_in;
-			if(next >= out_pos)
+			if (next >= out_pos)
 			{
 				f = (out_pos - in_pos) / pixel_size_in;
 			//	f = 1.0;
 				weight += f;
-				for(j = 0; j < channels; j++)
+				for (j = 0; j < channels; j++)
 					output[out_pixel + j] = (output[out_pixel + j] + input[in_pixel + j] * f) / weight;
 				f = 1.0 - f;
 				break;
 			}
 			weight += f;
-			for(j = 0; j < channels; j++)
+			for (j = 0; j < channels; j++)
 				output[out_pixel + j] += input[in_pixel + j] * f;
 			f = 1.0;
 			in_pos = next;
@@ -625,7 +625,7 @@ void e_image_scale_test(void)
 	float output[9];
 	unsigned int i;
 	e_image_scale_float_line_x(line, output, 3, 9, 1, 1, 1);
-	for(i = 0; i < 9; i++)
+	for (i = 0; i < 9; i++)
 		printf("pixel[%i] %f\n", i, output[i]);
 	exit(0);
 }
@@ -642,16 +642,16 @@ float *e_image_scale_float(float *data, unsigned int in_x, unsigned int in_y, un
 	float *tmp, *output;
 	unsigned int i;
 	output = malloc((sizeof *output) * out_x * out_y * channels);
-	if(out_y * in_x < out_x * in_y || 1)
+	if (out_y * in_x < out_x * in_y || 1)
 	{
 		tmp = malloc((sizeof *tmp) * in_y * out_x * channels);
-		for(i = 0; i < in_y; i++)
+		for (i = 0; i < in_y; i++)
 			e_image_scale_float_line_x(&data[i * in_x * channels], &tmp[i * out_x * channels], in_x, out_x, channels, channels, channels);
 
-		for(i = 0; i < out_x; i++)
+		for (i = 0; i < out_x; i++)
 			e_image_scale_float_line_x(&tmp[i * channels], &output[i * channels], in_y, out_y, out_x * channels + line_padding, out_x * channels + line_padding, channels);
 		free(tmp);
-	}else
+	} else
 	{
 	}
 
@@ -668,15 +668,15 @@ unsigned char *e_image_scale_uint8(unsigned char *data, unsigned int in_x, unsig
 	fin = malloc((sizeof *fin) * size);
 
 	line_size = in_x * channels + line_padding;
-	for(i = 0; i < in_y; i++)
-		for(j = 0; j < in_x * channels; j++)
+	for (i = 0; i < in_y; i++)
+		for (j = 0; j < in_x * channels; j++)
 			fin[i * in_x * channels + j] = (float)data[i * line_size + j] + (1.0 / 512);
 	size = out_x * out_y * channels;
 	fout = e_image_scale_float(fin, in_x, in_y, out_x, out_y, channels, 0);
 	free(fin);
 	size = out_x * out_y * channels;
 	output = malloc((sizeof *output) * size);
-	for(i = 0; i < size; i++)
+	for (i = 0; i < size; i++)
 		output[i] = (unsigned char)(fout[i]);
 	free(fout);
 	return output;

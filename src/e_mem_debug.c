@@ -41,20 +41,20 @@ bool e_debug_memory(void)
 {
 	bool output = false;
 	uint i, j, k;
-	if(e_alloc_mutex != NULL)
+	if (e_alloc_mutex != NULL)
 		e_alloc_mutex_lock(e_alloc_mutex);
-	for(i = 0; i < e_alloc_line_count; i++)
+	for (i = 0; i < e_alloc_line_count; i++)
 	{
-		for(j = 0; j < e_alloc_lines[i].alloc_count; j++)
+		for (j = 0; j < e_alloc_lines[i].alloc_count; j++)
 		{
 			uint8_t *buf;
 			uint size;
 			buf = e_alloc_lines[i].allocs[j].buf;
 			size = e_alloc_lines[i].allocs[j].size;
-			for(k = 0; k < E_MEM_OVER_ALLOC; k++)
-				if(buf[size + k] != E_MEM_MAGIC_NUMBER)
+			for (k = 0; k < E_MEM_OVER_ALLOC; k++)
+				if (buf[size + k] != E_MEM_MAGIC_NUMBER)
 					break;
-			if(k < E_MEM_OVER_ALLOC)
+			if (k < E_MEM_OVER_ALLOC)
 			{
 				printf("MEM ERROR: Overshoot at line %u in file %s\n", e_alloc_lines[i].line, e_alloc_lines[i].file);
 				{
@@ -65,7 +65,7 @@ bool e_debug_memory(void)
 			}
 		}
 	}
-	if(e_alloc_mutex != NULL)
+	if (e_alloc_mutex != NULL)
 		e_alloc_mutex_unlock(e_alloc_mutex);
 	return output;
 }
@@ -73,21 +73,21 @@ bool e_debug_memory(void)
 void e_debug_mem_add(void *pointer, uint size, char *file, uint line)
 {
 	uint i, j;
-	for(i = 0; i < E_MEM_OVER_ALLOC; i++)
+	for (i = 0; i < E_MEM_OVER_ALLOC; i++)
 		((uint8_t *)pointer)[size + i] = E_MEM_MAGIC_NUMBER;
 
-	for(i = 0; i < e_alloc_line_count; i++)
+	for (i = 0; i < e_alloc_line_count; i++)
 	{
-		if(line == e_alloc_lines[i].line)
+		if (line == e_alloc_lines[i].line)
 		{
-			for(j = 0; file[j] != 0 && file[j] == e_alloc_lines[i].file[j] ; j++);
-			if(file[j] == e_alloc_lines[i].file[j])
+			for (j = 0; file[j] != 0 && file[j] == e_alloc_lines[i].file[j] ; j++);
+			if (file[j] == e_alloc_lines[i].file[j])
 				break;
 		}
 	}
-	if(i < e_alloc_line_count)
+	if (i < e_alloc_line_count)
 	{
-		if(e_alloc_lines[i].alloc_alocated == e_alloc_lines[i].alloc_count)
+		if (e_alloc_lines[i].alloc_alocated == e_alloc_lines[i].alloc_count)
 		{
 			e_alloc_lines[i].alloc_alocated += 1024;
 			e_alloc_lines[i].allocs = (realloc)(e_alloc_lines[i].allocs, (sizeof *e_alloc_lines[i].allocs) * e_alloc_lines[i].alloc_alocated);
@@ -96,12 +96,12 @@ void e_debug_mem_add(void *pointer, uint size, char *file, uint line)
 		e_alloc_lines[i].allocs[e_alloc_lines[i].alloc_count++].buf = pointer;
 		e_alloc_lines[i].size += size;
 		e_alloc_lines[i].alocated++;
-	}else
+	} else
 	{
-		if(i < 1024)
+		if (i < 1024)
 		{
 			e_alloc_lines[i].line = line;
-			for(j = 0; j < 255 && file[j] != 0; j++)
+			for (j = 0; j < 255 && file[j] != 0; j++)
 				e_alloc_lines[i].file[j] = file[j];
 			e_alloc_lines[i].file[j] = 0;
 			e_alloc_lines[i].alloc_alocated = 256;
@@ -121,22 +121,22 @@ void *e_debug_mem_malloc(size_t size, char *file, uint line)
 {
 	void *pointer;
 	uint i;
-	if(e_alloc_mutex != NULL)
+	if (e_alloc_mutex != NULL)
 		e_alloc_mutex_lock(e_alloc_mutex);
 	pointer = (malloc)(size + E_MEM_OVER_ALLOC);
 
-	if(pointer == NULL)
+	if (pointer == NULL)
 	{
 		printf("MEM ERROR: Malloc returns NULL when trying to allocate %zu bytes at line %u in file %s\n", size, line, file);
-		if(e_alloc_mutex != NULL)
+		if (e_alloc_mutex != NULL)
 			e_alloc_mutex_unlock(e_alloc_mutex);
 		e_debug_mem_print(0);
 		exit(0);
 	}
-	for(i = 0; i < size + E_MEM_OVER_ALLOC; i++)
+	for (i = 0; i < size + E_MEM_OVER_ALLOC; i++)
 		((uint8_t *)pointer)[i] = E_MEM_MAGIC_NUMBER + 1;
 	e_debug_mem_add(pointer, size, file, line);
-	if(e_alloc_mutex != NULL)
+	if (e_alloc_mutex != NULL)
 		e_alloc_mutex_unlock(e_alloc_mutex);
 	return pointer;
 }
@@ -144,16 +144,16 @@ void *e_debug_mem_malloc(size_t size, char *file, uint line)
 bool e_debug_mem_remove(void *buf)
 {
 	uint i, j, k;
-	for(i = 0; i < e_alloc_line_count; i++)
+	for (i = 0; i < e_alloc_line_count; i++)
 	{
-		for(j = 0; j < e_alloc_lines[i].alloc_count; j++)
+		for (j = 0; j < e_alloc_lines[i].alloc_count; j++)
 		{
-			if(e_alloc_lines[i].allocs[j].buf == buf)
+			if (e_alloc_lines[i].allocs[j].buf == buf)
 			{
-				for(k = 0; k < E_MEM_OVER_ALLOC; k++)
-					if(((uint8_t *)buf)[e_alloc_lines[i].allocs[j].size + k] != E_MEM_MAGIC_NUMBER)
+				for (k = 0; k < E_MEM_OVER_ALLOC; k++)
+					if (((uint8_t *)buf)[e_alloc_lines[i].allocs[j].size + k] != E_MEM_MAGIC_NUMBER)
 						break;
-				if(k < E_MEM_OVER_ALLOC)
+				if (k < E_MEM_OVER_ALLOC)
 					printf("MEM ERROR: Overshoot at line %u in file %s\n", e_alloc_lines[i].line, e_alloc_lines[i].file);
 				e_alloc_lines[i].size -= e_alloc_lines[i].allocs[j].size;
 				e_alloc_lines[i].allocs[j] = e_alloc_lines[i].allocs[--e_alloc_lines[i].alloc_count];
@@ -167,15 +167,15 @@ bool e_debug_mem_remove(void *buf)
 
 void e_debug_mem_free(void *buf)
 {
-	if(e_alloc_mutex != NULL)
+	if (e_alloc_mutex != NULL)
 		e_alloc_mutex_lock(e_alloc_mutex);
-	if(!e_debug_mem_remove(buf))
+	if (!e_debug_mem_remove(buf))
 	{
 		uint *X = NULL;
 		X[0] = 0;
 	}
 	(free)(buf);
-	if(e_alloc_mutex != NULL)
+	if (e_alloc_mutex != NULL)
 		e_alloc_mutex_unlock(e_alloc_mutex);
 }
 
@@ -184,31 +184,31 @@ void *e_debug_mem_realloc(void *pointer, size_t size, char *file, uint line)
 {
 	uint i, j, k, move;
 	void *pointer2;
-	if(pointer == NULL)
+	if (pointer == NULL)
 		return e_debug_mem_malloc( size, file, line);
 
-	if(e_alloc_mutex != NULL)
+	if (e_alloc_mutex != NULL)
 		e_alloc_mutex_lock(e_alloc_mutex);
-	for(i = 0; i < e_alloc_line_count; i++)
+	for (i = 0; i < e_alloc_line_count; i++)
 	{
-		for(j = 0; j < e_alloc_lines[i].alloc_count; j++)
-			if(e_alloc_lines[i].allocs[j].buf == pointer)
+		for (j = 0; j < e_alloc_lines[i].alloc_count; j++)
+			if (e_alloc_lines[i].allocs[j].buf == pointer)
 				break;
-		if(j < e_alloc_lines[i].alloc_count)
+		if (j < e_alloc_lines[i].alloc_count)
 			break;
 	}
-	if(i == e_alloc_line_count)
+	if (i == e_alloc_line_count)
 	{
 		printf("ENIGMA Mem debugger error. Trying to reallocate pointer %p in %s line %u. Pointer has never beein allocated\n", pointer, file, line);
-		for(i = 0; i < e_alloc_line_count; i++)
+		for (i = 0; i < e_alloc_line_count; i++)
 		{
-			for(j = 0; j < e_alloc_lines[i].alloc_count; j++)
+			for (j = 0; j < e_alloc_lines[i].alloc_count; j++)
 			{
 				uint *buf;
 				buf = e_alloc_lines[i].allocs[j].buf;
-				for(k = 0; k < e_alloc_lines[i].allocs[j].size; k++)
+				for (k = 0; k < e_alloc_lines[i].allocs[j].size; k++)
 				{
-					if(&buf[k] == pointer)
+					if (&buf[k] == pointer)
 					{
 						printf("Trying to reallocate pointer %u bytes (out of %u) in to allocation made in %s on line %u.\n", k, e_alloc_lines[i].allocs[j].size, e_alloc_lines[i].file, e_alloc_lines[i].line);
 					}
@@ -219,19 +219,19 @@ void *e_debug_mem_realloc(void *pointer, size_t size, char *file, uint line)
 	}
 	move = e_alloc_lines[i].allocs[j].size;
 
-	if(move > size)
+	if (move > size)
 		move = size;
 
 	pointer2 = (malloc)(size + E_MEM_OVER_ALLOC);
-	if(pointer2 == NULL)
+	if (pointer2 == NULL)
 	{
 		printf("MEM ERROR: Realloc returns NULL when trying to allocate %zu bytes at line %u in file %s\n", size, line, file);
-		if(e_alloc_mutex != NULL)
+		if (e_alloc_mutex != NULL)
 			e_alloc_mutex_unlock(e_alloc_mutex);
 		e_debug_mem_print(0);
 		exit(0);
 	}
-	for(i = 0; i < size + E_MEM_OVER_ALLOC; i++)
+	for (i = 0; i < size + E_MEM_OVER_ALLOC; i++)
 		((uint8_t *)pointer2)[i] = E_MEM_MAGIC_NUMBER + 1;
 	memcpy(pointer2, pointer, move);
 
@@ -239,7 +239,7 @@ void *e_debug_mem_realloc(void *pointer, size_t size, char *file, uint line)
 	e_debug_mem_remove(pointer);
 	(free)(pointer);
 
-	if(e_alloc_mutex != NULL)
+	if (e_alloc_mutex != NULL)
 		e_alloc_mutex_unlock(e_alloc_mutex);
 	return pointer2;
 }
@@ -247,19 +247,19 @@ void *e_debug_mem_realloc(void *pointer, size_t size, char *file, uint line)
 void e_debug_mem_print(uint min_allocs)
 {
 	uint i;
-	if(e_alloc_mutex != NULL)
+	if (e_alloc_mutex != NULL)
 		e_alloc_mutex_lock(e_alloc_mutex);
 	printf("Memory repport:\n----------------------------------------------\n");
-	for(i = 0; i < e_alloc_line_count; i++)
+	for (i = 0; i < e_alloc_line_count; i++)
 	{
-		if(min_allocs < e_alloc_lines[i].alocated)
+		if (min_allocs < e_alloc_lines[i].alocated)
 		{
 			printf("%s line: %u\n",e_alloc_lines[i].file, e_alloc_lines[i].line);
 			printf(" - Bytes allocated: %u\n - Allocations: %u\n - Frees: %u\n\n", e_alloc_lines[i].size, e_alloc_lines[i].alocated, e_alloc_lines[i].freed);
 		}
 	}
 	printf("----------------------------------------------\n");
-	if(e_alloc_mutex != NULL)
+	if (e_alloc_mutex != NULL)
 		e_alloc_mutex_unlock(e_alloc_mutex);
 }
 
@@ -267,11 +267,11 @@ uint32_t e_debug_mem_consumption(void)
 {
 	uint i, sum = 0;
 
-	if(e_alloc_mutex != NULL)
+	if (e_alloc_mutex != NULL)
 		e_alloc_mutex_lock(e_alloc_mutex);
-	for(i = 0; i < e_alloc_line_count; i++)
+	for (i = 0; i < e_alloc_line_count; i++)
 		sum += e_alloc_lines[i].size;
-	if(e_alloc_mutex != NULL)
+	if (e_alloc_mutex != NULL)
 		e_alloc_mutex_unlock(e_alloc_mutex);
 	return sum;
 }
@@ -279,13 +279,13 @@ uint32_t e_debug_mem_consumption(void)
 void e_debug_mem_reset(void)
 {
 	uint i;
-	if(e_alloc_mutex != NULL)
+	if (e_alloc_mutex != NULL)
 		e_alloc_mutex_lock(e_alloc_mutex);
-	for(i = 0; i < e_alloc_line_count; i++)
+	for (i = 0; i < e_alloc_line_count; i++)
 		(free)(e_alloc_lines[i].allocs);
 	e_alloc_line_count = 0;
 
-	if(e_alloc_mutex != NULL)
+	if (e_alloc_mutex != NULL)
 		e_alloc_mutex_unlock(e_alloc_mutex);
 }
 
