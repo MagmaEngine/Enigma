@@ -15,6 +15,16 @@ libenigma = library(
   ],
   install : false)
 
+test_enigma = executable(
+  'test_enigma',
+  'test/test_e_sqrtf.c',
+  dependencies : [
+    m_dep,
+  ],
+  install : false)
+
+test('test_enigma', test_enigma)
+
 libenigma_dep = declare_dependency(
   include_directories: include_directories('include'),
   link_with : libenigma)
