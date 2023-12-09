@@ -17,7 +17,7 @@ libenigma = library(
 
 test_enigma = executable(
   'test_enigma',
-  'test/test_e_sqrtf.c',
+  'test/test_e_math.c',
   dependencies : [
     m_dep,
   ],

@@ -36,16 +36,9 @@ float e_dot2f(float *a, float *b)
 }
 
 
-void e_cross2f(float *output, float *a)
+void e_cross2f(float *output, float *a, float *b)
 {
-	output[0] = a[1];
-	output[1] = -a[0];
-}
-
-void e_surface_cross2f(float *output, float *a, float *subtract)
-{
-	output[0] = a[1] - subtract[1];
-	output[1] = subtract[0] - a[0];
+	*output = a[0] * b[1] - a[1] * b[0];
 }
 
 void e_normalize2f(float *vec)
