@@ -1,3 +1,5 @@
+#include <math.h>
+#include <stdlib.h>
 #include <stdint.h>
 #include <stdio.h>
 
@@ -666,7 +668,8 @@ void e_image_scale_float_line_x(float *line, float *output, unsigned int in_x, u
 void e_image_scale_float_line_x(float *input, float *output, unsigned int in_size, unsigned int out_size, unsigned int in_jump, unsigned int out_jump, unsigned int channels)
 {
 	float pixel_size_in, pixel_size_out, in_pos, out_pos, next, f, weight;
-	unsigned int i, j, in_pixel, out_pixel;
+	// unsigned int i, j, in_pixel, out_pixel;
+	unsigned int j, in_pixel, out_pixel;
 	pixel_size_in = 1.0 / (float)in_size;
 	pixel_size_out = 1.0 / (float)out_size;
 	f = 1;

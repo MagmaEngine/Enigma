@@ -6,12 +6,16 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <stdbool.h>
+
+#ifndef _UINT
+#define _UINT
 typedef unsigned int uint;
+#endif // _UINT
 
 #ifdef E_DOUBLE_PRECISION
-typedef double efloat;
+typedef double EFloat;
 #else
-typedef float efloat;
+typedef float EFloat;
 #endif
 
 #ifdef E_MEM_DEBUG
@@ -59,11 +63,11 @@ typedef struct {
 	size_t item_size;
 	uint num_items;
 	uint item_cap;
-} edynarr;
+} EDynarr;
 
-extern edynarr *e_dynarr_init(size_t item_size, uint item_cap);
-extern void e_dynarr_add(edynarr *d, void *item);
-extern void e_dynarr_deinit(edynarr *d);
+extern EDynarr *e_dynarr_init(size_t item_size, uint item_cap);
+extern void e_dynarr_add(EDynarr *d, void *item);
+extern void e_dynarr_deinit(EDynarr *d);
 
 // ------------ Vector Math ------------
 //#define d_sqrt sqrt /* replaced sqrt with carmacks  inverse sqrt aproximation */
