@@ -68,6 +68,8 @@ typedef struct {
 EDynarr *e_dynarr_init(size_t item_size, uint item_cap);
 void e_dynarr_add(EDynarr *d, void *item);
 void e_dynarr_deinit(EDynarr *d);
+int e_dynarr_remove_unordered(EDynarr *d, uint index);
+int e_dynarr_remove_ordered(EDynarr *d, uint index);
 
 // ------------ Vector Math ------------
 //#define d_sqrt sqrt /* replaced sqrt with carmacks  inverse sqrt aproximation */

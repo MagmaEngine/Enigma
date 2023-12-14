@@ -1,6 +1,12 @@
 #include "enigma.h"
 #include <string.h>
 
+/**
+ * e_dynarr_init
+ *
+ * Initialize and return a dynamic array with items of size item_size
+ * and an initial capacity of item_cap
+ */
 EDynarr *e_dynarr_init(size_t item_size, uint item_cap)
 {
 	EDynarr *d = malloc(sizeof *d);
@@ -11,6 +17,12 @@ EDynarr *e_dynarr_init(size_t item_size, uint item_cap)
 	return d;
 }
 
+/**
+ * e_dynarr_deinit
+ *
+ * uninitializes a dynamic array.
+ * frees the memory associated with it.
+ */
 void e_dynarr_deinit(EDynarr *d)
 {
 	if (d == NULL)
@@ -20,6 +32,12 @@ void e_dynarr_deinit(EDynarr *d)
 	free(d);
 }
 
+/**
+ * e_dynarr_add
+ *
+ * Adds an item to the dynamic array
+ * reallocates more memory if needed
+ */
 void e_dynarr_add(EDynarr *d, void *item)
 {
 	if (d->num_items >= d->item_cap)
@@ -27,6 +45,44 @@ void e_dynarr_add(EDynarr *d, void *item)
 		d->item_cap *= 2;
 		d->arr = realloc(d->arr, d->item_cap * d->item_size);
 	}
-	memcpy(&((char *)d->arr)[d->num_items*d->item_size], item, d->item_size);
-	d->num_items++;
+	memcpy(&((char *)d->arr)[d->num_items++ * d->item_size], item, d->item_size);
+}
+
+/**
+ * e_dynarr_remove_ordered
+ *
+ * remove an item at index
+ * the order of the array is guaranteed to be preserved
+ * returns 1 if the remove was out of bounds
+ */
+int e_dynarr_remove_ordered(EDynarr *d, uint index)
+{
+	if (index >= d->num_items) return 1;
+	memmove(&((char *)d->arr)[index * d->item_size], &((char *)d->arr)[(index+1) * d->item_size],
+			(--d->num_items-index) * d->item_size);
+	if (d->num_items < d->item_cap/2)
+	{
+		d->item_cap /= 2;
+		d->arr = realloc(d->arr, d->item_cap * d->item_size);
+	}
+	return 0;
+}
+
+/**
+ * e_dynarr_remove_unordered
+ *
+ * remove an item at index
+ * the order of the array is NOT guaranteed to be preserved
+ * returns 1 if the remove was out of bounds
+ */
+int e_dynarr_remove_unordered(EDynarr *d, uint index)
+{
+	if (index >= d->num_items) return 1;
+	memcpy(&((char *)d->arr)[index * d->item_size], &((char *)d->arr)[--d->num_items * d->item_size], d->item_size);
+	if (d->num_items < d->item_cap/2)
+	{
+		d->item_cap /= 2;
+		d->arr = realloc(d->arr, d->item_cap * d->item_size);
+	}
+	return 0;
 }

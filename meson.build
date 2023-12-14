@@ -18,6 +18,8 @@ libenigma = library(
 # tests
 test_e_math = executable('test_e_math', 'test/test_e_math.c', dependencies : dep_m, install : false)
 test('test_e_math', test_e_math)
+test_e_dynarr = executable('test_e_dynarr', 'test/test_e_dynarr.c', 'src/e_dynarr.c', include_directories: 'include', install : false)
+test('test_e_dynarr', test_e_dynarr)
 
 dep_libenigma = declare_dependency(
   include_directories: include_directories('include'),
