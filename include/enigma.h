@@ -71,6 +71,10 @@ void e_dynarr_deinit(EDynarr *d);
 int e_dynarr_remove_unordered(EDynarr *d, uint index);
 int e_dynarr_remove_ordered(EDynarr *d, uint index);
 
+// ------------ Integer math --------------
+inline int e_maxi(int a, int b);
+inline int e_mini(int a, int b);
+
 // ------------ Vector Math ------------
 //#define d_sqrt sqrt /* replaced sqrt with carmacks  inverse sqrt aproximation */
 

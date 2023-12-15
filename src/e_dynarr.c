@@ -58,12 +58,15 @@ void e_dynarr_add(EDynarr *d, void *item)
 int e_dynarr_remove_ordered(EDynarr *d, uint index)
 {
 	if (index >= d->num_items) return 1;
-	memmove(&((char *)d->arr)[index * d->item_size], &((char *)d->arr)[(index+1) * d->item_size],
-			(--d->num_items-index) * d->item_size);
-	if (d->num_items < d->item_cap/2)
+	if (d->num_items-- > 1)
 	{
-		d->item_cap /= 2;
-		d->arr = realloc(d->arr, d->item_cap * d->item_size);
+		memmove(&((char *)d->arr)[index * d->item_size], &((char *)d->arr)[(index+1) * d->item_size],
+			(d->num_items-index) * d->item_size);
+		if (d->num_items < d->item_cap/2)
+		{
+			d->item_cap /= 2;
+			d->arr = realloc(d->arr, d->item_cap * d->item_size);
+		}
 	}
 	return 0;
 }
@@ -78,11 +81,14 @@ int e_dynarr_remove_ordered(EDynarr *d, uint index)
 int e_dynarr_remove_unordered(EDynarr *d, uint index)
 {
 	if (index >= d->num_items) return 1;
-	memcpy(&((char *)d->arr)[index * d->item_size], &((char *)d->arr)[--d->num_items * d->item_size], d->item_size);
-	if (d->num_items < d->item_cap/2)
+	if (d->num_items-- > 1)
 	{
-		d->item_cap /= 2;
-		d->arr = realloc(d->arr, d->item_cap * d->item_size);
+		memcpy(&((char *)d->arr)[index * d->item_size], &((char *)d->arr)[d->num_items * d->item_size], d->item_size);
+		if (d->num_items < d->item_cap/2)
+		{
+			d->item_cap /= 2;
+			d->arr = realloc(d->arr, d->item_cap * d->item_size);
+		}
 	}
 	return 0;
 }

@@ -302,3 +302,14 @@ void e_intersect2d(double *output, double *line_a0, double *line_a1, double *lin
 				(line_b0[0] * line_b1[1] - line_b0[1] * line_b1[0])	* (line_a0[1] - line_a1[1]);
 	output[1] /= (line_a0[0] - line_a1[0]) * (line_b0[1] - line_b1[1]) - (line_a0[1] - line_a1[1]) * (line_b0[0] - line_b1[0]);
 }
+
+// ------------- MAX -------------
+int e_maxi(int a, int b)
+{
+	return (a > b) ? a : b;
+}
+
+int e_mini(int a, int b)
+{
+	return (a > b) ? b : a;
+}
