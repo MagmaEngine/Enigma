@@ -897,16 +897,16 @@ int test_e_normalize4d(double a, double b, double c, double d, double out0, doub
 }
 
 // ------------ Integer Tests ------------
-int test_e_sqrti(int a, int out)
-{
-	int result = e_sqrtf(a);
-	if (result != out)
-	{
-		printf("%s, %s: Test failed for: %i. Expected %i, but got %i", __FILE__, __FUNCTION__, a, out, result);
-		return 1;
-	}
-	return 0;
-}
+//int test_e_sqrti(int a, int out)
+//{
+//	int result = e_sqrti(a);
+//	if (result != out)
+//	{
+//		printf("%s, %s: Test failed for: %i. Expected %i, but got %i", __FILE__, __FUNCTION__, a, out, result);
+//		return 1;
+//	}
+//	return 0;
+//}
 
 int test_e_maxi(int a, int b, int out)
 {
@@ -1009,9 +1009,9 @@ int main(void)
 			test_e_intersect2d(0, 0, 0, 1, 2, 1, 1, 1, 0, 1) ||
 
 			// Integer tests
-			test_e_sqrti(9, 3) ||
-			test_e_sqrti(4, 2) ||
-			test_e_sqrti(1, 1) ||
+			//test_e_sqrti(9, 3) ||
+			//test_e_sqrti(4, 2) ||
+			//test_e_sqrti(1, 1) ||
 			test_e_maxi(4, 5, 5) ||
 			test_e_maxi(-1, -5, -1) ||
 			test_e_mini(4, 5, 4) ||

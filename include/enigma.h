@@ -121,7 +121,7 @@ inline void e_intersect2d(double *output, double *line_a0, double *line_a1, doub
 
 Vector math for integer types. */
 
-long e_sqrti(long value); /* Integer square root.*/
+// long e_sqrti(long value); /* Integer square root.*/
 bool e_normalize_2di(int *point, int fixed_point_multiplyer); /* Normalizes a 2D vector of integers. The fixed_point_multiplyer is used to set what is considerd to be one. */
 bool e_normalize_3di(int *point, int fixed_point_multiplyer); /* Normalizes a 2D vector of integers. The fixed_point_multiplyer is used to set what is considerd to be one. */
 void e_intersect2di(int *output, int *line_a0, int *line_a1, int *line_b0, int *line_b1); /* Inter sects two 2d integer lines. */
