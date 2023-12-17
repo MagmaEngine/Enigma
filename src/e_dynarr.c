@@ -92,3 +92,24 @@ int e_dynarr_remove_unordered(EDynarr *d, uint index)
 	}
 	return 0;
 }
+
+/**
+ * e_dynarr_remove_unordered_ptr
+ *
+ * finds an item in the array and removes it
+ * the order of the array is NOT guaranteed to be preserved
+ * returns 1 if the item does not exist in the array
+ */
+int e_dynarr_remove_unordered_ptr(EDynarr *d, void *item)
+{
+	for (uint i = 0; i < d->num_items; i++)
+	{
+		if (memcmp(&((char *)d->arr)[i*d->item_size], item, d->item_size) == 0)
+		{
+			e_dynarr_remove_unordered(d, i);
+			return 0;
+			break;
+		}
+	}
+	return 1;
+}
