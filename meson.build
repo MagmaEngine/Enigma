@@ -1,3 +1,8 @@
+if target_os == 'windows'
+elif target_os == 'linux'
+  dep_m = cc.find_library('m', required : true)
+endif
+
 libenigma = library(
   'enigma',
   'src/e_dynarr.c',
@@ -10,9 +15,6 @@ libenigma = library(
   'src/e_matrix_make.c',
   'src/e_math.c',
   include_directories: include_directories('include'),
-  dependencies : [
-    dep_m,
-  ],
   install : false)
 
 # tests
