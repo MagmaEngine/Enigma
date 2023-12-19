@@ -1,4 +1,5 @@
-enigma_deps = []
+dep_threads = dependency('threads', required : true)
+enigma_deps = [ dep_threads ]
 if target_os == 'windows'
 elif target_os == 'linux'
   dep_m = cc.find_library('m', required : true)
