@@ -81,14 +81,18 @@ typedef void* (*EThreadFunction)(void *);
 typedef void *EThreadArguments;
 typedef void *EThreadResult;
 typedef pthread_mutex_t EMutex;
-typedef pthread_mutexattr_t EMutexAttributes;
 #endif
 #ifdef _ENIGMA_WINDOWS
+#include <windows.h>
 typedef HANDLE EThread;
+typedef unsigned long (*EThreadFunction)(void *);
+typedef void *EThreadArguments;
+typedef void EThreadResult;
+typedef HANDLE EMutex;
 #endif
 void e_mutex_lock(EMutex *mutex);
 void e_mutex_unlock(EMutex *mutex);
-void e_mutex_init(EMutex *mutex, EMutexAttributes *attr);
+void e_mutex_init(EMutex *mutex);
 void e_mutex_destroy(EMutex *mutex);
 
 EThread e_thread_create(EThreadFunction func, EThreadArguments args);
