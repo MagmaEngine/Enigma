@@ -77,18 +77,18 @@ int e_dynarr_remove_ordered(EDynarr *d, uint index);
 #ifdef _ENIGMA_LINUX
 #include <pthread.h>
 typedef pthread_t EThread;
-typedef void* (*EThreadFunction)(void *);
 typedef void *EThreadArguments;
 typedef void *EThreadResult;
+typedef EThreadResult (*EThreadFunction)(void *);
 typedef pthread_mutex_t EMutex;
 #endif
 #ifdef _ENIGMA_WINDOWS
 #include <windows.h>
 typedef HANDLE EThread;
-typedef unsigned long (*EThreadFunction)(void *);
 typedef void *EThreadArguments;
-typedef void EThreadResult;
-typedef HANDLE EMutex;
+typedef unsigned long EThreadResult;
+typedef EThreadResult (*EThreadFunction)(void *);
+typedef CRITICAL_SECTION EMutex;
 #endif
 void e_mutex_lock(EMutex *mutex);
 void e_mutex_unlock(EMutex *mutex);

@@ -10,12 +10,7 @@
 void e_mutex_lock(EMutex *mutex)
 {
 #ifdef _ENIGMA_WINDOWS
-	DWORD result = WaitForSingleObject(mutex, INFINITE);
-	if (result == WAIT_FAILED)
-	{
-		fprintf(stderr, "ENIGMA: Could not lock mutex. Error code: %lu\n", GetLastError());
-		exit(1);
-	}
+	EnterCriticalSection(mutex);
 #endif
 #ifdef _ENIGMA_LINUX
 	int result = pthread_mutex_lock(mutex);
@@ -36,11 +31,7 @@ void e_mutex_lock(EMutex *mutex)
 void e_mutex_unlock(EMutex *mutex)
 {
 #ifdef _ENIGMA_WINDOWS
-	if (!ReleaseMutex(mutex))
-	{
-		fprintf(stderr, "ENIGMA: Could not unlock mutex. Error code: %lu\n", GetLastError());
-		exit(1)
-	}
+	LeaveCriticalSection(mutex);
 #endif
 #ifdef _ENIGMA_LINUX
 	int result = pthread_mutex_unlock(mutex);
@@ -61,7 +52,7 @@ void e_mutex_unlock(EMutex *mutex)
 void e_mutex_init(EMutex *mutex)
 {
 #ifdef _ENIGMA_WINDOWS
-	*mutex = CreateMutex(NULL, FALSE, NULL);
+	InitializeCriticalSection(mutex);
 	if (mutex == NULL)
 	{
 		fprintf(stderr, "ENIGMA: Could not initiate mutex. Error code: %lu\n", GetLastError());
@@ -87,11 +78,7 @@ void e_mutex_init(EMutex *mutex)
 void e_mutex_destroy(EMutex *mutex)
 {
 #ifdef _ENIGMA_WINDOWS
-	if(!CloseHandle(mutex))
-	{
-		fprintf(stderr, "ENIGMA: Could not destroy mutex. Error code: %lu\n", GetLastError());
-		exit(1);
-	}
+	DeleteCriticalSection(mutex);
 #endif
 #ifdef _ENIGMA_LINUX
 	int result = pthread_mutex_destroy(mutex);
