@@ -175,6 +175,7 @@ void e_thread_detach(EThread thread)
 {
 #ifdef _ENIGMA_WINDOWS
 	// Windows threads are always detached
+	E_UNUSED(thread);
 #endif
 #ifdef _ENIGMA_LINUX
 	int result = pthread_detach(thread);

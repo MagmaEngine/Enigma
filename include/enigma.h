@@ -12,6 +12,10 @@
 typedef unsigned int uint;
 #endif // _UINT
 
+#ifndef E_UNUSED
+#define E_UNUSED(x) (void)(x)
+#endif
+
 #ifdef E_DOUBLE_PRECISION
 typedef double EFloat;
 #else
@@ -86,7 +90,7 @@ typedef pthread_mutex_t EMutex;
 #include <windows.h>
 typedef HANDLE EThread;
 typedef void *EThreadArguments;
-typedef unsigned long EThreadResult;
+typedef DWORD EThreadResult;
 typedef EThreadResult (*EThreadFunction)(void *);
 typedef CRITICAL_SECTION EMutex;
 #endif
@@ -102,50 +106,50 @@ void e_thread_detach(EThread thread);
 
 
 // ------------ Integer math --------------
-inline int e_maxi(int a, int b);
-inline int e_mini(int a, int b);
+int e_maxi(int a, int b);
+int e_mini(int a, int b);
 
 // ------------ Vector Math ------------
 //#define d_sqrt sqrt /* replaced sqrt with carmacks  inverse sqrt aproximation */
 
-inline float e_sqrtf(float number); /* replaced sqrt with carmacks  inverse sqrt aproximation */
-inline float e_length2f(float *vec); /* Computes the length of a vector 2D for 32 bit floats.*/
-inline float e_length3f(float *vec); /* Computes the length of a vector 3D for 32 bit floats.*/
-inline float e_distance2f(float *a, float *b); /* Computes the distance between two points in 2D for 32 bit floats.*/
-inline float e_distance3f(float *a, float *b); /* Computes the distance between two points in 3D for 32 bit floats.*/
-inline float e_dot2f(float *a, float *b); /* Computes the dot product between two points in 2D for 32 bit floats.*/
-inline float e_dot3f(float *a, float *b); /* Computes the dot product between two points in 3D for 32 bit floats.*/
-inline void e_cross2f(float *output, float *a, float *b); /* Computes cross product between two points in 2D for 32 bit floats.*/
-inline void e_cross3f(float *output, float *a, float *b); /* Computes cross product between two points in 3D for 32 bit floats.*/
-inline void e_normalize2f(float *vec); /* Normalizes a 2D vector of 32 bit floats.*/
-inline void e_normalize3f(float *vec); /* Normalizes a 3D vector of 32 bit floats.*/
-inline void e_normalize4f(float *vec); /* Normalizes a 4D vector of 32 bit floats (useful for quaternions).*/
-inline void e_normal2f(float *output, float *a, float *b); /* Generates a normal from 2 points on a line. */
-inline void e_normal3f(float *output, float *a, float *b, float *c); /* Generates a normal from 3 points on a plane. */
-inline void e_reflect2f(float *output, float *pos, float *normal); /* Reflects a position to a normal plane in 2D for 32 bit floats.*/
-inline void e_reflect3f(float *output, float *pos, float *normal); /* Reflects a position to a normal plane in 3D for 32 bit floats.*/
-inline void e_project2f(float *output, float *pos, float *vec); /* Projects a point (pos) onto a line defined by (vec) in 2D for 32 bit floats.*/
-inline void e_project3f(float *output, float *pos, float *vec); /* Projects a point (pos) onto a line defined by (vec) in 3D for 32 bit floats.*/
-inline void e_intersect2f(float *output, float *line_a0, float *line_a1, float *line_b0, float *line_b1); /* Computes the intersection between two lines in 2D for 32 bit floats.*/
+float e_sqrtf(float number); /* replaced sqrt with carmacks  inverse sqrt aproximation */
+float e_length2f(float *vec); /* Computes the length of a vector 2D for 32 bit floats.*/
+float e_length3f(float *vec); /* Computes the length of a vector 3D for 32 bit floats.*/
+float e_distance2f(float *a, float *b); /* Computes the distance between two points in 2D for 32 bit floats.*/
+float e_distance3f(float *a, float *b); /* Computes the distance between two points in 3D for 32 bit floats.*/
+float e_dot2f(float *a, float *b); /* Computes the dot product between two points in 2D for 32 bit floats.*/
+float e_dot3f(float *a, float *b); /* Computes the dot product between two points in 3D for 32 bit floats.*/
+void e_cross2f(float *output, float *a, float *b); /* Computes cross product between two points in 2D for 32 bit floats.*/
+void e_cross3f(float *output, float *a, float *b); /* Computes cross product between two points in 3D for 32 bit floats.*/
+void e_normalize2f(float *vec); /* Normalizes a 2D vector of 32 bit floats.*/
+void e_normalize3f(float *vec); /* Normalizes a 3D vector of 32 bit floats.*/
+void e_normalize4f(float *vec); /* Normalizes a 4D vector of 32 bit floats (useful for quaternions).*/
+void e_normal2f(float *output, float *a, float *b); /* Generates a normal from 2 points on a line. */
+void e_normal3f(float *output, float *a, float *b, float *c); /* Generates a normal from 3 points on a plane. */
+void e_reflect2f(float *output, float *pos, float *normal); /* Reflects a position to a normal plane in 2D for 32 bit floats.*/
+void e_reflect3f(float *output, float *pos, float *normal); /* Reflects a position to a normal plane in 3D for 32 bit floats.*/
+void e_project2f(float *output, float *pos, float *vec); /* Projects a point (pos) onto a line defined by (vec) in 2D for 32 bit floats.*/
+void e_project3f(float *output, float *pos, float *vec); /* Projects a point (pos) onto a line defined by (vec) in 3D for 32 bit floats.*/
+void e_intersect2f(float *output, float *line_a0, float *line_a1, float *line_b0, float *line_b1); /* Computes the intersection between two lines in 2D for 32 bit floats.*/
 
-inline double e_length2d(double *vec); /* Computes the length of a vector 2D for 64 bit doubles.*/
-inline double e_length3d(double *vec); /* Computes the length of a vector 3D for 64 bit doubles.*/
-inline double e_distance2d(double *a, double *b); /* Computes the distance between two points in 2D for 64 bit doubles.*/
-inline double e_distance3d(double *a, double *b); /* Computes the distance between two points in 3D for 64 bit doubles.*/
-inline double e_dot2d(double *a, double *b); /* Computes the dot product between two points in 2D for 64 bit doubles.*/
-inline double e_dot3d(double *a, double *b); /* Computes the dot product between two points in 3D for 64 bit doubles.*/
-inline void e_cross2d(double *output, double *a, double *b); /* Computes cross product between two points in 2D for 64 bit doubles.*/
-inline void e_cross3d(double *output, double *a, double *b); /* Computes cross product between two points in 3D for 64 bit doubles.*/
-inline void e_normalize2d(double *vec); /* Normalizes a 2D vector of 64 bit doubles.*/
-inline void e_normalize3d(double *vec); /* Normalizes a 3D vector of 64 bit doubles.*/
-inline void e_normalize4d(double *vec); /* Normalizes a 4D vector of 64 bit doubles (useful for quaternions).*/
-inline void e_normal2d(double *output, double *a, double *b); /* Generates a normal from 2 points on a line. */
-inline void e_normal3d(double *output, double *a, double *b, double *c); /* Generates a normal from 3 points on a plane. */
-inline void e_reflect2d(double *output, double *pos, double *normal); /* Reflects a position to a normal plane in 2D for 64 bit doubles.*/
-inline void e_reflect3d(double *output, double *pos, double *normal); /* Reflects a position to a normal plane in 3D for 64 bit doubles.*/
-inline void e_project2d(double *output, double *pos, double *vec); /* Projects a point (pos) onto a line defined by (vec) in 2D for 64 bit doubles.*/
-inline void e_project3d(double *output, double *pos, double *vec); /* Projects a point (pos) onto a line defined by (vec) in 3D for 64 bit doubles.*/
-inline void e_intersect2d(double *output, double *line_a0, double *line_a1, double *line_b0, double *line_b1); /* Computes the intersection between two lines in 2D for 64 bit doubles.*/
+double e_length2d(double *vec); /* Computes the length of a vector 2D for 64 bit doubles.*/
+double e_length3d(double *vec); /* Computes the length of a vector 3D for 64 bit doubles.*/
+double e_distance2d(double *a, double *b); /* Computes the distance between two points in 2D for 64 bit doubles.*/
+double e_distance3d(double *a, double *b); /* Computes the distance between two points in 3D for 64 bit doubles.*/
+double e_dot2d(double *a, double *b); /* Computes the dot product between two points in 2D for 64 bit doubles.*/
+double e_dot3d(double *a, double *b); /* Computes the dot product between two points in 3D for 64 bit doubles.*/
+void e_cross2d(double *output, double *a, double *b); /* Computes cross product between two points in 2D for 64 bit doubles.*/
+void e_cross3d(double *output, double *a, double *b); /* Computes cross product between two points in 3D for 64 bit doubles.*/
+void e_normalize2d(double *vec); /* Normalizes a 2D vector of 64 bit doubles.*/
+void e_normalize3d(double *vec); /* Normalizes a 3D vector of 64 bit doubles.*/
+void e_normalize4d(double *vec); /* Normalizes a 4D vector of 64 bit doubles (useful for quaternions).*/
+void e_normal2d(double *output, double *a, double *b); /* Generates a normal from 2 points on a line. */
+void e_normal3d(double *output, double *a, double *b, double *c); /* Generates a normal from 3 points on a plane. */
+void e_reflect2d(double *output, double *pos, double *normal); /* Reflects a position to a normal plane in 2D for 64 bit doubles.*/
+void e_reflect3d(double *output, double *pos, double *normal); /* Reflects a position to a normal plane in 3D for 64 bit doubles.*/
+void e_project2d(double *output, double *pos, double *vec); /* Projects a point (pos) onto a line defined by (vec) in 2D for 64 bit doubles.*/
+void e_project3d(double *output, double *pos, double *vec); /* Projects a point (pos) onto a line defined by (vec) in 3D for 64 bit doubles.*/
+void e_intersect2d(double *output, double *line_a0, double *line_a1, double *line_b0, double *line_b1); /* Computes the intersection between two lines in 2D for 64 bit doubles.*/
 
 /*------- Integer vector math -------------
 
