@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <math.h>
-#include "enigma.h"
+#include <enigma.h>
 
 float e_randf(uint32_t index)
 {

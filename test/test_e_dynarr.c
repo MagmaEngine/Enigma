@@ -26,7 +26,7 @@ int main(void)
 	// first number should be 1.1
 	if (test_float_equality( ((float *)test->arr)[0], firstnum))
 	{
-		printf("%s, %s: Test failed. Expected %f, but got %f", __FILE__, __func__, firstnum, ((float *)test->arr)[0]);
+		e_log_message(E_LOG_ERROR, L"Test", L"%s, %s: Test failed. Expected %f, but got %f", __FILE__, __func__, firstnum, ((float *)test->arr)[0]);
 		return 1;
 	}
 
@@ -38,7 +38,7 @@ int main(void)
 	// should only be 2 items in array
 	if (test->num_items != 2)
 	{
-		printf("%s, %s: Test failed. Expected %i, but got %i", __FILE__, __func__, 2, test->num_items);
+		e_log_message(E_LOG_ERROR, L"Test", L"%s, %s: Test failed. Expected %i, but got %i", __FILE__, __func__, 2, test->num_items);
 		return 1;
 	}
 
@@ -54,7 +54,7 @@ int main(void)
 	// first number should be 1.1
 	if (test_float_equality( ((float *)test->arr)[0], firstnum))
 	{
-		printf("%s, %s: Test failed. Expected %f, but got %f", __FILE__, __func__, firstnum, ((float *)test->arr)[0]);
+		e_log_message(E_LOG_ERROR, L"Test", L"%s, %s: Test failed. Expected %f, but got %f", __FILE__, __func__, firstnum, ((float *)test->arr)[0]);
 		return 1;
 	}
 
@@ -66,13 +66,13 @@ int main(void)
 	// should only be 2 items in array
 	if (test->num_items != 2)
 	{
-		printf("%s, %s: Test failed. Expected %i, but got %i", __FILE__, __func__, 2, test->num_items);
+		e_log_message(E_LOG_ERROR, L"Test", L"%s, %s: Test failed. Expected %i, but got %i", __FILE__, __func__, 2, test->num_items);
 		return 1;
 	}
 	// first number should be 2.05
 	if (test_float_equality( ((float *)test->arr)[0], secondnum))
 	{
-		printf("%s, %s: Test failed. Expected %f, but got %f", __FILE__, __func__, secondnum, ((float *)test->arr)[0]);
+		e_log_message(E_LOG_ERROR, L"Test", L"%s, %s: Test failed. Expected %f, but got %f", __FILE__, __func__, secondnum, ((float *)test->arr)[0]);
 		return 1;
 	}
 
@@ -86,7 +86,7 @@ int main(void)
 	// should only be 8 items in array
 	if (test->num_items != 8)
 	{
-		printf("%s, %s: Test failed. Expected %i, but got %i", __FILE__, __func__, 8, test->num_items);
+		e_log_message(E_LOG_ERROR, L"Test", L"%s, %s: Test failed. Expected %i, but got %i", __FILE__, __func__, 8, test->num_items);
 		return 1;
 	}
 

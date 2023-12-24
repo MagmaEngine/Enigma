@@ -7,6 +7,10 @@
 #include <stdint.h>
 #include <stdbool.h>
 
+#ifndef NULL
+#define NULL (void*)(0)
+#endif
+
 #ifndef _UINT
 #define _UINT
 typedef unsigned int uint;
@@ -46,6 +50,17 @@ bool e_debug_memory(void); /*f_debug_memory checks if any of the bounds of any a
 void exit_crash(uint i);
 #define exit(n) exit_crash(n);
 #endif
+
+// ------------ Logging -------------
+enum ELogLevel {
+	E_LOG_DEBUG,
+	E_LOG_INFO,
+	E_LOG_WARNING,
+	E_LOG_ERROR,
+	E_LOG_MAX
+};
+
+void e_log_message(enum ELogLevel level, const wchar_t *channel, const wchar_t *format, ...);
 
 // ------------ Fast RNG ------------
 

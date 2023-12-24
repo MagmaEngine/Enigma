@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "enigma.h"
+#include <enigma.h>
 
 extern void e_debug_mem_print(uint min_allocs);
 
@@ -56,7 +56,8 @@ bool e_debug_memory(void)
 					break;
 			if (k < E_MEM_OVER_ALLOC)
 			{
-				printf("MEM ERROR: Overshoot at line %u in file %s\n", e_alloc_lines[i].line, e_alloc_lines[i].file);
+				e_log_message(E_LOG_ERROR, L"Memory", L"Overshoot at line %u in file %s\n", e_alloc_lines[i].line,
+						e_alloc_lines[i].file);
 				{
 					uint *X = NULL;
 					X[0] = 0;
@@ -127,7 +128,8 @@ void *e_debug_mem_malloc(size_t size, char *file, uint line)
 
 	if (pointer == NULL)
 	{
-		printf("MEM ERROR: Malloc returns NULL when trying to allocate %zu bytes at line %u in file %s\n", size, line, file);
+		e_log_message(E_LOG_ERROR, L"Memory",
+				L"Malloc returns NULL when trying to allocate %zu bytes at line %u in file %s\n", size, line, file);
 		if (e_alloc_mutex != NULL)
 			e_alloc_mutex_unlock(e_alloc_mutex);
 		e_debug_mem_print(0);
@@ -154,7 +156,8 @@ bool e_debug_mem_remove(void *buf)
 					if (((uint8_t *)buf)[e_alloc_lines[i].allocs[j].size + k] != E_MEM_MAGIC_NUMBER)
 						break;
 				if (k < E_MEM_OVER_ALLOC)
-					printf("MEM ERROR: Overshoot at line %u in file %s\n", e_alloc_lines[i].line, e_alloc_lines[i].file);
+					e_log_message(E_LOG_ERROR, L"Memory", L"Overshoot at line %u in file %s\n", e_alloc_lines[i].line,
+							e_alloc_lines[i].file);
 				e_alloc_lines[i].size -= e_alloc_lines[i].allocs[j].size;
 				e_alloc_lines[i].allocs[j] = e_alloc_lines[i].allocs[--e_alloc_lines[i].alloc_count];
 				e_alloc_lines[i].freed++;
@@ -199,7 +202,9 @@ void *e_debug_mem_realloc(void *pointer, size_t size, char *file, uint line)
 	}
 	if (i == e_alloc_line_count)
 	{
-		printf("ENIGMA Mem debugger error. Trying to reallocate pointer %p in %s line %u. Pointer has never beein allocated\n", pointer, file, line);
+		e_log_message(E_LOG_ERROR, L"Memory",
+				L"Trying to reallocate pointer %p in %s line %u. Pointer has never beein allocated\n", pointer, file,
+				line);
 		for (i = 0; i < e_alloc_line_count; i++)
 		{
 			for (j = 0; j < e_alloc_lines[i].alloc_count; j++)
@@ -210,7 +215,9 @@ void *e_debug_mem_realloc(void *pointer, size_t size, char *file, uint line)
 				{
 					if (&buf[k] == pointer)
 					{
-						printf("Trying to reallocate pointer %u bytes (out of %u) in to allocation made in %s on line %u.\n", k, e_alloc_lines[i].allocs[j].size, e_alloc_lines[i].file, e_alloc_lines[i].line);
+						e_log_message(E_LOG_ERROR, L"Memory",
+								L"Trying to reallocate pointer %u bytes (out of %u) in to allocation made in %s on line %u.\n",
+								k, e_alloc_lines[i].allocs[j].size, e_alloc_lines[i].file, e_alloc_lines[i].line);
 					}
 				}
 			}
@@ -225,7 +232,8 @@ void *e_debug_mem_realloc(void *pointer, size_t size, char *file, uint line)
 	pointer2 = (malloc)(size + E_MEM_OVER_ALLOC);
 	if (pointer2 == NULL)
 	{
-		printf("MEM ERROR: Realloc returns NULL when trying to allocate %zu bytes at line %u in file %s\n", size, line, file);
+		e_log_message(E_LOG_ERROR, L"Memory",
+				L"Realloc returns NULL when trying to allocate %zu bytes at line %u in file %s\n", size, line, file);
 		if (e_alloc_mutex != NULL)
 			e_alloc_mutex_unlock(e_alloc_mutex);
 		e_debug_mem_print(0);
@@ -249,16 +257,17 @@ void e_debug_mem_print(uint min_allocs)
 	uint i;
 	if (e_alloc_mutex != NULL)
 		e_alloc_mutex_lock(e_alloc_mutex);
-	printf("Memory repport:\n----------------------------------------------\n");
+	e_log_message(E_LOG_INFO, L"Memory", L"Report:\n----------------------------------------------");
 	for (i = 0; i < e_alloc_line_count; i++)
 	{
 		if (min_allocs < e_alloc_lines[i].alocated)
 		{
-			printf("%s line: %u\n",e_alloc_lines[i].file, e_alloc_lines[i].line);
-			printf(" - Bytes allocated: %u\n - Allocations: %u\n - Frees: %u\n\n", e_alloc_lines[i].size, e_alloc_lines[i].alocated, e_alloc_lines[i].freed);
+			e_log_message(E_LOG_INFO, L"Memory", L"%s line: %u\n",e_alloc_lines[i].file, e_alloc_lines[i].line);
+			e_log_message(E_LOG_INFO, L"Memory", L" - Bytes allocated: %u\n - Allocations: %u\n - Frees: %u\n\n",
+					e_alloc_lines[i].size, e_alloc_lines[i].alocated, e_alloc_lines[i].freed);
 		}
 	}
-	printf("----------------------------------------------\n");
+	e_log_message(E_LOG_INFO, L"Memory",L"\n----------------------------------------------");
 	if (e_alloc_mutex != NULL)
 		e_alloc_mutex_unlock(e_alloc_mutex);
 }

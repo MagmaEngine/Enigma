@@ -1,4 +1,4 @@
-#include "enigma.h"
+#include <enigma.h>
 #include <stdio.h>
 
 /**
@@ -16,7 +16,7 @@ void e_mutex_lock(EMutex *mutex)
 	int result = pthread_mutex_lock(mutex);
 	if (result != 0)
 	{
-		fprintf(stderr, "ENIGMA: Could not lock mutex. Error code: %i\n", result);
+		e_log_message(E_LOG_ERROR, L"Thread", L"Could not lock mutex. Error code: %i\n", result);
 		exit(1);
 	}
 #endif
@@ -37,7 +37,7 @@ void e_mutex_unlock(EMutex *mutex)
 	int result = pthread_mutex_unlock(mutex);
 	if (result != 0)
 	{
-		fprintf(stderr, "ENIGMA: Could not unlock mutex. Error code: %i\n", result);
+		e_log_message(E_LOG_ERROR, L"Thread", L"Could not unlock mutex. Error code: %i\n", result);
 		exit(1);
 	}
 #endif
@@ -55,7 +55,7 @@ void e_mutex_init(EMutex *mutex)
 	InitializeCriticalSection(mutex);
 	if (mutex == NULL)
 	{
-		fprintf(stderr, "ENIGMA: Could not initiate mutex. Error code: %lu\n", GetLastError());
+		e_log_message(E_LOG_ERROR, L"Thread", L"Could not initiate mutex. Error code: %lu\n", GetLastError());
 		exit(1);
 	}
 #endif
@@ -63,7 +63,7 @@ void e_mutex_init(EMutex *mutex)
 	int result = pthread_mutex_init(mutex, NULL);
 	if (result != 0)
 	{
-		fprintf(stderr, "ENIGMA: Could not initiate mutex. Error code: %i\n", result);
+		e_log_message(E_LOG_ERROR, L"Thread", L"Could not initiate mutex. Error code: %i\n", result);
 		exit(1);
 	}
 #endif
@@ -84,7 +84,7 @@ void e_mutex_destroy(EMutex *mutex)
 	int result = pthread_mutex_destroy(mutex);
 	if (result != 0)
 	{
-		fprintf(stderr, "ENIGMA: Could not destroy mutex. Error code: %i\n", result);
+		e_log_message(E_LOG_ERROR, L"Thread", L"Could not destroy mutex. Error code: %i\n", result);
 		exit(1);
 	}
 #endif
@@ -106,7 +106,7 @@ EThread e_thread_create(EThreadFunction func, EThreadArguments args)
 
 	if (thread == NULL)
 	{
-		fprintf(stderr, "ENIGMA: Could not create thread. Error code: %lu\n", GetLastError());
+		e_log_message(E_LOG_ERROR, L"Thread", L"Could not create thread. Error code: %lu\n", GetLastError());
 		exit(1);
 	}
 	return thread;
@@ -115,7 +115,7 @@ EThread e_thread_create(EThreadFunction func, EThreadArguments args)
 	int result = pthread_create(&thread, NULL, func, args);
 	if (result != 0)
 	{
-		fprintf(stderr, "ENIGMA: Could not create thread. Error code: %i\n", result);
+		e_log_message(E_LOG_ERROR, L"Thread", L"Could not create thread. Error code: %i\n", result);
 		exit(1);
 	}
 #endif
@@ -150,7 +150,7 @@ void e_thread_join(EThread thread)
 	DWORD result = WaitForSingleObject(thread, INFINITE);
 	if (result == WAIT_FAILED || !CloseHandle(thread))
 	{
-		fprintf(stderr, "ENIGMA: Could not join thread. Error code: %lu\n", GetLastError());
+		e_log_message(E_LOG_ERROR, L"Thread", L"Could not join thread. Error code: %lu\n", GetLastError());
 		exit(1);
 	}
 #endif
@@ -158,7 +158,7 @@ void e_thread_join(EThread thread)
 	int result = pthread_join(thread, NULL);
 	if (result != 0)
 	{
-		fprintf(stderr, "ENIGMA: Could not join thread. Error code: %i\n", result);
+		e_log_message(E_LOG_ERROR, L"Thread", L"Could not join thread. Error code: %i\n", result);
 		exit(1);
 	}
 	return;
@@ -181,7 +181,7 @@ void e_thread_detach(EThread thread)
 	int result = pthread_detach(thread);
 	if (result != 0)
 	{
-		fprintf(stderr, "ENIGMA: Could not detach thread. Error code: %i\n", result);
+		e_log_message(E_LOG_ERROR, L"Thread", L"Could not detach thread. Error code: %i\n", result);
 		exit(1);
 	}
 	return;

@@ -1,9 +1,7 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-
-#include "enigma.h"
+#include <enigma.h>
 
 uint e_find_next_word(char *text)
 {
