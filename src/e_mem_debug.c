@@ -1,7 +1,6 @@
 #include <stdlib.h>
-#include <stdio.h>
 #include <string.h>
-#include <enigma.h>
+#include "enigma.h"
 
 extern void e_debug_mem_print(uint min_allocs);
 

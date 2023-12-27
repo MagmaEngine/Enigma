@@ -1,6 +1,21 @@
 #ifndef _ENIGMA_H
 #define _ENIGMA_H
 
+#ifdef ENIGMA_PLATFORM_WINDOWS
+#ifdef _ENIGMA_INTERNAL
+#define ENIGMA_API __declspec(dllexport)
+#else
+#define ENIGMA_API __declspec(dllimport)
+#endif // _ENIGMA_INTERNAL
+
+#elif defined ENIGMA_PLATFORM_LINUX
+#ifdef _ENIGMA_INTERNAL
+#define ENIGMA_API __attribute__((visibility("default")))
+#else
+#define ENIGMA_API
+#endif
+#endif // ENIGMA_PLATFORM_XXXXXX
+
 #define PI 3.1415926535897932384626433832795L
 
 #include <stdlib.h>
@@ -20,13 +35,13 @@ typedef unsigned int uint;
 #define E_UNUSED(x) (void)(x)
 #endif
 
-#ifdef E_DOUBLE_PRECISION
+#ifdef ENIGMA_DOUBLE_PRECISION
 typedef double EFloat;
 #else
 typedef float EFloat;
 #endif
 
-#ifdef E_MEM_DEBUG
+#ifdef ENIGMA_MEM_DEBUG
 
 /* ----- Debugging -----
 If E_MEM_DEBUG  is enabled, the memory debugging system will create macros that replace malloc, free and realloc and allows the system to keep track of and report where memory is beeing allocated, how much and if the memory is beeing freed. This is very useful for finding memory leaks in large applications. The system can also over allocate memory and fill it with a magic number and can therfor detect if the application writes outside of the allocated memory. if E_EXIT_CRASH is defined, then exit(); will be replaced with a funtion that writes to NULL. This will make it trivial ti find out where an application exits using any debugger., */
@@ -46,7 +61,7 @@ bool e_debug_memory(void); /*f_debug_memory checks if any of the bounds of any a
 #endif // E_MEM_DEBUG
 
 // Crash on exit.
-#ifdef E_EXIT_CRASH
+#ifdef ENIGMA_EXIT_CRASH
 void exit_crash(uint i);
 #define exit(n) exit_crash(n);
 #endif
@@ -60,7 +75,7 @@ enum ELogLevel {
 	E_LOG_MAX
 };
 
-void e_log_message(enum ELogLevel level, const wchar_t *channel, const wchar_t *format, ...);
+ENIGMA_API void e_log_message(enum ELogLevel level, const wchar_t *channel, const wchar_t *format, ...);
 
 // ------------ Fast RNG ------------
 
@@ -93,21 +108,20 @@ int e_dynarr_remove_unordered_ptr(EDynarr *d, void *item);
 int e_dynarr_remove_ordered(EDynarr *d, uint index);
 
 // ------------- Threads ---------------
-#ifdef _ENIGMA_LINUX
-#include <pthread.h>
-typedef pthread_t EThread;
-typedef void *EThreadArguments;
-typedef void *EThreadResult;
-typedef EThreadResult (*EThreadFunction)(void *);
-typedef pthread_mutex_t EMutex;
-#endif
-#ifdef _ENIGMA_WINDOWS
+#ifdef ENIGMA_PLATFORM_WINDOWS
 #include <windows.h>
 typedef HANDLE EThread;
 typedef void *EThreadArguments;
 typedef DWORD EThreadResult;
 typedef EThreadResult (*EThreadFunction)(void *);
 typedef CRITICAL_SECTION EMutex;
+#elif defined ENIGMA_PLATFORM_LINUX
+#include <pthread.h>
+typedef pthread_t EThread;
+typedef void *EThreadArguments;
+typedef void *EThreadResult;
+typedef EThreadResult (*EThreadFunction)(void *);
+typedef pthread_mutex_t EMutex;
 #endif
 void e_mutex_lock(EMutex *mutex);
 void e_mutex_unlock(EMutex *mutex);
@@ -320,7 +334,7 @@ A very fast algorithem for path finding. */
 
 uint *e_path_find(uint *output_count, uint cell_count, uint naighbour_max_count, uint start, uint goal, uint (* naighbout_func)(uint start, uint goal, uint *list, float *cost, float *dist, void *user), void *user, uint max_cells);
 
-#ifdef E_DOUBLE_PRECISION
+#ifdef ENIGMA_DOUBLE_PRECISION
 
 #define e_length2 e_length2d
 #define e_length3 e_length3d

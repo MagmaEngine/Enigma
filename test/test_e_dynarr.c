@@ -1,5 +1,4 @@
 #include "../include/enigma.h"
-#include <stdio.h>
 
 float tolerance = 0.0001;
 

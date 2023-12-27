@@ -1,5 +1,4 @@
-#include <enigma.h>
-#include <stdio.h>
+#include "enigma.h"
 
 /**
  * e_mutex_lock
@@ -9,10 +8,10 @@
  */
 void e_mutex_lock(EMutex *mutex)
 {
-#ifdef _ENIGMA_WINDOWS
+#ifdef ENIGMA_PLATFORM_WINDOWS
 	EnterCriticalSection(mutex);
 #endif
-#ifdef _ENIGMA_LINUX
+#ifdef ENIGMA_PLATFORM_LINUX
 	int result = pthread_mutex_lock(mutex);
 	if (result != 0)
 	{
@@ -30,10 +29,10 @@ void e_mutex_lock(EMutex *mutex)
  */
 void e_mutex_unlock(EMutex *mutex)
 {
-#ifdef _ENIGMA_WINDOWS
+#ifdef ENIGMA_PLATFORM_WINDOWS
 	LeaveCriticalSection(mutex);
 #endif
-#ifdef _ENIGMA_LINUX
+#ifdef ENIGMA_PLATFORM_LINUX
 	int result = pthread_mutex_unlock(mutex);
 	if (result != 0)
 	{
@@ -51,7 +50,7 @@ void e_mutex_unlock(EMutex *mutex)
  */
 void e_mutex_init(EMutex *mutex)
 {
-#ifdef _ENIGMA_WINDOWS
+#ifdef ENIGMA_PLATFORM_WINDOWS
 	InitializeCriticalSection(mutex);
 	if (mutex == NULL)
 	{
@@ -59,7 +58,7 @@ void e_mutex_init(EMutex *mutex)
 		exit(1);
 	}
 #endif
-#ifdef _ENIGMA_LINUX
+#ifdef ENIGMA_PLATFORM_LINUX
 	int result = pthread_mutex_init(mutex, NULL);
 	if (result != 0)
 	{
@@ -77,10 +76,10 @@ void e_mutex_init(EMutex *mutex)
  */
 void e_mutex_destroy(EMutex *mutex)
 {
-#ifdef _ENIGMA_WINDOWS
+#ifdef ENIGMA_PLATFORM_WINDOWS
 	DeleteCriticalSection(mutex);
 #endif
-#ifdef _ENIGMA_LINUX
+#ifdef ENIGMA_PLATFORM_LINUX
 	int result = pthread_mutex_destroy(mutex);
 	if (result != 0)
 	{
@@ -99,7 +98,7 @@ void e_mutex_destroy(EMutex *mutex)
 EThread e_thread_create(EThreadFunction func, EThreadArguments args)
 {
 	EThread thread;
-#ifdef _ENIGMA_WINDOWS
+#ifdef ENIGMA_PLATFORM_WINDOWS
 	DWORD thread_id;
 	// Create a thread on Windows
 	thread = CreateThread(NULL, 0, func, args, 0, &thread_id);
@@ -111,7 +110,7 @@ EThread e_thread_create(EThreadFunction func, EThreadArguments args)
 	}
 	return thread;
 #endif
-#ifdef _ENIGMA_LINUX
+#ifdef ENIGMA_PLATFORM_LINUX
 	int result = pthread_create(&thread, NULL, func, args);
 	if (result != 0)
 	{
@@ -130,10 +129,10 @@ EThread e_thread_create(EThreadFunction func, EThreadArguments args)
  */
 EThread e_thread_self(void)
 {
-#ifdef _ENIGMA_WINDOWS
+#ifdef ENIGMA_PLATFORM_WINDOWS
 	return GetCurrentThread();
 #endif
-#ifdef _ENIGMA_LINUX
+#ifdef ENIGMA_PLATFORM_LINUX
 	return pthread_self();
 #endif
 }
@@ -146,7 +145,7 @@ EThread e_thread_self(void)
  */
 void e_thread_join(EThread thread)
 {
-#ifdef _ENIGMA_WINDOWS
+#ifdef ENIGMA_PLATFORM_WINDOWS
 	DWORD result = WaitForSingleObject(thread, INFINITE);
 	if (result == WAIT_FAILED || !CloseHandle(thread))
 	{
@@ -154,7 +153,7 @@ void e_thread_join(EThread thread)
 		exit(1);
 	}
 #endif
-#ifdef _ENIGMA_LINUX
+#ifdef ENIGMA_PLATFORM_LINUX
 	int result = pthread_join(thread, NULL);
 	if (result != 0)
 	{
@@ -173,11 +172,11 @@ void e_thread_join(EThread thread)
  */
 void e_thread_detach(EThread thread)
 {
-#ifdef _ENIGMA_WINDOWS
+#ifdef ENIGMA_PLATFORM_WINDOWS
 	// Windows threads are always detached
 	E_UNUSED(thread);
 #endif
-#ifdef _ENIGMA_LINUX
+#ifdef ENIGMA_PLATFORM_LINUX
 	int result = pthread_detach(thread);
 	if (result != 0)
 	{
