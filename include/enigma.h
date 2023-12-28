@@ -46,13 +46,13 @@ typedef float EFloat;
 /* ----- Debugging -----
 If E_MEM_DEBUG  is enabled, the memory debugging system will create macros that replace malloc, free and realloc and allows the system to keep track of and report where memory is beeing allocated, how much and if the memory is beeing freed. This is very useful for finding memory leaks in large applications. The system can also over allocate memory and fill it with a magic number and can therfor detect if the application writes outside of the allocated memory. if E_EXIT_CRASH is defined, then exit(); will be replaced with a funtion that writes to NULL. This will make it trivial ti find out where an application exits using any debugger., */
 
-void e_debug_memory_init(void (*lock)(void *mutex), void (*unlock)(void *mutex), void *mutex); /* Required for memory debugger to be thread safe */
-void *e_debug_mem_malloc(size_t size, char *file, uint line); /* Replaces malloc and records the c file and line where it was called*/
-void *e_debug_mem_realloc(void *pointer, size_t size, char *file, uint line); /* Replaces realloc and records the c file and line where it was called*/
-void e_debug_mem_free(void *buf); /* Replaces free and records the c file and line where it was called*/
-void e_debug_mem_print(uint min_allocs); /* Prints out a list of all allocations made, their location, how much memorey each has allocated, freed, and how many allocations have been made. The min_allocs parameter can be set to avoid printing any allocations that have been made fewer times then min_allocs */
-void e_debug_mem_reset(void); /* f_debug_mem_reset allows you to clear all memory stored in the debugging system if you only want to record allocations after a specific point in your code*/
-bool e_debug_memory(void); /*f_debug_memory checks if any of the bounds of any allocation has been over written and reports where to standard out. The function returns TRUE if any error was found*/
+ENIGMA_API void e_debug_memory_init(void (*lock)(void *mutex), void (*unlock)(void *mutex), void *mutex); /* Required for memory debugger to be thread safe */
+ENIGMA_API void *e_debug_mem_malloc(size_t size, char *file, uint line); /* Replaces malloc and records the c file and line where it was called*/
+ENIGMA_API void *e_debug_mem_realloc(void *pointer, size_t size, char *file, uint line); /* Replaces realloc and records the c file and line where it was called*/
+ENIGMA_API void e_debug_mem_free(void *buf); /* Replaces free and records the c file and line where it was called*/
+ENIGMA_API void e_debug_mem_print(uint min_allocs); /* Prints out a list of all allocations made, their location, how much memorey each has allocated, freed, and how many allocations have been made. The min_allocs parameter can be set to avoid printing any allocations that have been made fewer times then min_allocs */
+ENIGMA_API void e_debug_mem_reset(void); /* f_debug_mem_reset allows you to clear all memory stored in the debugging system if you only want to record allocations after a specific point in your code*/
+ENIGMA_API bool e_debug_memory(void); /*f_debug_memory checks if any of the bounds of any allocation has been over written and reports where to standard out. The function returns TRUE if any error was found*/
 
 #define malloc(n) e_debug_mem_malloc(n, __FILE__, __LINE__) /* Replaces malloc. */
 #define realloc(n, m) e_debug_mem_realloc(n, m, __FILE__, __LINE__) /* Replaces realloc. */
@@ -62,7 +62,7 @@ bool e_debug_memory(void); /*f_debug_memory checks if any of the bounds of any a
 
 // Crash on exit.
 #ifdef ENIGMA_EXIT_CRASH
-void exit_crash(uint i);
+ENIGMA_API void exit_crash(uint i);
 #define exit(n) exit_crash(n);
 #endif
 
@@ -99,13 +99,13 @@ typedef struct {
 	uint item_cap;
 } EDynarr;
 
-EDynarr *e_dynarr_init(size_t item_size, uint item_cap);
-void e_dynarr_deinit(EDynarr *d);
-void e_dynarr_add(EDynarr *d, void *item);
-int e_dynarr_contains(EDynarr *d, void *item);
-int e_dynarr_remove_unordered(EDynarr *d, uint index);
-int e_dynarr_remove_unordered_ptr(EDynarr *d, void *item);
-int e_dynarr_remove_ordered(EDynarr *d, uint index);
+ENIGMA_API EDynarr *e_dynarr_init(size_t item_size, uint item_cap);
+ENIGMA_API void e_dynarr_deinit(EDynarr *d);
+ENIGMA_API void e_dynarr_add(EDynarr *d, void *item);
+ENIGMA_API int e_dynarr_find(EDynarr *d, void *item);
+ENIGMA_API int e_dynarr_remove_unordered(EDynarr *d, uint index);
+ENIGMA_API int e_dynarr_remove_unordered_ptr(EDynarr *d, void *item);
+ENIGMA_API int e_dynarr_remove_ordered(EDynarr *d, uint index);
 
 // ------------- Threads ---------------
 #ifdef ENIGMA_PLATFORM_WINDOWS
@@ -123,20 +123,21 @@ typedef void *EThreadResult;
 typedef EThreadResult (*EThreadFunction)(void *);
 typedef pthread_mutex_t EMutex;
 #endif
-void e_mutex_lock(EMutex *mutex);
-void e_mutex_unlock(EMutex *mutex);
-void e_mutex_init(EMutex *mutex);
-void e_mutex_destroy(EMutex *mutex);
 
-EThread e_thread_create(EThreadFunction func, EThreadArguments args);
-EThread e_thread_self(void);
-void e_thread_join(EThread thread);
-void e_thread_detach(EThread thread);
+ENIGMA_API void e_mutex_lock(EMutex *mutex);
+ENIGMA_API void e_mutex_unlock(EMutex *mutex);
+ENIGMA_API void e_mutex_init(EMutex *mutex);
+ENIGMA_API void e_mutex_destroy(EMutex *mutex);
+
+ENIGMA_API EThread e_thread_create(EThreadFunction func, EThreadArguments args);
+ENIGMA_API EThread e_thread_self(void);
+ENIGMA_API void e_thread_join(EThread thread);
+ENIGMA_API void e_thread_detach(EThread thread);
 
 
 // ------------ Integer math --------------
-int e_maxi(int a, int b);
-int e_mini(int a, int b);
+ENIGMA_API int e_maxi(int a, int b);
+ENIGMA_API int e_mini(int a, int b);
 
 // ------------ Vector Math ------------
 //#define d_sqrt sqrt /* replaced sqrt with carmacks  inverse sqrt aproximation */

@@ -8,7 +8,7 @@ enigma_c_args = [
 
 if host_machine.system() == 'windows'
   enigma_c_args += [
-    '-DBUILDING_MY_LIBRARY'
+    '-DBUILDING_MY_LIBRARY',
     ]
 elif host_machine.system() == 'linux'
   enigma_deps += meson.get_compiler('c').find_library('m', required : true)

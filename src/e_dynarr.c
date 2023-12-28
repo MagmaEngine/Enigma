@@ -7,7 +7,7 @@
  * Initialize and return a dynamic array with items of size item_size
  * and an initial capacity of item_cap
  */
-EDynarr *e_dynarr_init(size_t item_size, uint item_cap)
+ENIGMA_API EDynarr *e_dynarr_init(size_t item_size, uint item_cap)
 {
 	EDynarr *d = malloc(sizeof *d);
 	d->item_size = item_size;
@@ -23,7 +23,7 @@ EDynarr *e_dynarr_init(size_t item_size, uint item_cap)
  * uninitializes a dynamic array.
  * frees the memory associated with it.
  */
-void e_dynarr_deinit(EDynarr *d)
+ENIGMA_API void e_dynarr_deinit(EDynarr *d)
 {
 	if (d == NULL)
 		return;
@@ -38,7 +38,7 @@ void e_dynarr_deinit(EDynarr *d)
  * Adds an item to the dynamic array
  * reallocates more memory if needed
  */
-void e_dynarr_add(EDynarr *d, void *item)
+ENIGMA_API void e_dynarr_add(EDynarr *d, void *item)
 {
 	if (d->num_items >= d->item_cap)
 	{
@@ -55,7 +55,7 @@ void e_dynarr_add(EDynarr *d, void *item)
  * the order of the array is guaranteed to be preserved
  * returns 1 if the remove was out of bounds
  */
-int e_dynarr_remove_ordered(EDynarr *d, uint index)
+ENIGMA_API int e_dynarr_remove_ordered(EDynarr *d, uint index)
 {
 	if (index >= d->num_items) return 1;
 	if (d->num_items-- > 1)
@@ -78,7 +78,7 @@ int e_dynarr_remove_ordered(EDynarr *d, uint index)
  * the order of the array is NOT guaranteed to be preserved
  * returns 1 if the remove was out of bounds
  */
-int e_dynarr_remove_unordered(EDynarr *d, uint index)
+ENIGMA_API int e_dynarr_remove_unordered(EDynarr *d, uint index)
 {
 	if (index >= d->num_items) return 1;
 	if (d->num_items-- > 1)
@@ -94,12 +94,12 @@ int e_dynarr_remove_unordered(EDynarr *d, uint index)
 }
 
 /**
- * e_dynarr_contains
+ * e_dynarr_find
  *
  * returns the index of the array that the item if it exists
  * if the array does not contain the item it returns -1
  */
-int e_dynarr_contains(EDynarr *d, void *item)
+ENIGMA_API int e_dynarr_find(EDynarr *d, void *item)
 {
 	for (uint i = 0; i < d->num_items; i++)
 		if (memcmp(&((char *)d->arr)[i*d->item_size], item, d->item_size) == 0)
@@ -115,7 +115,7 @@ int e_dynarr_contains(EDynarr *d, void *item)
  * returns 1 if the item does not exist in the array
  * or the remove could not be done
  */
-int e_dynarr_remove_unordered_ptr(EDynarr *d, void *item)
+ENIGMA_API int e_dynarr_remove_unordered_ptr(EDynarr *d, void *item)
 {
 	for (uint i = 0; i < d->num_items; i++)
 	{

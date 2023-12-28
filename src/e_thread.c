@@ -6,7 +6,7 @@
  * wrapper function around pthreads and winapithreads
  * that locks a mutex
  */
-void e_mutex_lock(EMutex *mutex)
+ENIGMA_API void e_mutex_lock(EMutex *mutex)
 {
 #ifdef ENIGMA_PLATFORM_WINDOWS
 	EnterCriticalSection(mutex);
@@ -27,7 +27,7 @@ void e_mutex_lock(EMutex *mutex)
  * wrapper function around pthreads and winapithreads
  * that unlocks a mutex
  */
-void e_mutex_unlock(EMutex *mutex)
+ENIGMA_API void e_mutex_unlock(EMutex *mutex)
 {
 #ifdef ENIGMA_PLATFORM_WINDOWS
 	LeaveCriticalSection(mutex);
@@ -48,7 +48,7 @@ void e_mutex_unlock(EMutex *mutex)
  * wrapper function around pthreads and winapithreads
  * that initializes a mutex
  */
-void e_mutex_init(EMutex *mutex)
+ENIGMA_API void e_mutex_init(EMutex *mutex)
 {
 #ifdef ENIGMA_PLATFORM_WINDOWS
 	InitializeCriticalSection(mutex);
@@ -74,7 +74,7 @@ void e_mutex_init(EMutex *mutex)
  * wrapper function around pthreads and winapithreads
  * that destroys a mutex
  */
-void e_mutex_destroy(EMutex *mutex)
+ENIGMA_API void e_mutex_destroy(EMutex *mutex)
 {
 #ifdef ENIGMA_PLATFORM_WINDOWS
 	DeleteCriticalSection(mutex);
@@ -95,7 +95,7 @@ void e_mutex_destroy(EMutex *mutex)
  * wrapper function around pthreads and winapithreads
  * that creates a new thread
  */
-EThread e_thread_create(EThreadFunction func, EThreadArguments args)
+ENIGMA_API EThread e_thread_create(EThreadFunction func, EThreadArguments args)
 {
 	EThread thread;
 #ifdef ENIGMA_PLATFORM_WINDOWS
@@ -127,7 +127,7 @@ EThread e_thread_create(EThreadFunction func, EThreadArguments args)
  * wrapper function around pthreads and winapithreads
  * that returns the current thread
  */
-EThread e_thread_self(void)
+ENIGMA_API EThread e_thread_self(void)
 {
 #ifdef ENIGMA_PLATFORM_WINDOWS
 	return GetCurrentThread();
@@ -143,7 +143,7 @@ EThread e_thread_self(void)
  * wrapper function around pthreads and winapithreads
  * that joins a thread
  */
-void e_thread_join(EThread thread)
+ENIGMA_API void e_thread_join(EThread thread)
 {
 #ifdef ENIGMA_PLATFORM_WINDOWS
 	DWORD result = WaitForSingleObject(thread, INFINITE);
@@ -170,7 +170,7 @@ void e_thread_join(EThread thread)
  * wrapper function around pthreads and winapithreads
  * that detaches a thread
  */
-void e_thread_detach(EThread thread)
+ENIGMA_API void e_thread_detach(EThread thread)
 {
 #ifdef ENIGMA_PLATFORM_WINDOWS
 	// Windows threads are always detached

@@ -1,6 +1,5 @@
 #include <math.h>
-#include <stdlib.h>
-#include <stdint.h>
+#include "enigma.h"
 
 // ------------ FLOAT OPS ------------
 
@@ -303,12 +302,12 @@ void e_intersect2d(double *output, double *line_a0, double *line_a1, double *lin
 }
 
 // ------------- MAX -------------
-int e_maxi(int a, int b)
+ENIGMA_API int e_maxi(int a, int b)
 {
 	return (a > b) ? a : b;
 }
 
-int e_mini(int a, int b)
+ENIGMA_API int e_mini(int a, int b)
 {
 	return (a > b) ? b : a;
 }
