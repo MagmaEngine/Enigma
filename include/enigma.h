@@ -91,6 +91,9 @@ double e_randnd(uint32_t index);
 uint e_randi(uint32_t index);
 
 // ------------ Dynamic Arrays ------------
+#define E_VOID_PTR_FROM_VALUE(type, value) (void *) &(type){value}
+#define E_DYNARR_GET(dynarr, type, index) ((type *)dynarr->arr)[index]
+
 // only store pointer types
 typedef struct {
 	void *arr;
@@ -100,8 +103,10 @@ typedef struct {
 } EDynarr;
 
 ENIGMA_API EDynarr *e_dynarr_init(size_t item_size, uint item_cap);
+ENIGMA_API EDynarr *e_dynarr_init_arr(size_t item_size, uint num_items, void *arr);
 ENIGMA_API void e_dynarr_deinit(EDynarr *d);
 ENIGMA_API void e_dynarr_add(EDynarr *d, void *item);
+ENIGMA_API int e_dynarr_set(EDynarr *d, uint index, void *item);
 ENIGMA_API int e_dynarr_find(EDynarr *d, void *item);
 ENIGMA_API int e_dynarr_remove_unordered(EDynarr *d, uint index);
 ENIGMA_API int e_dynarr_remove_unordered_ptr(EDynarr *d, void *item);

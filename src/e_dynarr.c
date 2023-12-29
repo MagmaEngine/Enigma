@@ -18,6 +18,23 @@ ENIGMA_API EDynarr *e_dynarr_init(size_t item_size, uint item_cap)
 }
 
 /**
+ * e_dynarr_init_arr
+ *
+ * Initialize and return a dynamic array with items of size item_size
+ * and an initial capacity of item_cap
+ */
+ENIGMA_API EDynarr *e_dynarr_init_arr(size_t item_size, uint num_items, void *arr)
+{
+	EDynarr *d = malloc(sizeof *d);
+	d->item_size = item_size;
+	d->num_items = num_items;
+	d->item_cap = num_items;
+	d->arr = malloc(item_size * num_items);
+	memcpy(d->arr, arr, item_size*num_items);
+	return d;
+}
+
+/**
  * e_dynarr_deinit
  *
  * uninitializes a dynamic array.
@@ -46,6 +63,20 @@ ENIGMA_API void e_dynarr_add(EDynarr *d, void *item)
 		d->arr = realloc(d->arr, d->item_cap * d->item_size);
 	}
 	memcpy(&((char *)d->arr)[d->num_items++ * d->item_size], item, d->item_size);
+}
+
+/**
+ * e_dynarr_set
+ *
+ * Sets an item at index of the dynamic array
+ * returns 1 if the set was out of bounds
+ */
+ENIGMA_API int e_dynarr_set(EDynarr *d, uint index, void *item)
+{
+	if (index >= d->num_items || index < 0)
+		return 1;
+	memcpy(&((char *)d->arr)[index * d->item_size], item, d->item_size);
+	return 0;
 }
 
 /**
