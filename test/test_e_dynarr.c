@@ -90,5 +90,29 @@ int main(void)
 	}
 
 	e_dynarr_deinit(test);
+
+	// test e_dynarr_init_arr, e_dynarr_find, and e_dynarr_set
+	int *array = malloc(5 * sizeof(int));
+	array[0] = 0;
+	array[1] = 1;
+	array[2] = 2;
+	array[3] = 3;
+	array[4] = 4;
+	test = e_dynarr_init_arr(sizeof(int), 5, array);
+	if (e_dynarr_find(test, E_VOID_PTR_FROM_VALUE(int, 4)) != 4)
+	{
+		e_log_message(E_LOG_ERROR, L"Test", L"%s, %s: Test failed. Expected %i, but got %i", __FILE__, __func__, 4,
+				e_dynarr_find(test, E_VOID_PTR_FROM_VALUE(int, 4)));
+		return 1;
+	}
+	e_dynarr_set(test, 4, E_VOID_PTR_FROM_VALUE(int, 5));
+	if (e_dynarr_find(test, E_VOID_PTR_FROM_VALUE(int, 5)) != 4)
+	{
+		e_log_message(E_LOG_ERROR, L"Test", L"%s, %s: Test failed. Expected %i, but got %i", __FILE__, __func__, 4,
+				e_dynarr_find(test, E_VOID_PTR_FROM_VALUE(int, 5)));
+		return 1;
+	}
+	e_dynarr_deinit(test);
+
 	return 0;
 }
