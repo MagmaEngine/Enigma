@@ -2,6 +2,32 @@
 #include <string.h>
 
 /**
+ * e_optional_uint32_init
+ */
+ENIGMA_API EOptionalUINT32 *e_optional_uint32_init(void)
+{
+	EOptionalUINT32 *optional = calloc(1, sizeof *optional);
+	return optional;
+}
+
+/**
+ * e_optional_uint32_init
+ */
+ENIGMA_API void e_optional_uint32_deinit(EOptionalUINT32 *optional)
+{
+	free(optional);
+}
+
+/**
+ * e_optional_uint32_set
+ */
+ENIGMA_API void e_optional_uint32_set(EOptionalUINT32 *optional, uint32_t value)
+{
+	optional->value = value;
+	optional->exists = true;
+}
+
+/**
  * e_dynarr_init
  *
  * Initialize and return a dynamic array with items of size item_size

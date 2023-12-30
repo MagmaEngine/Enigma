@@ -102,6 +102,12 @@ typedef struct {
 	uint item_cap;
 } EDynarr;
 
+// struct for optional values
+typedef struct {
+	bool exists;
+	uint32_t value;
+} EOptionalUINT32;
+
 ENIGMA_API EDynarr *e_dynarr_init(size_t item_size, uint item_cap);
 ENIGMA_API EDynarr *e_dynarr_init_arr(size_t item_size, uint num_items, void *arr);
 ENIGMA_API void e_dynarr_deinit(EDynarr *d);
@@ -111,6 +117,11 @@ ENIGMA_API int e_dynarr_find(EDynarr *d, void *item);
 ENIGMA_API int e_dynarr_remove_unordered(EDynarr *d, uint index);
 ENIGMA_API int e_dynarr_remove_unordered_ptr(EDynarr *d, void *item);
 ENIGMA_API int e_dynarr_remove_ordered(EDynarr *d, uint index);
+
+ENIGMA_API EOptionalUINT32 *e_optional_uint32_init(void);
+ENIGMA_API void e_optional_uint32_deinit(EOptionalUINT32 *optional);
+ENIGMA_API void e_optional_uint32_set(EOptionalUINT32 *optional, uint32_t value);
+ENIGMA_API void e_optional_value_unset(EOptionalUINT32 *optional);
 
 // ------------- Threads ---------------
 #ifdef ENIGMA_PLATFORM_WINDOWS
