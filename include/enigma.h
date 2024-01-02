@@ -90,7 +90,11 @@ double e_randnd(uint32_t index);
 // rand uint
 uint e_randi(uint32_t index);
 
+// count set bits
+ENIGMA_API uint e_count_set_bits(uint32_t n);
+
 // ------------ Dynamic Arrays ------------
+#define E_PTR_FROM_VALUE(type, value) &(type){value}
 #define E_VOID_PTR_FROM_VALUE(type, value) (void *) &(type){value}
 #define E_DYNARR_GET(dynarr, type, index) ((type *)dynarr->arr)[index]
 
@@ -102,26 +106,16 @@ typedef struct {
 	uint item_cap;
 } EDynarr;
 
-// struct for optional values
-typedef struct {
-	bool exists;
-	uint32_t value;
-} EOptionalUINT32;
-
 ENIGMA_API EDynarr *e_dynarr_init(size_t item_size, uint item_cap);
 ENIGMA_API EDynarr *e_dynarr_init_arr(size_t item_size, uint num_items, void *arr);
 ENIGMA_API void e_dynarr_deinit(EDynarr *d);
 ENIGMA_API void e_dynarr_add(EDynarr *d, void *item);
+ENIGMA_API void e_dynarr_append(EDynarr *dest, EDynarr *src);
 ENIGMA_API int e_dynarr_set(EDynarr *d, uint index, void *item);
 ENIGMA_API int e_dynarr_find(EDynarr *d, void *item);
 ENIGMA_API int e_dynarr_remove_unordered(EDynarr *d, uint index);
 ENIGMA_API int e_dynarr_remove_unordered_ptr(EDynarr *d, void *item);
 ENIGMA_API int e_dynarr_remove_ordered(EDynarr *d, uint index);
-
-ENIGMA_API EOptionalUINT32 *e_optional_uint32_init(void);
-ENIGMA_API void e_optional_uint32_deinit(EOptionalUINT32 *optional);
-ENIGMA_API void e_optional_uint32_set(EOptionalUINT32 *optional, uint32_t value);
-ENIGMA_API void e_optional_value_unset(EOptionalUINT32 *optional);
 
 // ------------- Threads ---------------
 #ifdef ENIGMA_PLATFORM_WINDOWS

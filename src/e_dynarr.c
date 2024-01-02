@@ -2,32 +2,6 @@
 #include <string.h>
 
 /**
- * e_optional_uint32_init
- */
-ENIGMA_API EOptionalUINT32 *e_optional_uint32_init(void)
-{
-	EOptionalUINT32 *optional = calloc(1, sizeof *optional);
-	return optional;
-}
-
-/**
- * e_optional_uint32_init
- */
-ENIGMA_API void e_optional_uint32_deinit(EOptionalUINT32 *optional)
-{
-	free(optional);
-}
-
-/**
- * e_optional_uint32_set
- */
-ENIGMA_API void e_optional_uint32_set(EOptionalUINT32 *optional, uint32_t value)
-{
-	optional->value = value;
-	optional->exists = true;
-}
-
-/**
  * e_dynarr_init
  *
  * Initialize and return a dynamic array with items of size item_size
@@ -38,7 +12,7 @@ ENIGMA_API EDynarr *e_dynarr_init(size_t item_size, uint item_cap)
 	EDynarr *d = malloc(sizeof *d);
 	d->item_size = item_size;
 	d->num_items = 0;
-	d->item_cap = item_cap;
+	d->item_cap = (item_cap > 0) ? item_cap : 1;
 	d->arr = malloc(item_size * item_cap);
 	return d;
 }
@@ -89,6 +63,23 @@ ENIGMA_API void e_dynarr_add(EDynarr *d, void *item)
 		d->arr = realloc(d->arr, d->item_cap * d->item_size);
 	}
 	memcpy(&((char *)d->arr)[d->num_items++ * d->item_size], item, d->item_size);
+}
+
+/**
+ * e_dynarr_append
+ *
+ * Appends one dynarr to another
+ * reallocates more memory if needed
+ */
+ENIGMA_API void e_dynarr_append(EDynarr *dest, EDynarr *src)
+{
+	if (dest->num_items + src->num_items >= dest->item_cap)
+	{
+		dest->item_cap *= 2;
+		dest->arr = realloc(dest->arr, dest->item_cap * dest->item_size);
+	}
+	memcpy(&((char *)dest->arr)[dest->num_items * dest->item_size], src->arr, src->num_items * src->item_size);
+	dest->num_items += src->num_items;
 }
 
 /**

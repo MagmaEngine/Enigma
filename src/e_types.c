@@ -1,6 +1,18 @@
 #include <math.h>
 #include "enigma.h"
 
+/**
+ * e_count_set_bits
+ *
+ * count the number of set bits in a number
+ */
+ENIGMA_API uint e_count_set_bits(uint32_t n)
+{
+	n = n - ((n >> 1) & 0x55555555);
+	n = (n & 0x33333333) + ((n >> 2) & 0x33333333);
+	return (((n + (n >> 4)) & 0xf0f0f0f) * 0x1010101) >> 24;
+}
+
 float e_randf(uint32_t index)
 {
 	index = (index << 13) ^ index;
