@@ -1,6 +1,21 @@
 #include "enigma.h"
 
 /**
+ * e_sleep
+ *
+ * wrapper function that sleeps for a number of miliseconds
+ */
+ENIGMA_API void e_sleep_ms(uint milis)
+{
+#ifdef ENIGMA_PLATFORM_WINDOWS
+	Sleep(milis);
+#endif
+#ifdef ENIGMA_PLATFORM_LINUX
+	usleep(milis*1000);
+#endif // ENIGMA_PLATFORM_XXXXXX
+}
+
+/**
  * e_mutex_lock
  *
  * wrapper function around pthreads and winapithreads

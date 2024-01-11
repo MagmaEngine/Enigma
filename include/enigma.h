@@ -21,6 +21,9 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <stdbool.h>
+#ifdef ENIGMA_PLATFORM_LINUX
+#include <unistd.h>
+#endif // ENIGMA_PLATFORM_LINUX
 
 #ifndef NULL
 #define NULL (void*)(0)
@@ -58,6 +61,7 @@ typedef EThreadResult (*EThreadFunction)(void *);
 typedef pthread_mutex_t EMutex;
 #endif
 
+ENIGMA_API void e_sleep_ms(uint milis);
 ENIGMA_API void e_mutex_lock(EMutex *mutex);
 ENIGMA_API void e_mutex_unlock(EMutex *mutex);
 ENIGMA_API void e_mutex_init(EMutex *mutex);
@@ -89,14 +93,14 @@ ENIGMA_API bool e_debug_memory(void); /*f_debug_memory checks if any of the boun
 
 #else
 
-#define e_debug_memory_init(a, b, c) (void(0))
-#define e_debug_mem_malloc(a, b, c) (void(0))
-#define e_debug_mem_calloc(a, b, c, d) (void(0))
-#define e_debug_mem_realloc(a, b, c, d) (void(0))
-#define e_debug_mem_free(a) (void(0))
-#define e_debug_mem_print(a) (void(0))
-#define e_debug_mem_reset() (void(0))
-#define e_debug_memory() (void(0))
+//#define e_debug_memory_init(a, b, c) (void(0))
+//#define e_debug_mem_malloc(a, b, c) (void(0))
+//#define e_debug_mem_calloc(a, b, c, d) (void(0))
+//#define e_debug_mem_realloc(a, b, c, d) (void(0))
+//#define e_debug_mem_free(a) (void(0))
+//#define e_debug_mem_print(a) (void(0))
+//#define e_debug_mem_reset() (void(0))
+//#define e_debug_memory() (void(0))
 
 #endif // ENIGMA_DEBUG_MEMORY
 

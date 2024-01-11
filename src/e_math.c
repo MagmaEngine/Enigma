@@ -1,21 +1,20 @@
 #include <math.h>
-#include "enigma.h"
 
 // ------------ FLOAT OPS ------------
 
 // ------------ SQRT ------------
 float e_sqrtf(float number)
 {
-    int i;
-    float x, y;
-    x = number * 0.5;
-    y  = number;
-    i  = * (int * ) &y;
-    i  = 0x5f3759df - (i >> 1);
-    y  = * ( float * ) &i;
-    y  = y * (1.5 - (x * y * y));
-    y  = y * (1.5 - (x * y * y));
-    return number * y;
+	int i;
+	float x, y;
+	x = number * 0.5;
+	y  = number;
+	i  = * (int * ) &y;
+	i  = 0x5f3759df - (i >> 1);
+	y  = * ( float * ) &i;
+	y  = y * (1.5 - (x * y * y));
+	y  = y * (1.5 - (x * y * y));
+	return number * y;
 }
 
 // ------------ LENGTH ------------
@@ -207,7 +206,7 @@ void e_project3f(float *output, float *pos, float *vec)
 	c /= vec[0] * vec[0] + vec[1] * vec[1] + vec[2] * vec[2];
 	output[0] = vec[0] * c;
 	output[1] = vec[1] * c;
-    output[2] = vec[2] * c;
+	output[2] = vec[2] * c;
 }
 void e_project2d(double *output, double *pos, double *vec)
 {
@@ -224,7 +223,7 @@ void e_project3d(double *output, double *pos, double *vec)
 	c /= vec[0] * vec[0] + vec[1] * vec[1] + vec[2] * vec[2];
 	output[0] = vec[0] * c;
 	output[1] = vec[1] * c;
-    output[2] = vec[2] * c;
+	output[2] = vec[2] * c;
 }
 
 // ------------ NORMAL ------------
@@ -302,12 +301,12 @@ void e_intersect2d(double *output, double *line_a0, double *line_a1, double *lin
 }
 
 // ------------- MAX -------------
-ENIGMA_API int e_maxi(int a, int b)
+int e_maxi(int a, int b)
 {
 	return (a > b) ? a : b;
 }
 
-ENIGMA_API int e_mini(int a, int b)
+int e_mini(int a, int b)
 {
 	return (a > b) ? b : a;
 }

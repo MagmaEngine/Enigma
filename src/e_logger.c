@@ -36,7 +36,7 @@ ENIGMA_API void e_log_message(enum ELogLevel level, const wchar_t *channel, cons
 	char *color;
 #elif defined ENIGMA_PLATFORM_WINDOWS
 	HANDLE console_handle = GetStdHandle(STD_OUTPUT_HANDLE);
-	WORD *color;
+	WORD color;
 #endif // ENIGMA_PLATFORM_XXXXXX
 	switch (level) {
 		case E_LOG_DEBUG:

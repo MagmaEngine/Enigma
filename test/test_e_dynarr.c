@@ -1,4 +1,4 @@
-#include "../include/enigma.h"
+#include "enigma.h"
 
 float tolerance = 0.0001;
 
