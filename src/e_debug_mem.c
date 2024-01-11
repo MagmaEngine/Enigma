@@ -281,18 +281,18 @@ void e_debug_mem_print(uint min_allocs)
 	uint i;
 	if (e_alloc_mutex != NULL)
 		e_alloc_mutex_lock(e_alloc_mutex);
-	e_log_message(E_LOG_INFO, L"Memory",L"----------------------------------------------");
+	e_log_message(E_LOG_DEBUG, L"Memory",L"----------------------------------------------");
 	for (i = 0; i < e_alloc_line_count; i++)
 	{
 		if (min_allocs < e_alloc_lines[i].alocated)
 		{
-			e_log_message(E_LOG_INFO, L"Memory", L"%s line: %u",e_alloc_lines[i].file, e_alloc_lines[i].line);
-			e_log_message(E_LOG_INFO, L"Memory", L"    - Bytes allocated: %u", e_alloc_lines[i].size);
-			e_log_message(E_LOG_INFO, L"Memory", L"    - Allocations:     %u", e_alloc_lines[i].alocated);
-			e_log_message(E_LOG_INFO, L"Memory", L"    - Frees:           %u", e_alloc_lines[i].freed);
+			e_log_message(E_LOG_DEBUG, L"Memory", L"%s line: %u",e_alloc_lines[i].file, e_alloc_lines[i].line);
+			e_log_message(E_LOG_DEBUG, L"Memory", L"    - Bytes allocated: %u", e_alloc_lines[i].size);
+			e_log_message(E_LOG_DEBUG, L"Memory", L"    - Allocations:     %u", e_alloc_lines[i].alocated);
+			e_log_message(E_LOG_DEBUG, L"Memory", L"    - Frees:           %u", e_alloc_lines[i].freed);
 		}
 	}
-	e_log_message(E_LOG_INFO, L"Memory",L"----------------------------------------------");
+	e_log_message(E_LOG_DEBUG, L"Memory",L"----------------------------------------------");
 	if (e_alloc_mutex != NULL)
 		e_alloc_mutex_unlock(e_alloc_mutex);
 }
