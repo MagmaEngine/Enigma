@@ -25,15 +25,15 @@ typedef struct{
 STMemAllocLine e_alloc_lines[1024];
 uint e_alloc_line_count = 0;
 void *e_alloc_mutex = NULL;
-void (*e_alloc_mutex_lock)(void *mutex) = NULL;
-void (*e_alloc_mutex_unlock)(void *mutex) = NULL;
+void (*e_alloc_mutex_lock)(EMutex *mutex) = NULL;
+void (*e_alloc_mutex_unlock)(EMutex *mutex) = NULL;
 
 
-void e_debug_memory_init(void (*lock)(void *mutex), void (*unlock)(void *mutex), void *mutex)
+void e_debug_memory_init(EMutex *mutex)
 {
 	e_alloc_mutex = mutex;
-	e_alloc_mutex_lock = lock;
-	e_alloc_mutex_unlock = unlock;
+	e_alloc_mutex_lock = e_mutex_lock;
+	e_alloc_mutex_unlock = e_mutex_unlock;
 }
 
 bool e_debug_memory(void)
@@ -129,6 +129,31 @@ void *e_debug_mem_malloc(size_t size, char *file, uint line)
 	{
 		e_log_message(E_LOG_ERROR, L"Memory",
 				L"Malloc returns NULL when trying to allocate %zu bytes at line %u in file %s\n", size, line, file);
+		if (e_alloc_mutex != NULL)
+			e_alloc_mutex_unlock(e_alloc_mutex);
+		e_debug_mem_print(0);
+		exit(0);
+	}
+	for (i = 0; i < size + E_MEM_OVER_ALLOC; i++)
+		((uint8_t *)pointer)[i] = E_MEM_MAGIC_NUMBER + 1;
+	e_debug_mem_add(pointer, size, file, line);
+	if (e_alloc_mutex != NULL)
+		e_alloc_mutex_unlock(e_alloc_mutex);
+	return pointer;
+}
+
+void *e_debug_mem_calloc(size_t nmemb, size_t size, char *file, uint line)
+{
+	void *pointer;
+	uint i;
+	if (e_alloc_mutex != NULL)
+		e_alloc_mutex_lock(e_alloc_mutex);
+	pointer = (calloc)(nmemb, size + E_MEM_OVER_ALLOC);
+
+	if (pointer == NULL)
+	{
+		e_log_message(E_LOG_ERROR, L"Memory",
+				L"Calloc returns NULL when trying to allocate %zu bytes at line %u in file %s\n", size, line, file);
 		if (e_alloc_mutex != NULL)
 			e_alloc_mutex_unlock(e_alloc_mutex);
 		e_debug_mem_print(0);
@@ -256,17 +281,18 @@ void e_debug_mem_print(uint min_allocs)
 	uint i;
 	if (e_alloc_mutex != NULL)
 		e_alloc_mutex_lock(e_alloc_mutex);
-	e_log_message(E_LOG_INFO, L"Memory", L"Report:\n----------------------------------------------");
+	e_log_message(E_LOG_INFO, L"Memory",L"----------------------------------------------");
 	for (i = 0; i < e_alloc_line_count; i++)
 	{
 		if (min_allocs < e_alloc_lines[i].alocated)
 		{
-			e_log_message(E_LOG_INFO, L"Memory", L"%s line: %u\n",e_alloc_lines[i].file, e_alloc_lines[i].line);
-			e_log_message(E_LOG_INFO, L"Memory", L" - Bytes allocated: %u\n - Allocations: %u\n - Frees: %u\n\n",
-					e_alloc_lines[i].size, e_alloc_lines[i].alocated, e_alloc_lines[i].freed);
+			e_log_message(E_LOG_INFO, L"Memory", L"%s line: %u",e_alloc_lines[i].file, e_alloc_lines[i].line);
+			e_log_message(E_LOG_INFO, L"Memory", L"    - Bytes allocated: %u", e_alloc_lines[i].size);
+			e_log_message(E_LOG_INFO, L"Memory", L"    - Allocations:     %u", e_alloc_lines[i].alocated);
+			e_log_message(E_LOG_INFO, L"Memory", L"    - Frees:           %u", e_alloc_lines[i].freed);
 		}
 	}
-	e_log_message(E_LOG_INFO, L"Memory",L"\n----------------------------------------------");
+	e_log_message(E_LOG_INFO, L"Memory",L"----------------------------------------------");
 	if (e_alloc_mutex != NULL)
 		e_alloc_mutex_unlock(e_alloc_mutex);
 }
