@@ -44,7 +44,7 @@ elif library_buildtype == 'static'
     c_args : enigma_c_args,
     include_directories : include_directories('include'),
     dependencies : enigma_deps,
-    install : true)
+    install : false)
 endif
 
 # tests
