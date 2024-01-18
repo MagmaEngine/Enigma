@@ -75,7 +75,6 @@ ENIGMA_API void e_thread_detach(EThread thread);
 /* ----- Debugging -----
 If ENIGMA_DEBUG_MEMORY is enabled, the memory debugging system will create macros that replace malloc, free and realloc and allows the system to keep track of and report where memory is beeing allocated, how much and if the memory is beeing freed. This is very useful for finding memory leaks in large applications. The system can also over allocate memory and fill it with a magic number and can therfor detect if the application writes outside of the allocated memory. if E_EXIT_CRASH is defined, then exit(); will be replaced with a funtion that writes to NULL. This will make it trivial ti find out where an application exits using any debugger., */
 
-#ifdef ENIGMA_DEBUG_MEMORY
 
 ENIGMA_API void e_debug_memory_init(EMutex *mutex); /* Required for memory debugger to be thread safe */
 ENIGMA_API void *e_debug_mem_malloc(size_t size, char *file, uint line); /* Replaces malloc and records the c file and line where it was called*/
@@ -86,21 +85,12 @@ ENIGMA_API void e_debug_mem_print(uint min_allocs); /* Prints out a list of all 
 ENIGMA_API void e_debug_mem_reset(void); /* f_debug_mem_reset allows you to clear all memory stored in the debugging system if you only want to record allocations after a specific point in your code*/
 ENIGMA_API bool e_debug_memory(void); /*f_debug_memory checks if any of the bounds of any allocation has been over written and reports where to standard out. The function returns TRUE if any error was found*/
 
+#ifdef ENIGMA_DEBUG_MEMORY
+
 #define malloc(n) e_debug_mem_malloc(n, __FILE__, __LINE__) /* Replaces malloc. */
 #define calloc(n, m) e_debug_mem_calloc(n, m, __FILE__, __LINE__) /* Replaces malloc. */
 #define realloc(n, m) e_debug_mem_realloc(n, m, __FILE__, __LINE__) /* Replaces realloc. */
 #define free(n) e_debug_mem_free(n) /* Replaces free. */
-
-#else
-
-//#define e_debug_memory_init(a, b, c) (void(0))
-//#define e_debug_mem_malloc(a, b, c) (void(0))
-//#define e_debug_mem_calloc(a, b, c, d) (void(0))
-//#define e_debug_mem_realloc(a, b, c, d) (void(0))
-//#define e_debug_mem_free(a) (void(0))
-//#define e_debug_mem_print(a) (void(0))
-//#define e_debug_mem_reset() (void(0))
-//#define e_debug_memory() (void(0))
 
 #endif // ENIGMA_DEBUG_MEMORY
 

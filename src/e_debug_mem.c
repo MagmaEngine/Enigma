@@ -31,14 +31,17 @@ void (*e_alloc_mutex_unlock)(EMutex *mutex) = NULL;
 
 void e_debug_memory_init(EMutex *mutex)
 {
+#ifdef ENIGMA_DEBUG_MEMORY
 	e_alloc_mutex = mutex;
 	e_alloc_mutex_lock = e_mutex_lock;
 	e_alloc_mutex_unlock = e_mutex_unlock;
+#endif
 }
 
 bool e_debug_memory(void)
 {
 	bool output = false;
+#ifdef ENIGMA_DEBUG_MEMORY
 	uint i, j, k;
 	if (e_alloc_mutex != NULL)
 		e_alloc_mutex_lock(e_alloc_mutex);
@@ -67,6 +70,7 @@ bool e_debug_memory(void)
 	}
 	if (e_alloc_mutex != NULL)
 		e_alloc_mutex_unlock(e_alloc_mutex);
+#endif
 	return output;
 }
 
@@ -278,6 +282,7 @@ void *e_debug_mem_realloc(void *pointer, size_t size, char *file, uint line)
 
 void e_debug_mem_print(uint min_allocs)
 {
+#ifdef ENIGMA_DEBUG_MEMORY
 	uint i;
 	if (e_alloc_mutex != NULL)
 		e_alloc_mutex_lock(e_alloc_mutex);
@@ -295,10 +300,12 @@ void e_debug_mem_print(uint min_allocs)
 	e_log_message(E_LOG_DEBUG, L"Memory",L"----------------------------------------------");
 	if (e_alloc_mutex != NULL)
 		e_alloc_mutex_unlock(e_alloc_mutex);
+#endif
 }
 
 uint32_t e_debug_mem_consumption(void)
 {
+#ifdef ENIGMA_DEBUG_MEMORY
 	uint i, sum = 0;
 
 	if (e_alloc_mutex != NULL)
@@ -308,10 +315,12 @@ uint32_t e_debug_mem_consumption(void)
 	if (e_alloc_mutex != NULL)
 		e_alloc_mutex_unlock(e_alloc_mutex);
 	return sum;
+#endif
 }
 
 void e_debug_mem_reset(void)
 {
+#ifdef ENIGMA_DEBUG_MEMORY
 	uint i;
 	if (e_alloc_mutex != NULL)
 		e_alloc_mutex_lock(e_alloc_mutex);
@@ -321,6 +330,7 @@ void e_debug_mem_reset(void)
 
 	if (e_alloc_mutex != NULL)
 		e_alloc_mutex_unlock(e_alloc_mutex);
+#endif
 }
 
 void exit_crash(uint i)
