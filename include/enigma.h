@@ -140,16 +140,16 @@ typedef struct {
 	uint item_cap;
 } EDynarr;
 
-ENIGMA_API EDynarr *e_dynarr_init(size_t item_size, uint item_cap);
-ENIGMA_API EDynarr *e_dynarr_init_arr(size_t item_size, uint num_items, void *arr);
-ENIGMA_API void e_dynarr_deinit(EDynarr *d);
-ENIGMA_API void e_dynarr_add(EDynarr *d, void *item);
-ENIGMA_API void e_dynarr_append(EDynarr *dest, EDynarr *src);
-ENIGMA_API int e_dynarr_set(EDynarr *d, uint index, void *item);
-ENIGMA_API int e_dynarr_find(EDynarr *d, void *item);
-ENIGMA_API int e_dynarr_remove_unordered(EDynarr *d, uint index);
-ENIGMA_API int e_dynarr_remove_unordered_ptr(EDynarr *d, void *item);
-ENIGMA_API int e_dynarr_remove_ordered(EDynarr *d, uint index);
+ENIGMA_API EDynarr *e_dynarr_init(const size_t item_size, const uint item_cap);
+ENIGMA_API EDynarr *e_dynarr_init_arr(const size_t item_size, const uint num_items, const void * const arr);
+ENIGMA_API void e_dynarr_deinit(EDynarr * const d);
+ENIGMA_API void e_dynarr_add(EDynarr * const d, const void * const item);
+ENIGMA_API void e_dynarr_append(EDynarr * const dest, const EDynarr * const src);
+ENIGMA_API int e_dynarr_set(EDynarr * const d, const uint index, const void * const item);
+ENIGMA_API int e_dynarr_find(const EDynarr * const d, const void * const item);
+ENIGMA_API int e_dynarr_remove_unordered(EDynarr * const d, const uint index);
+ENIGMA_API int e_dynarr_remove_unordered_ptr(EDynarr * const d, const void * const item);
+ENIGMA_API int e_dynarr_remove_ordered(EDynarr * const d, const uint index);
 
 // ------------ Integer math --------------
 ENIGMA_API int e_maxi(int a, int b);
