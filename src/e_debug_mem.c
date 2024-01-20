@@ -124,7 +124,6 @@ void e_debug_mem_add(void *pointer, uint size, char *file, uint line)
 void *e_debug_mem_malloc(size_t size, char *file, uint line)
 {
 	void *pointer;
-	uint i;
 	if (e_alloc_mutex != NULL)
 		e_alloc_mutex_lock(e_alloc_mutex);
 	pointer = (malloc)(size + E_MEM_OVER_ALLOC);
@@ -138,8 +137,7 @@ void *e_debug_mem_malloc(size_t size, char *file, uint line)
 		e_debug_mem_print(0);
 		exit(0);
 	}
-	for (i = 0; i < size + E_MEM_OVER_ALLOC; i++)
-		((uint8_t *)pointer)[i] = E_MEM_MAGIC_NUMBER + 1;
+	memset(pointer, E_MEM_MAGIC_NUMBER+1, size + E_MEM_OVER_ALLOC);
 	e_debug_mem_add(pointer, size, file, line);
 	if (e_alloc_mutex != NULL)
 		e_alloc_mutex_unlock(e_alloc_mutex);
@@ -149,10 +147,9 @@ void *e_debug_mem_malloc(size_t size, char *file, uint line)
 void *e_debug_mem_calloc(size_t nmemb, size_t size, char *file, uint line)
 {
 	void *pointer;
-	uint i;
 	if (e_alloc_mutex != NULL)
 		e_alloc_mutex_lock(e_alloc_mutex);
-	pointer = (calloc)(nmemb, size + E_MEM_OVER_ALLOC);
+	pointer = (malloc)((nmemb * size) + E_MEM_OVER_ALLOC);
 
 	if (pointer == NULL)
 	{
@@ -163,8 +160,8 @@ void *e_debug_mem_calloc(size_t nmemb, size_t size, char *file, uint line)
 		e_debug_mem_print(0);
 		exit(0);
 	}
-	for (i = 0; i < size + E_MEM_OVER_ALLOC; i++)
-		((uint8_t *)pointer)[i] = E_MEM_MAGIC_NUMBER + 1;
+	memset(pointer, E_MEM_MAGIC_NUMBER+1, nmemb * size + E_MEM_OVER_ALLOC);
+	memset(pointer, 0, nmemb * size);
 	e_debug_mem_add(pointer, size, file, line);
 	if (e_alloc_mutex != NULL)
 		e_alloc_mutex_unlock(e_alloc_mutex);
