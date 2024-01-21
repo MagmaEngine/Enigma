@@ -152,8 +152,12 @@ ENIGMA_API int e_dynarr_remove_unordered_ptr(EDynarr * const d, const void * con
 ENIGMA_API int e_dynarr_remove_ordered(EDynarr * const d, const uint index);
 
 // ------------ Integer math --------------
-ENIGMA_API int e_maxi(int a, int b);
-ENIGMA_API int e_mini(int a, int b);
+#ifndef E_MAX
+#define E_MAX(a, b) ((a) > (b) ? (a) : (b))
+#endif // E_MAX
+#ifndef E_MIN
+#define E_MIN(a, b) ((a) < (b) ? (a) : (b))
+#endif // E_MIN
 
 // ------------ Vector Math ------------
 //#define d_sqrt sqrt /* replaced sqrt with carmacks  inverse sqrt aproximation */

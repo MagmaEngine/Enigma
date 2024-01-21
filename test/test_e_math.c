@@ -908,9 +908,9 @@ int test_e_normalize4d(double a, double b, double c, double d, double out0, doub
 //	return 0;
 //}
 
-int test_e_maxi(int a, int b, int out)
+int test_e_max(int a, int b, int out)
 {
-	int result = e_maxi(a, b);
+	int result = E_MAX(a, b);
 	if (result != out)
 	{
 		e_log_message(E_LOG_ERROR, L"Test", L"%s, %s: Test failed for: %i, %i. Expected %i, but got %i", __FILE__, __func__, a, b, out, result);
@@ -919,9 +919,9 @@ int test_e_maxi(int a, int b, int out)
 	return 0;
 }
 
-int test_e_mini(int a, int b, int out)
+int test_e_min(int a, int b, int out)
 {
-	int result = e_mini(a, b);
+	int result = E_MIN(a, b);
 	if (result != out)
 	{
 		e_log_message(E_LOG_ERROR, L"Test", L"%s, %s: Test failed for: %i, %i. Expected %i, but got %i", __FILE__, __func__, a, b, out, result);
@@ -1012,10 +1012,10 @@ int main(void)
 			//test_e_sqrti(9, 3) ||
 			//test_e_sqrti(4, 2) ||
 			//test_e_sqrti(1, 1) ||
-			test_e_maxi(4, 5, 5) ||
-			test_e_maxi(-1, -5, -1) ||
-			test_e_mini(4, 5, 4) ||
-			test_e_mini(-1, -5, -5))
+			test_e_max(4, 5, 5) ||
+			test_e_max(-1, -5, -1) ||
+			test_e_min(4, 5, 4) ||
+			test_e_min(-1, -5, -5))
 		return 1;
 
 
