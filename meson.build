@@ -19,6 +19,7 @@ enigma_srcs = [
   'src/e_dynarr.c',
   'src/e_thread.c',
   'src/e_logger.c',
+  'src/e_file.c',
   'src/e_matrix.c',
   'src/e_debug_mem.c',
   'src/e_path.c',

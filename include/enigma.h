@@ -111,6 +111,12 @@ enum ELogLevel {
 
 ENIGMA_API void e_log_message(enum ELogLevel level, const wchar_t *channel, const wchar_t *format, ...);
 
+// ------------ File IO --------------
+ENIGMA_API bool e_file_exists(const char *filename);
+ENIGMA_API uint e_file_get_size(const char *filename);
+ENIGMA_API bool e_file_write(const char *filename, void *buffer, uint size);
+ENIGMA_API bool e_file_read(const char *filename, void *buffer, uint size);
+
 // ------------ Fast RNG ------------
 
 // ranged 0 to 1
