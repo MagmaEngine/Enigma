@@ -7,7 +7,7 @@
  * Initialize and return a dynamic array with items of size item_size
  * and an initial capacity of item_cap
  */
-ENIGMA_API EDynarr *e_dynarr_init(const size_t item_size, const uint item_cap)
+EDynarr *e_dynarr_init(const size_t item_size, const uint item_cap)
 {
 	EDynarr *d = malloc(sizeof *d);
 	d->item_size = item_size;
@@ -23,7 +23,7 @@ ENIGMA_API EDynarr *e_dynarr_init(const size_t item_size, const uint item_cap)
  * Initialize and return a dynamic array with items of size item_size
  * and an initial capacity of item_cap
  */
-ENIGMA_API EDynarr *e_dynarr_init_arr(const size_t item_size, const uint num_items, const void * const arr)
+EDynarr *e_dynarr_init_arr(const size_t item_size, const uint num_items, const void * const arr)
 {
 	EDynarr *d = malloc(sizeof *d);
 	d->item_size = item_size;
@@ -40,7 +40,7 @@ ENIGMA_API EDynarr *e_dynarr_init_arr(const size_t item_size, const uint num_ite
  * uninitializes a dynamic array.
  * frees the memory associated with it.
  */
-ENIGMA_API void e_dynarr_deinit(EDynarr * const d)
+void e_dynarr_deinit(EDynarr * const d)
 {
 	if (d == NULL)
 		return;
@@ -55,7 +55,7 @@ ENIGMA_API void e_dynarr_deinit(EDynarr * const d)
  * Adds an item to the dynamic array
  * reallocates more memory if needed
  */
-ENIGMA_API void e_dynarr_add(EDynarr * const d, const void * const item)
+void e_dynarr_add(EDynarr * const d, const void * const item)
 {
 	if (d->num_items >= d->item_cap)
 	{
@@ -71,7 +71,7 @@ ENIGMA_API void e_dynarr_add(EDynarr * const d, const void * const item)
  * Appends one dynarr to another
  * reallocates more memory if needed
  */
-ENIGMA_API void e_dynarr_append(EDynarr * const dest, const EDynarr * const src)
+void e_dynarr_append(EDynarr * const dest, const EDynarr * const src)
 {
 	if (dest->num_items + src->num_items >= dest->item_cap)
 	{
@@ -88,7 +88,7 @@ ENIGMA_API void e_dynarr_append(EDynarr * const dest, const EDynarr * const src)
  * Sets an item at index of the dynamic array
  * returns 1 if the set was out of bounds
  */
-ENIGMA_API int e_dynarr_set(EDynarr * const d, const uint index, const void * const item)
+int e_dynarr_set(EDynarr * const d, const uint index, const void * const item)
 {
 	if (index >= d->num_items || index < 0)
 		return 1;
@@ -103,7 +103,7 @@ ENIGMA_API int e_dynarr_set(EDynarr * const d, const uint index, const void * co
  * the order of the array is guaranteed to be preserved
  * returns 1 if the remove was out of bounds
  */
-ENIGMA_API int e_dynarr_remove_ordered(EDynarr * const d, const uint index)
+int e_dynarr_remove_ordered(EDynarr * const d, const uint index)
 {
 	if (index >= d->num_items) return 1;
 	if (d->num_items-- > 1)
@@ -126,7 +126,7 @@ ENIGMA_API int e_dynarr_remove_ordered(EDynarr * const d, const uint index)
  * the order of the array is NOT guaranteed to be preserved
  * returns 1 if the remove was out of bounds
  */
-ENIGMA_API int e_dynarr_remove_unordered(EDynarr * const d, const uint index)
+int e_dynarr_remove_unordered(EDynarr * const d, const uint index)
 {
 	if (index >= d->num_items) return 1;
 	if (d->num_items-- > 1)
@@ -147,7 +147,7 @@ ENIGMA_API int e_dynarr_remove_unordered(EDynarr * const d, const uint index)
  * returns the index of the array that the item if it exists
  * if the array does not contain the item it returns -1
  */
-ENIGMA_API int e_dynarr_find(const EDynarr * const d, const void * const item)
+int e_dynarr_find(const EDynarr * const d, const void * const item)
 {
 	for (uint i = 0; i < d->num_items; i++)
 		if (memcmp(&((char *)d->arr)[i*d->item_size], item, d->item_size) == 0)
@@ -163,7 +163,7 @@ ENIGMA_API int e_dynarr_find(const EDynarr * const d, const void * const item)
  * returns 1 if the item does not exist in the array
  * or the remove could not be done
  */
-ENIGMA_API int e_dynarr_remove_unordered_ptr(EDynarr * const d, const void * const item)
+int e_dynarr_remove_unordered_ptr(EDynarr * const d, const void * const item)
 {
 	for (uint i = 0; i < d->num_items; i++)
 	{

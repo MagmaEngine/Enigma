@@ -6,7 +6,7 @@
  *
  * count the number of set bits in a number
  */
-ENIGMA_API uint e_count_set_bits(uint32_t n)
+uint e_count_set_bits(uint32_t n)
 {
 	n = n - ((n >> 1) & 0x55555555);
 	n = (n & 0x33333333) + ((n >> 2) & 0x33333333);

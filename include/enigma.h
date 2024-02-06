@@ -1,21 +1,6 @@
 #ifndef _ENIGMA_H
 #define _ENIGMA_H
 
-#ifdef ENIGMA_PLATFORM_WINDOWS
-#ifdef _ENIGMA_INTERNAL
-#define ENIGMA_API __declspec(dllexport)
-#else
-#define ENIGMA_API __declspec(dllimport)
-#endif // _ENIGMA_INTERNAL
-
-#elif defined ENIGMA_PLATFORM_LINUX
-#ifdef _ENIGMA_INTERNAL
-#define ENIGMA_API __attribute__((visibility("default")))
-#else
-#define ENIGMA_API
-#endif
-#endif // ENIGMA_PLATFORM_XXXXXX
-
 #define PI 3.1415926535897932384626433832795L
 
 #include <stdlib.h>
@@ -44,79 +29,6 @@ typedef double EFloat;
 typedef float EFloat;
 #endif
 
-// ------------- Threads ---------------
-#ifdef ENIGMA_PLATFORM_WINDOWS
-#include <windows.h>
-typedef HANDLE EThread;
-typedef void *EThreadArguments;
-typedef DWORD EThreadResult;
-typedef EThreadResult (*EThreadFunction)(void *);
-typedef CRITICAL_SECTION EMutex;
-#elif defined ENIGMA_PLATFORM_LINUX
-#include <pthread.h>
-typedef pthread_t EThread;
-typedef void *EThreadArguments;
-typedef void *EThreadResult;
-typedef EThreadResult (*EThreadFunction)(void *);
-typedef pthread_mutex_t EMutex;
-#endif
-
-ENIGMA_API void e_sleep_ms(uint milis);
-ENIGMA_API void e_mutex_lock(EMutex *mutex);
-ENIGMA_API void e_mutex_unlock(EMutex *mutex);
-ENIGMA_API void e_mutex_init(EMutex *mutex);
-ENIGMA_API void e_mutex_destroy(EMutex *mutex);
-
-ENIGMA_API EThread e_thread_create(EThreadFunction func, EThreadArguments args);
-ENIGMA_API EThread e_thread_self(void);
-ENIGMA_API void e_thread_join(EThread thread);
-ENIGMA_API void e_thread_detach(EThread thread);
-
-/* ----- Debugging -----
-If ENIGMA_DEBUG_MEMORY is enabled, the memory debugging system will create macros that replace malloc, free and realloc and allows the system to keep track of and report where memory is beeing allocated, how much and if the memory is beeing freed. This is very useful for finding memory leaks in large applications. The system can also over allocate memory and fill it with a magic number and can therfor detect if the application writes outside of the allocated memory. if E_EXIT_CRASH is defined, then exit(); will be replaced with a funtion that writes to NULL. This will make it trivial ti find out where an application exits using any debugger., */
-
-
-ENIGMA_API void e_debug_memory_init(EMutex *mutex); /* Required for memory debugger to be thread safe */
-ENIGMA_API void *e_debug_mem_malloc(size_t size, char *file, uint line); /* Replaces malloc and records the c file and line where it was called*/
-ENIGMA_API void *e_debug_mem_calloc(size_t nmemb, size_t size, char *file, uint line); /* Replaces malloc and records the c file and line where it was called*/
-ENIGMA_API void *e_debug_mem_realloc(void *pointer, size_t size, char *file, uint line); /* Replaces realloc and records the c file and line where it was called*/
-ENIGMA_API void e_debug_mem_free(void *buf); /* Replaces free and records the c file and line where it was called*/
-ENIGMA_API void e_debug_mem_print(uint min_allocs); /* Prints out a list of all allocations made, their location, how much memorey each has allocated, freed, and how many allocations have been made. The min_allocs parameter can be set to avoid printing any allocations that have been made fewer times then min_allocs */
-ENIGMA_API void e_debug_mem_reset(void); /* f_debug_mem_reset allows you to clear all memory stored in the debugging system if you only want to record allocations after a specific point in your code*/
-ENIGMA_API bool e_debug_memory(void); /*f_debug_memory checks if any of the bounds of any allocation has been over written and reports where to standard out. The function returns TRUE if any error was found*/
-
-#ifdef ENIGMA_DEBUG_MEMORY
-
-#define malloc(n) e_debug_mem_malloc(n, __FILE__, __LINE__) /* Replaces malloc. */
-#define calloc(n, m) e_debug_mem_calloc(n, m, __FILE__, __LINE__) /* Replaces malloc. */
-#define realloc(n, m) e_debug_mem_realloc(n, m, __FILE__, __LINE__) /* Replaces realloc. */
-#define free(n) e_debug_mem_free(n) /* Replaces free. */
-
-#endif // ENIGMA_DEBUG_MEMORY
-
-// Crash on exit.
-#ifdef ENIGMA_EXIT_CRASH
-ENIGMA_API void exit_crash(uint i);
-#define exit(n) exit_crash(n);
-#endif
-
-// ------------ Logging -------------
-enum ELogLevel {
-	E_LOG_DEBUG,
-	E_LOG_INFO,
-	E_LOG_WARNING,
-	E_LOG_ERROR,
-	E_LOG_MAX
-};
-
-ENIGMA_API void e_log_message(enum ELogLevel level, const wchar_t *channel, const wchar_t *format, ...);
-
-// ------------ File IO --------------
-ENIGMA_API bool e_file_exists(const char *filename);
-ENIGMA_API uint e_file_get_size(const char *filename);
-ENIGMA_API bool e_file_write(const char *filename, void *buffer, uint size);
-ENIGMA_API bool e_file_read(const char *filename, void *buffer, uint size);
-
 // ------------ Fast RNG ------------
 
 // ranged 0 to 1
@@ -131,7 +43,7 @@ double e_randnd(uint32_t index);
 uint e_randi(uint32_t index);
 
 // count set bits
-ENIGMA_API uint e_count_set_bits(uint32_t n);
+uint e_count_set_bits(uint32_t n);
 
 // ------------ Dynamic Arrays ------------
 #define E_PTR_FROM_VALUE(type, value) &(type){value}
@@ -146,16 +58,16 @@ typedef struct {
 	uint item_cap;
 } EDynarr;
 
-ENIGMA_API EDynarr *e_dynarr_init(const size_t item_size, const uint item_cap);
-ENIGMA_API EDynarr *e_dynarr_init_arr(const size_t item_size, const uint num_items, const void * const arr);
-ENIGMA_API void e_dynarr_deinit(EDynarr * const d);
-ENIGMA_API void e_dynarr_add(EDynarr * const d, const void * const item);
-ENIGMA_API void e_dynarr_append(EDynarr * const dest, const EDynarr * const src);
-ENIGMA_API int e_dynarr_set(EDynarr * const d, const uint index, const void * const item);
-ENIGMA_API int e_dynarr_find(const EDynarr * const d, const void * const item);
-ENIGMA_API int e_dynarr_remove_unordered(EDynarr * const d, const uint index);
-ENIGMA_API int e_dynarr_remove_unordered_ptr(EDynarr * const d, const void * const item);
-ENIGMA_API int e_dynarr_remove_ordered(EDynarr * const d, const uint index);
+EDynarr *e_dynarr_init(const size_t item_size, const uint item_cap);
+EDynarr *e_dynarr_init_arr(const size_t item_size, const uint num_items, const void * const arr);
+void e_dynarr_deinit(EDynarr * const d);
+void e_dynarr_add(EDynarr * const d, const void * const item);
+void e_dynarr_append(EDynarr * const dest, const EDynarr * const src);
+int e_dynarr_set(EDynarr * const d, const uint index, const void * const item);
+int e_dynarr_find(const EDynarr * const d, const void * const item);
+int e_dynarr_remove_unordered(EDynarr * const d, const uint index);
+int e_dynarr_remove_unordered_ptr(EDynarr * const d, const void * const item);
+int e_dynarr_remove_ordered(EDynarr * const d, const uint index);
 
 // ------------ Integer math --------------
 #ifndef E_MAX
