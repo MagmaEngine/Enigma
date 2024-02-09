@@ -1,4 +1,5 @@
 #include "enigma.h"
+#include <stdio.h>
 #include <math.h>
 
 float tolerance = 0.0001;
@@ -23,7 +24,7 @@ int test_e_sqrtf(float a, float out)
 	float b = e_sqrtf(a);
 	if (test_float_equality(b, out))
 	{
-		e_log_message(E_LOG_ERROR, L"Test", L"%s, %s: Test failed for: %f. Expected %f, but got %f", __FILE__, __func__, a, out, b);
+		fprintf(stderr, "%s, %s: Test failed for: %f. Expected %f, but got %f", __FILE__, __func__, a, out, b);
 		return 1;
 	}
 	return 0;
@@ -38,7 +39,7 @@ int test_e_length2f(float a, float b, float c)
 	float out = e_length2f(i);
 	if (test_float_equality(out, c))
 	{
-		e_log_message(E_LOG_ERROR, L"Test", L"%s, %s: Test failed for: (%f, %f). Expected %f, but got %f", __FILE__, __func__, a, b, c, out);
+		fprintf(stderr, "%s, %s: Test failed for: (%f, %f). Expected %f, but got %f", __FILE__, __func__, a, b, c, out);
 		free(i);
 		return 1;
 	}
@@ -57,7 +58,7 @@ int test_e_distance2f(float a, float b, float c, float d, float out)
 	float result = e_distance2f(i, j);
 	if (test_float_equality(result, out))
 	{
-		e_log_message(E_LOG_ERROR, L"Test", L"%s, %s: Test failed for: (%f, %f), (%f, %f). Expected %f, but got %f",
+		fprintf(stderr, "%s, %s: Test failed for: (%f, %f), (%f, %f). Expected %f, but got %f",
 				__FILE__, __func__, a, b, c, d, out, result);
 		free(i);
 		free(j);
@@ -79,7 +80,7 @@ int test_e_dot2f(float a, float b, float c, float d, float out)
 	float result = e_dot2f(i, j);
 	if (test_float_equality(result, out))
 	{
-		e_log_message(E_LOG_ERROR, L"Test", L"%s, %s: Test failed for: (%f, %f), (%f, %f). Expected %f, but got %f",
+		fprintf(stderr, "%s, %s: Test failed for: (%f, %f), (%f, %f). Expected %f, but got %f",
 				__FILE__, __func__, a, b, c, d, out, result);
 		free(i);
 		free(j);
@@ -102,7 +103,7 @@ int test_e_cross2f(float a, float b, float c, float d, float out)
 	e_cross2f(k, i, j);
 	if (test_float_equality(*k, out))
 	{
-		e_log_message(E_LOG_ERROR, L"Test", L"%s, %s: Test failed for: (%f, %f), (%f, %f). Expected %f, but got %f",
+		fprintf(stderr, "%s, %s: Test failed for: (%f, %f), (%f, %f). Expected %f, but got %f",
 				__FILE__, __func__, a, b, c, d, out, *k);
 		free(i);
 		free(j);
@@ -123,7 +124,7 @@ int test_e_normalize2f(float a, float b, float out0, float out1)
 	e_normalize2f(i);
 	if (test_float_equality(i[0], out0) || test_float_equality(i[1], out1))
 	{
-		e_log_message(E_LOG_ERROR, L"Test", L"%s, %s: Test failed for: (%f, %f). Expected (%f, %f), but got (%f, %f)",
+		fprintf(stderr, "%s, %s: Test failed for: (%f, %f). Expected (%f, %f), but got (%f, %f)",
 				__FILE__, __func__, a, b, out0, out1, i[0], i[1]);
 		free(i);
 		return 1;
@@ -144,7 +145,7 @@ int test_e_reflect2f(float a, float b, float c, float d, float out0, float out1)
 	e_reflect2f(k, pos, normal);
 	if (test_float_equality(k[0], out0) || test_float_equality(k[1], out1))
 	{
-		e_log_message(E_LOG_ERROR, L"Test", L"%s, %s: Test failed for: (%f, %f), (%f, %f). Expected (%f, %f), but got (%f, %f)",
+		fprintf(stderr, "%s, %s: Test failed for: (%f, %f), (%f, %f). Expected (%f, %f), but got (%f, %f)",
 				__FILE__, __func__, a, b, c, d, out0, out1, k[0], k[1]);
 		free(pos);
 		free(normal);
@@ -169,7 +170,7 @@ int test_e_project2f(float a, float b, float c, float d, float out0, float out1)
 	e_project2f(k, pos, normal);
 	if (test_float_equality(k[0], out0) || test_float_equality(k[1], out1))
 	{
-		e_log_message(E_LOG_ERROR, L"Test", L"%s, %s: Test failed for: (%f, %f), (%f, %f). Expected (%f, %f), but got (%f, %f)",
+		fprintf(stderr, "%s, %s: Test failed for: (%f, %f), (%f, %f). Expected (%f, %f), but got (%f, %f)",
 				__FILE__, __func__, a, b, c, d, out0, out1, k[0], k[1]);
 		free(pos);
 		free(normal);
@@ -194,7 +195,7 @@ int test_e_normal2f(float a, float b, float c, float d, float out0, float out1)
 	e_normal2f(k, veca, vecb);
 	if (test_float_equality(k[0], out0) || test_float_equality(k[1], out1))
 	{
-		e_log_message(E_LOG_ERROR, L"Test", L"%s, %s: Test failed for: (%f, %f), (%f, %f). Expected (%f, %f), but got (%f, %f)",
+		fprintf(stderr, "%s, %s: Test failed for: (%f, %f), (%f, %f). Expected (%f, %f), but got (%f, %f)",
 				__FILE__, __func__, a, b, c, d, out0, out1, k[0], k[1]);
 		free(veca);
 		free(vecb);
@@ -224,7 +225,7 @@ int test_e_intersect2f(float a, float b, float c, float d, float e, float f, flo
 	e_intersect2f(k, pa1, pa2, pb1, pb2);
 	if (test_float_equality(k[0], out0) || test_float_equality(k[1], out1))
 	{
-		e_log_message(E_LOG_ERROR, L"Test", L"%s, %s: Test failed for: (%f, %f), (%f, %f), (%f, %f), (%f, %f). Expected (%f, %f), but got (%f, %f)",
+		fprintf(stderr, "%s, %s: Test failed for: (%f, %f), (%f, %f), (%f, %f), (%f, %f). Expected (%f, %f), but got (%f, %f)",
 				__FILE__, __func__, a, b, c, d, e, f, g, h, out0, out1, k[0], k[1]);
 		free(pa1);
 		free(pa2);
@@ -251,7 +252,7 @@ int test_e_length3f(float a, float b, float c, float out)
 	float result = e_length3f(i);
 	if (test_float_equality(out, result))
 	{
-		e_log_message(E_LOG_ERROR, L"Test", L"%s, %s: Test failed for: (%f, %f, %f). Expected %f, but got %f",
+		fprintf(stderr, "%s, %s: Test failed for: (%f, %f, %f). Expected %f, but got %f",
 				__FILE__, __func__, a, b, c, out, result);
 		free(i);
 		return 1;
@@ -273,7 +274,7 @@ int test_e_distance3f(float a, float b, float c, float d, float e, float f, floa
 	float result = e_distance3f(i, j);
 	if (test_float_equality(result, out))
 	{
-		e_log_message(E_LOG_ERROR, L"Test", L"%s, %s: Test failed for: (%f, %f, %f), (%f, %f, %f). Expected %f, but got %f",
+		fprintf(stderr, "%s, %s: Test failed for: (%f, %f, %f), (%f, %f, %f). Expected %f, but got %f",
 				__FILE__, __func__, a, b, c, d, e, f, out, result);
 		free(i);
 		free(j);
@@ -297,7 +298,7 @@ int test_e_dot3f(float a, float b, float c, float d, float e, float f, float out
 	float result = e_dot3f(i, j);
 	if (test_float_equality(result, out))
 	{
-		e_log_message(E_LOG_ERROR, L"Test", L"%s, %s: Test failed for: (%f, %f, %f), (%f, %f, %f), Expected %f, but got %f.",
+		fprintf(stderr, "%s, %s: Test failed for: (%f, %f, %f), (%f, %f, %f), Expected %f, but got %f.",
 				__FILE__, __func__, a, b, c, d, e, f, out, result);
 		free(i);
 		free(j);
@@ -322,7 +323,7 @@ int test_e_cross3f(float a, float b, float c, float d, float e, float f, float o
 	e_cross3f(k, i, j);
 	if (test_float_equality(k[0], out0) || test_float_equality(k[1], out1) || test_float_equality(k[2], out2))
 	{
-		e_log_message(E_LOG_ERROR, L"Test", L"%s, %s: Test failed for: (%f, %f, %f), (%f, %f, %f). Expected (%f, %f, %f), but got (%f, %f, %f)",
+		fprintf(stderr, "%s, %s: Test failed for: (%f, %f, %f), (%f, %f, %f). Expected (%f, %f, %f), but got (%f, %f, %f)",
 				__FILE__, __func__, a, b, c, d, e, f, out0, out1, out2, k[0], k[1], k[2]);
 		free(i);
 		free(j);
@@ -344,7 +345,7 @@ int test_e_normalize3f(float a, float b, float c, float out0, float out1, float 
 	e_normalize3f(i);
 	if (test_float_equality(i[0], out0) || test_float_equality(i[1], out1) || test_float_equality(i[2], out2))
 	{
-		e_log_message(E_LOG_ERROR, L"Test", L"%s, %s: Test failed for: (%f, %f, %f). Expected (%f, %f, %f), but got (%f, %f, %f)",
+		fprintf(stderr, "%s, %s: Test failed for: (%f, %f, %f). Expected (%f, %f, %f), but got (%f, %f, %f)",
 				__FILE__, __func__, a, b, c, out0, out1, out2, i[0], i[1], i[2]);
 		free(i);
 		return 1;
@@ -367,7 +368,7 @@ int test_e_reflect3f(float a, float b, float c, float d, float e, float f, float
 	e_reflect3f(k, pos, vec);
 	if (test_float_equality(k[0], out0) || test_float_equality(k[1], out1) || test_float_equality(k[2], out2))
 	{
-		e_log_message(E_LOG_ERROR, L"Test", L"%s, %s: Test failed for: (%f, %f, %f), (%f, %f, %f). Expected (%f, %f, %f), but got (%f, %f, %f)",
+		fprintf(stderr, "%s, %s: Test failed for: (%f, %f, %f), (%f, %f, %f). Expected (%f, %f, %f), but got (%f, %f, %f)",
 				__FILE__, __func__, a, b, c, d, e, f, out0, out1, out2, k[0], k[1], k[2]);
 		free(pos);
 		free(vec);
@@ -394,7 +395,7 @@ int test_e_project3f(float a, float b, float c, float d, float e, float f, float
 	e_project3f(k, pos, vec);
 	if (test_float_equality(k[0], out0) || test_float_equality(k[1], out1) || test_float_equality(k[2], out2))
 	{
-		e_log_message(E_LOG_ERROR, L"Test", L"%s, %s: Test failed for: (%f, %f, %f), (%f, %f, %f). Expected (%f, %f, %f), but got (%f, %f, %f)",
+		fprintf(stderr, "%s, %s: Test failed for: (%f, %f, %f), (%f, %f, %f). Expected (%f, %f, %f), but got (%f, %f, %f)",
 				__FILE__, __func__, a, b, c, d, e, f, out0, out1, out2, k[0], k[1], k[2]);
 		free(pos);
 		free(vec);
@@ -425,7 +426,7 @@ int test_e_normal3f(float a, float b, float c, float d, float e, float f, float 
 	e_normal3f(k, veca, vecb, vecc);
 	if (test_float_equality(k[0], out0) || test_float_equality(k[1], out1) || test_float_equality(k[2], out2))
 	{
-		e_log_message(E_LOG_ERROR, L"Test", L"%s, %s: Test failed for: (%f, %f, %f), (%f, %f, %f), (%f, %f, %f). Expected (%f, %f, %f), but got (%f, %f, %f)",
+		fprintf(stderr, "%s, %s: Test failed for: (%f, %f, %f), (%f, %f, %f), (%f, %f, %f). Expected (%f, %f, %f), but got (%f, %f, %f)",
 				__FILE__, __func__, a, b, c, d, e, f, g, h, i, out0, out1, out2, k[0], k[1], k[2]);
 		free(veca);
 		free(vecb);
@@ -449,7 +450,7 @@ int test_e_length2d(double a, double b, double c)
 	double out = e_length2d(i);
 	if (test_double_equality(out, c))
 	{
-		e_log_message(E_LOG_ERROR, L"Test", L"%s, %s: Test failed for: (%f, %f). Expected %f, but got %f", __FILE__, __func__, a, b, c, out);
+		fprintf(stderr, "%s, %s: Test failed for: (%f, %f). Expected %f, but got %f", __FILE__, __func__, a, b, c, out);
 		free(i);
 		return 1;
 	}
@@ -468,7 +469,7 @@ int test_e_distance2d(double a, double b, double c, double d, double out)
 	double result = e_distance2d(i, j);
 	if (test_double_equality(result, out))
 	{
-		e_log_message(E_LOG_ERROR, L"Test", L"%s, %s: Test failed for: (%f, %f), (%f, %f). Expected %f, but got %f",
+		fprintf(stderr, "%s, %s: Test failed for: (%f, %f), (%f, %f). Expected %f, but got %f",
 				__FILE__, __func__, a, b, c, d, out, result);
 		free(i);
 		free(j);
@@ -490,7 +491,7 @@ int test_e_dot2d(double a, double b, double c, double d, double out)
 	double result = e_dot2d(i, j);
 	if (test_double_equality(result, out))
 	{
-		e_log_message(E_LOG_ERROR, L"Test", L"%s, %s: Test failed for: (%f, %f), (%f, %f). Expected %f, but got %f",
+		fprintf(stderr, "%s, %s: Test failed for: (%f, %f), (%f, %f). Expected %f, but got %f",
 				__FILE__, __func__, a, b, c, d, out, result);
 		free(i);
 		free(j);
@@ -513,7 +514,7 @@ int test_e_cross2d(double a, double b, double c, double d, double out)
 	e_cross2d(k, i, j);
 	if (test_double_equality(*k, out))
 	{
-		e_log_message(E_LOG_ERROR, L"Test", L"%s, %s: Test failed for: (%f, %f), (%f, %f). Expected %f, but got %f",
+		fprintf(stderr, "%s, %s: Test failed for: (%f, %f), (%f, %f). Expected %f, but got %f",
 				__FILE__, __func__, a, b, c, d, out, *k);
 		free(i);
 		free(j);
@@ -534,7 +535,7 @@ int test_e_normalize2d(double a, double b, double out0, double out1)
 	e_normalize2d(i);
 	if (test_double_equality(i[0], out0) || test_double_equality(i[1], out1))
 	{
-		e_log_message(E_LOG_ERROR, L"Test", L"%s, %s: Test failed for: (%f, %f). Expected (%f, %f), but got (%f, %f)",
+		fprintf(stderr, "%s, %s: Test failed for: (%f, %f). Expected (%f, %f), but got (%f, %f)",
 				__FILE__, __func__, a, b, out0, out1, i[0], i[1]);
 		free(i);
 		return 1;
@@ -555,7 +556,7 @@ int test_e_reflect2d(double a, double b, double c, double d, double out0, double
 	e_reflect2d(k, pos, normal);
 	if (test_double_equality(k[0], out0) || test_double_equality(k[1], out1))
 	{
-		e_log_message(E_LOG_ERROR, L"Test", L"%s, %s: Test failed for: (%f, %f), (%f, %f). Expected (%f, %f), but got (%f, %f)",
+		fprintf(stderr, "%s, %s: Test failed for: (%f, %f), (%f, %f). Expected (%f, %f), but got (%f, %f)",
 				__FILE__, __func__, a, b, c, d, out0, out1, k[0], k[1]);
 		free(pos);
 		free(normal);
@@ -580,7 +581,7 @@ int test_e_project2d(double a, double b, double c, double d, double out0, double
 	e_project2d(k, pos, normal);
 	if (test_double_equality(k[0], out0) || test_double_equality(k[1], out1))
 	{
-		e_log_message(E_LOG_ERROR, L"Test", L"%s, %s: Test failed for: (%f, %f), (%f, %f). Expected (%f, %f), but got (%f, %f)",
+		fprintf(stderr, "%s, %s: Test failed for: (%f, %f), (%f, %f). Expected (%f, %f), but got (%f, %f)",
 				__FILE__, __func__, a, b, c, d, out0, out1, k[0], k[1]);
 		free(pos);
 		free(normal);
@@ -604,7 +605,7 @@ int test_e_normal2d(double a, double b, double c, double d, double out0, double 
 	e_normal2d(k, veca, vecb);
 	if (test_double_equality(k[0], out0) || test_double_equality(k[1], out1))
 	{
-		e_log_message(E_LOG_ERROR, L"Test", L"%s, %s: Test failed for: (%f, %f), (%f, %f). Expected (%f, %f), but got (%f, %f)",
+		fprintf(stderr, "%s, %s: Test failed for: (%f, %f), (%f, %f). Expected (%f, %f), but got (%f, %f)",
 				__FILE__, __func__, a, b, c, d, out0, out1, k[0], k[1]);
 		free(veca);
 		free(vecb);
@@ -634,7 +635,7 @@ int test_e_intersect2d(double a, double b, double c, double d, double e, double 
 	e_intersect2d(k, pa1, pa2, pb1, pb2);
 	if (test_double_equality(k[0], out0) || test_double_equality(k[1], out1))
 	{
-		e_log_message(E_LOG_ERROR, L"Test", L"%s, %s: Test failed for: (%f, %f), (%f, %f), (%f, %f), (%f, %f). Expected (%f, %f), but got (%f, %f)",
+		fprintf(stderr, "%s, %s: Test failed for: (%f, %f), (%f, %f), (%f, %f), (%f, %f). Expected (%f, %f), but got (%f, %f)",
 				__FILE__, __func__, a, b, c, d, e, f, g, h, out0, out1, k[0], k[1]);
 		free(pa1);
 		free(pa2);
@@ -661,7 +662,7 @@ int test_e_length3d(double a, double b, double c, double out)
 	double result = e_length3d(i);
 	if (test_double_equality(out, result))
 	{
-		e_log_message(E_LOG_ERROR, L"Test", L"%s, %s: Test failed for: (%f, %f, %f). Expected %f, but got %f",
+		fprintf(stderr, "%s, %s: Test failed for: (%f, %f, %f). Expected %f, but got %f",
 				__FILE__, __func__, a, b, c, out, result);
 		free(i);
 		return 1;
@@ -683,7 +684,7 @@ int test_e_distance3d(double a, double b, double c, double d, double e, double f
 	double result = e_distance3d(i, j);
 	if (test_double_equality(result, out))
 	{
-		e_log_message(E_LOG_ERROR, L"Test", L"%s, %s: Test failed for: (%f, %f, %f), (%f, %f, %f). Expected %f, but got %f",
+		fprintf(stderr, "%s, %s: Test failed for: (%f, %f, %f), (%f, %f, %f). Expected %f, but got %f",
 				__FILE__, __func__, a, b, c, d, e, f, out, result);
 		free(i);
 		free(j);
@@ -707,7 +708,7 @@ int test_e_dot3d(double a, double b, double c, double d, double e, double f, dou
 	double result = e_dot3d(i, j);
 	if (test_double_equality(result, out))
 	{
-		e_log_message(E_LOG_ERROR, L"Test", L"%s, %s: Test failed for: (%f, %f, %f), (%f, %f, %f), Expected %f, but got %f.",
+		fprintf(stderr, "%s, %s: Test failed for: (%f, %f, %f), (%f, %f, %f), Expected %f, but got %f.",
 				__FILE__, __func__, a, b, c, d, e, f, out, result);
 		free(i);
 		free(j);
@@ -732,7 +733,7 @@ int test_e_cross3d(double a, double b, double c, double d, double e, double f, d
 	e_cross3d(k, i, j);
 	if (test_double_equality(k[0], out0) || test_double_equality(k[1], out1) || test_double_equality(k[2], out2))
 	{
-		e_log_message(E_LOG_ERROR, L"Test", L"%s, %s: Test failed for: (%f, %f, %f), (%f, %f, %f). Expected (%f, %f, %f), but got (%f, %f, %f)",
+		fprintf(stderr, "%s, %s: Test failed for: (%f, %f, %f), (%f, %f, %f). Expected (%f, %f, %f), but got (%f, %f, %f)",
 				__FILE__, __func__, a, b, c, d, e, f, out0, out1, out2, k[0], k[1], k[2]);
 		free(i);
 		free(j);
@@ -754,7 +755,7 @@ int test_e_normalize3d(double a, double b, double c, double out0, double out1, d
 	e_normalize3d(i);
 	if (test_double_equality(i[0], out0) || test_double_equality(i[1], out1) || test_double_equality(i[2], out2))
 	{
-		e_log_message(E_LOG_ERROR, L"Test", L"%s, %s: Test failed for: (%f, %f, %f). Expected (%f, %f, %f), but got (%f, %f, %f)",
+		fprintf(stderr, "%s, %s: Test failed for: (%f, %f, %f). Expected (%f, %f, %f), but got (%f, %f, %f)",
 				__FILE__, __func__, a, b, c, out0, out1, out2, i[0], i[1], i[2]);
 		free(i);
 		return 1;
@@ -777,7 +778,7 @@ int test_e_reflect3d(double a, double b, double c, double d, double e, double f,
 	e_reflect3d(k, pos, vec);
 	if (test_double_equality(k[0], out0) || test_double_equality(k[1], out1) || test_double_equality(k[2], out2))
 	{
-		e_log_message(E_LOG_ERROR, L"Test", L"%s, %s: Test failed for: (%f, %f, %f), (%f, %f, %f). Expected (%f, %f, %f), but got (%f, %f, %f)",
+		fprintf(stderr, "%s, %s: Test failed for: (%f, %f, %f), (%f, %f, %f). Expected (%f, %f, %f), but got (%f, %f, %f)",
 				__FILE__, __func__, a, b, c, d, e, f, out0, out1, out2, k[0], k[1], k[2]);
 		free(pos);
 		free(vec);
@@ -804,7 +805,7 @@ int test_e_project3d(double a, double b, double c, double d, double e, double f,
 	e_project3d(k, pos, vec);
 	if (test_double_equality(k[0], out0) || test_double_equality(k[1], out1) || test_double_equality(k[2], out2))
 	{
-		e_log_message(E_LOG_ERROR, L"Test", L"%s, %s: Test failed for: (%f, %f, %f), (%f, %f, %f). Expected (%f, %f, %f), but got (%f, %f, %f)",
+		fprintf(stderr, "%s, %s: Test failed for: (%f, %f, %f), (%f, %f, %f). Expected (%f, %f, %f), but got (%f, %f, %f)",
 				__FILE__, __func__, a, b, c, d, e, f, out0, out1, out2, k[0], k[1], k[2]);
 		free(pos);
 		free(vec);
@@ -835,7 +836,7 @@ int test_e_normal3d(double a, double b, double c, double d, double e, double f, 
 	e_normal3d(k, veca, vecb, vecc);
 	if (test_double_equality(k[0], out0) || test_double_equality(k[1], out1) || test_double_equality(k[2], out2))
 	{
-		e_log_message(E_LOG_ERROR, L"Test", L"%s, %s: Test failed for: (%f, %f, %f), (%f, %f, %f), (%f, %f, %f). Expected (%f, %f, %f), but got (%f, %f, %f)",
+		fprintf(stderr, "%s, %s: Test failed for: (%f, %f, %f), (%f, %f, %f), (%f, %f, %f). Expected (%f, %f, %f), but got (%f, %f, %f)",
 				__FILE__, __func__, a, b, c, d, e, f, g, h, i, out0, out1, out2, k[0], k[1], k[2]);
 		free(veca);
 		free(vecb);
@@ -865,7 +866,7 @@ int test_e_normalize4f(float a, float b, float c, float d, float out0, float out
 			test_float_equality(i[2], out2) ||
 			test_float_equality(i[2], out2))
 	{
-		e_log_message(E_LOG_ERROR, L"Test", L"%s, %s: Test failed for: (%f, %f, %f, %f). Expected (%f, %f, %f, %f), but got (%f, %f, %f, %f)",
+		fprintf(stderr, "%s, %s: Test failed for: (%f, %f, %f, %f). Expected (%f, %f, %f, %f), but got (%f, %f, %f, %f)",
 				__FILE__, __func__, a, b, c, d, out0, out1, out2, out3, i[0], i[1], i[2], i[3]);
 		free(i);
 		return 1;
@@ -887,7 +888,7 @@ int test_e_normalize4d(double a, double b, double c, double d, double out0, doub
 			test_double_equality(i[2], out2) ||
 			test_double_equality(i[2], out2))
 	{
-		e_log_message(E_LOG_ERROR, L"Test", L"%s, %s: Test failed for: (%f, %f, %f, %f). Expected (%f, %f, %f, %f), but got (%f, %f, %f, %f)",
+		fprintf(stderr, "%s, %s: Test failed for: (%f, %f, %f, %f). Expected (%f, %f, %f, %f), but got (%f, %f, %f, %f)",
 				__FILE__, __func__, a, b, c, d, out0, out1, out2, out3, i[0], i[1], i[2], i[3]);
 		free(i);
 		return 1;
@@ -902,7 +903,7 @@ int test_e_normalize4d(double a, double b, double c, double d, double out0, doub
 //	int result = e_sqrti(a);
 //	if (result != out)
 //	{
-//		e_log_message(E_LOG_ERROR, L"Test", L"%s, %s: Test failed for: %i. Expected %i, but got %i", __FILE__, __func__, a, out, result);
+//		fprintf(stderr, "%s, %s: Test failed for: %i. Expected %i, but got %i", __FILE__, __func__, a, out, result);
 //		return 1;
 //	}
 //	return 0;
@@ -913,7 +914,7 @@ int test_e_max(int a, int b, int out)
 	int result = E_MAX(a, b);
 	if (result != out)
 	{
-		e_log_message(E_LOG_ERROR, L"Test", L"%s, %s: Test failed for: %i, %i. Expected %i, but got %i", __FILE__, __func__, a, b, out, result);
+		fprintf(stderr, "%s, %s: Test failed for: %i, %i. Expected %i, but got %i", __FILE__, __func__, a, b, out, result);
 		return 1;
 	}
 	return 0;
@@ -924,7 +925,7 @@ int test_e_min(int a, int b, int out)
 	int result = E_MIN(a, b);
 	if (result != out)
 	{
-		e_log_message(E_LOG_ERROR, L"Test", L"%s, %s: Test failed for: %i, %i. Expected %i, but got %i", __FILE__, __func__, a, b, out, result);
+		fprintf(stderr, "%s, %s: Test failed for: %i, %i. Expected %i, but got %i", __FILE__, __func__, a, b, out, result);
 		return 1;
 	}
 	return 0;
