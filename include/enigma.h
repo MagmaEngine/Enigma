@@ -48,15 +48,10 @@ uint e_count_set_bits(uint32_t n);
 // ------------ Dynamic Arrays ------------
 #define E_PTR_FROM_VALUE(type, value) &(type){value}
 #define E_VOID_PTR_FROM_VALUE(type, value) (void *) &(type){value}
-#define E_DYNARR_GET(dynarr, type, index) ((type *)dynarr->arr)[index]
+#define e_dynarr_get(dynarr, type, index) ((type *)e_dynarr_get_arr(dynarr))[index]
 
 // only store pointer types
-typedef struct {
-	void *arr;
-	size_t item_size;
-	uint num_items;
-	uint item_cap;
-} EDynarr;
+typedef struct EDynarr EDynarr;
 
 EDynarr *e_dynarr_init(const size_t item_size, const uint item_cap);
 EDynarr *e_dynarr_init_arr(const size_t item_size, const uint num_items, const void * const arr);
@@ -68,6 +63,9 @@ int e_dynarr_find(const EDynarr * const d, const void * const item);
 int e_dynarr_remove_unordered(EDynarr * const d, const uint index);
 int e_dynarr_remove_unordered_ptr(EDynarr * const d, const void * const item);
 int e_dynarr_remove_ordered(EDynarr * const d, const uint index);
+uint e_dynarr_item_count(const EDynarr * const d);
+size_t e_dynarr_item_size(const EDynarr * const d);
+void *e_dynarr_get_arr(const EDynarr * const d);
 
 // ------------ Integer math --------------
 #ifndef E_MAX

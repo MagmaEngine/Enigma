@@ -24,9 +24,10 @@ int main(void)
 	e_dynarr_add(test, &fifthnum);
 
 	// first number should be 1.1
-	if (test_float_equality( ((float *)test->arr)[0], firstnum))
+	void *arr = e_dynarr_get_arr(test);
+	if (test_float_equality( ((float *)arr)[0], firstnum))
 	{
-		fprintf(stderr, "%s, %s: Test failed. Expected %f, but got %f", __FILE__, __func__, firstnum, ((float *)test->arr)[0]);
+		fprintf(stderr, "%s, %s: Test failed. Expected %f, but got %f", __FILE__, __func__, firstnum, ((float *)arr)[0]);
 		return 1;
 	}
 
@@ -36,9 +37,9 @@ int main(void)
 	e_dynarr_remove_unordered(test, 2);
 
 	// should only be 2 items in array
-	if (test->num_items != 2)
+	if (e_dynarr_item_count(test) != 2)
 	{
-		fprintf(stderr, "%s, %s: Test failed. Expected %i, but got %i", __FILE__, __func__, 2, test->num_items);
+		fprintf(stderr, "%s, %s: Test failed. Expected %i, but got %i", __FILE__, __func__, 2, e_dynarr_item_count(test));
 		return 1;
 	}
 
@@ -52,9 +53,10 @@ int main(void)
 	e_dynarr_add(test, &fifthnum);
 
 	// first number should be 1.1
-	if (test_float_equality( ((float *)test->arr)[0], firstnum))
+	arr = e_dynarr_get_arr(test);
+	if (test_float_equality( ((float *)arr)[0], firstnum))
 	{
-		fprintf(stderr, "%s, %s: Test failed. Expected %f, but got %f", __FILE__, __func__, firstnum, ((float *)test->arr)[0]);
+		fprintf(stderr, "%s, %s: Test failed. Expected %f, but got %f", __FILE__, __func__, firstnum, ((float *)arr)[0]);
 		return 1;
 	}
 
@@ -64,15 +66,16 @@ int main(void)
 	e_dynarr_remove_ordered(test, 2);
 
 	// should only be 2 items in array
-	if (test->num_items != 2)
+	if (e_dynarr_item_count(test) != 2)
 	{
-		fprintf(stderr, "%s, %s: Test failed. Expected %i, but got %i", __FILE__, __func__, 2, test->num_items);
+		fprintf(stderr, "%s, %s: Test failed. Expected %i, but got %i", __FILE__, __func__, 2, e_dynarr_item_count(test));
 		return 1;
 	}
 	// first number should be 2.05
-	if (test_float_equality( ((float *)test->arr)[0], secondnum))
+	arr = e_dynarr_get_arr(test);
+	if (test_float_equality( ((float *)arr)[0], secondnum))
 	{
-		fprintf(stderr, "%s, %s: Test failed. Expected %f, but got %f", __FILE__, __func__, secondnum, ((float *)test->arr)[0]);
+		fprintf(stderr, "%s, %s: Test failed. Expected %f, but got %f", __FILE__, __func__, secondnum, ((float *)arr)[0]);
 		return 1;
 	}
 
@@ -84,9 +87,9 @@ int main(void)
 	e_dynarr_add(test, &(float){5.64});
 
 	// should only be 8 items in array
-	if (test->num_items != 8)
+	if (e_dynarr_item_count(test) != 8)
 	{
-		fprintf(stderr, "%s, %s: Test failed. Expected %i, but got %i", __FILE__, __func__, 8, test->num_items);
+		fprintf(stderr, "%s, %s: Test failed. Expected %i, but got %i", __FILE__, __func__, 8, e_dynarr_item_count(test));
 		return 1;
 	}
 

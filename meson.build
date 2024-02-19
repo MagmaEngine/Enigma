@@ -1,22 +1,3 @@
-enigma_deps = [
-  dependency('threads', required : true),
-  meson.get_compiler('c').find_library('m', required : false),
-  ]
-
-enigma_c_args = [
-  '-D_ENIGMA_INTERNAL',
-  ]
-
-if host_machine.system() == 'windows'
-  enigma_c_args += [
-    '-DBUILD_DLL',
-    ]
-elif host_machine.system() == 'linux'
-  enigma_c_args += [
-    '-fvisibility=hidden',
-    ]
-endif
-
 enigma_srcs = [
   'src/e_dynarr.c',
   'src/e_matrix.c',
@@ -25,6 +6,15 @@ enigma_srcs = [
   'src/e_types.c',
   'src/e_noise.c',
   'src/e_math.c',
+  ]
+
+enigma_deps = [
+  dependency('threads', required : true),
+  meson.get_compiler('c').find_library('m', required : false),
+  ]
+
+enigma_c_args = [
+  '-D_ENIGMA_INTERNAL',
   ]
 
 libenigma = library(

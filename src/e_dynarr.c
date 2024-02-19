@@ -1,6 +1,13 @@
 #include "enigma.h"
 #include <string.h>
 
+struct EDynarr {
+	void *arr;
+	size_t item_size;
+	uint num_items;
+	uint item_cap;
+};
+
 /**
  * e_dynarr_init
  *
@@ -48,6 +55,37 @@ void e_dynarr_deinit(EDynarr * const d)
 			free(d->arr);
 	free(d);
 }
+
+/**
+ * e_dynarr_item_count
+ *
+ * Returns the number of items in the dynamic array
+ */
+uint e_dynarr_item_count(const EDynarr * const d)
+{
+	return d->num_items;
+}
+
+/**
+ * e_dynarr_item_size
+ *
+ * Returns the capacity of the dynamic array
+ */
+size_t e_dynarr_item_size(const EDynarr * const d)
+{
+	return d->item_size;
+}
+
+/**
+ * e_dynarr_get_arr
+ *
+ * Returns the array
+ */
+void *e_dynarr_get_arr(const EDynarr * const d)
+{
+	return d->arr;
+}
+
 
 /**
  * e_dynarr_add
